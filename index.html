@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalix – Executive Dashboard 2026</title>
+<meta name="description" content="Kalix Executive Dashboard – Điều hành vận hành và CSKH năm 2026. Dành cho Ban lãnh đạo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+/* =============================================
+   DESIGN TOKENS
+============================================= */
+:root {
+  --bg: #F5F6FA;
+  --surface: #FFFFFF;
+  --surface-2: #FAFBFD;
+  --border: #E4E8F0;
+  --border-strong: #CBD5E1;
+
+  --text-h1: #0F172A;
+  --text-h2: #1E293B;
+  --text-body: #334155;
+  --text-muted: #64748B;
+  --text-subtle: #94A3B8;
+
+  --brand: #1A56DB;
+  --brand-light: #EFF6FF;
+  --brand-mid: #DBEAFE;
+
+  --green: #059669;
+  --green-bg: #ECFDF5;
+  --green-border: #A7F3D0;
+
+  --yellow: #D97706;
+  --yellow-bg: #FFFBEB;
+  --yellow-border: #FCD34D;
+
+  --red: #DC2626;
+  --red-bg: #FEF2F2;
+  --red-border: #FECACA;
+
+  --navy: #0F172A;
+  --slate-100: #F1F5F9;
+  --slate-200: #E2E8F0;
+
+  --shadow-sm: 0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
+  --shadow-md: 0 4px 12px rgba(15,23,42,0.08), 0 2px 4px rgba(15,23,42,0.04);
+  --shadow-lg: 0 10px 30px rgba(15,23,42,0.10), 0 4px 12px rgba(15,23,42,0.06);
+
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-sm: 6px;
+}
+
+/* =============================================
+   RESET & BASE
+============================================= */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text-body);
+  min-height: 100vh;
+  font-size: 13.5px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =============================================
+   LAYOUT SCAFFOLD
+============================================= */
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  padding: 0 32px 48px;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* =============================================
+   TOP NAVIGATION BAR
+============================================= */
+.topnav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  gap: 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.brand-mark {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #1A56DB, #1d4ed8);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.5px;
+}
+
+.brand-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-h1);
+  letter-spacing: -0.3px;
+}
+
+.nav-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2px;
+  flex: 1;
+}
+
+.nav-link {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.nav-link:hover { background: var(--slate-100); color: var(--text-h2); }
+.nav-link.active { background: var(--brand-mid); color: var(--brand); font-weight: 600; }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.nav-badge {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: var(--red-bg);
+  color: var(--red);
+  border: 1px solid var(--red-border);
+}
+
+.nav-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+}
+
+/* =============================================
+   ROW 1: PAGE HEADER + FILTER BAR
+============================================= */
+.page-header-wrap {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 32px;
+}
+
+.page-header-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.page-title-block h1 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-h1);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.page-title-block p {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+.screen-toggle {
+  display: flex;
+  gap: 6px;
+  padding: 4px;
+  background: var(--slate-100);
+  border-radius: var(--radius-sm);
+}
+
+.screen-btn {
+  padding: 6px 14px;
+  border-radius: 5px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.screen-btn.active {
+  background: var(--surface);
+  color: var(--brand);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Filter Bar */
+.filter-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 32px;
+}
+
+.filter-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-right: 4px;
+}
+
+.filter-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-body);
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.filter-pill:hover { border-color: var(--brand); color: var(--brand); }
+.filter-pill.active { background: var(--brand-mid); border-color: var(--brand); color: var(--brand); font-weight: 600; }
+
+.filter-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+.period-toggle {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.period-btn {
+  padding: 5px 13px;
+  font-size: 12.5px;
+  font-weight: 500;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.period-btn.active {
+  background: var(--brand);
+  color: white;
+  font-weight: 600;
+}
+
+.filter-select {
+  padding: 5px 28px 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 3l3 4 3-4' stroke='%2364748B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-body);
+  cursor: pointer;
+  appearance: none;
+  font-family: inherit;
+}
+
+.filter-sep { width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
+
+.compare-tag {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.compare-tag input[type="checkbox"] { accent-color: var(--brand); }
+
+/* =============================================
+   SECTION HEADER
+============================================= */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 28px 0 14px;
+}
+
+.section-label-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.section-label-text {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-subtle);
+  white-space: nowrap;
+  padding: 0 4px;
+}
+
+/* =============================================
+   ROW 2: HERO KPI STRIP
+============================================= */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+.kpi-hero {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.kpi-hero:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--brand);
+  transform: translateY(-2px);
+}
+
+.kpi-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.kpi-hero.kpi-green::before { background: var(--green); }
+.kpi-hero.kpi-blue::before { background: var(--brand); }
+.kpi-hero.kpi-yellow::before { background: var(--yellow); }
+.kpi-hero.kpi-red::before { background: var(--red); }
+.kpi-hero.kpi-purple::before { background: #7c3aed; }
+
+.kpi-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.kpi-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  line-height: 1.3;
+}
+
+.kpi-value-main {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-h1);
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.kpi-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.trend-up, .trend-down, .trend-flat {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 20px;
+}
+
+.trend-up { color: var(--green); background: var(--green-bg); }
+.trend-down { color: var(--red); background: var(--red-bg); }
+.trend-flat { color: var(--yellow); background: var(--yellow-bg); }
+
+.kpi-compare {
+  font-size: 11px;
+  color: var(--text-subtle);
+}
+
+/* Status badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.badge-ok { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.badge-warn { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow-border); }
+.badge-risk { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+.badge-info { background: var(--brand-mid); color: var(--brand); border: 1px solid #BFDBFE; }
+
+/* =============================================
+   CHART GRID SYSTEM
+============================================= */
+.row {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.row-3 { grid-template-columns: 1fr 1fr 1fr; }
+.row-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.row-2 { grid-template-columns: 1fr 1fr; }
+.row-2-1 { grid-template-columns: 2fr 1fr; }
+.row-1-2 { grid-template-columns: 1fr 2fr; }
+.row-3-2 { grid-template-columns: 3fr 2fr; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  padding: 16px 18px 12px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-h2);
+  letter-spacing: -0.1px;
+}
+
+.card-subtitle {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  font-weight: 400;
+}
+
+.card-body {
+  padding: 16px 18px;
+  flex: 1;
+  position: relative;
+}
+
+.chart-wrap {
+  position: relative;
+  height: 200px;
+}
+
+.chart-wrap-lg { height: 240px; }
+.chart-wrap-sm { height: 160px; }
+
+/* =============================================
+   ROW 4: RISK ANALYSIS — SPECIAL
+============================================= */
+.debt-bar-list { display: flex; flex-direction: column; gap: 10px; }
+
+.debt-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.debt-bar-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.debt-name { font-size: 12.5px; font-weight: 600; color: var(--text-h2); }
+.debt-val { font-size: 12.5px; font-weight: 700; }
+
+.debt-track {
+  height: 7px;
+  border-radius: 4px;
+  background: var(--slate-100);
+  overflow: hidden;
+}
+
+.debt-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+/* Aging Inventory Stacked */
+.aging-list { display: flex; flex-direction: column; gap: 10px; }
+
+.aging-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.aging-label { font-size: 11.5px; color: var(--text-muted); width: 72px; flex-shrink: 0; }
+.aging-bar-wrap { flex: 1; height: 22px; background: var(--slate-100); border-radius: 4px; overflow: hidden; }
+.aging-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; }
+.aging-bar span { font-size: 10.5px; font-weight: 700; color: white; }
+.aging-count { font-size: 12px; font-weight: 700; color: var(--text-h2); width: 60px; text-align: right; flex-shrink: 0; }
+
+/* =============================================
+   ROW 6: ALERT CENTER
+============================================= */
+.alert-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.alert-panel-header {
+  padding: 14px 20px;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alert-panel-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.2px;
+}
+
+.alert-count-badge {
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.ac-critical { background: rgba(220,38,38,0.3); color: #FCA5A5; }
+.ac-warning { background: rgba(217,119,6,0.3); color: #FCD34D; }
+.ac-notice { background: rgba(59,130,246,0.2); color: #93C5FD; }
+
+.alert-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.alert-col {
+  padding: 14px 18px;
+  border-right: 1px solid var(--border);
+}
+
+.alert-col:last-child { border-right: none; }
+
+.alert-col-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--border);
+}
+
+.alert-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.col-title-critical { color: var(--red); }
+.col-title-warning { color: var(--yellow); }
+.col-title-notice { color: var(--brand); }
+
+.alert-items { display: flex; flex-direction: column; gap: 8px; }
+
+.alert-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 9px 11px;
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  transition: all 0.15s;
+}
+
+.alert-item:hover { border-color: var(--border-strong); }
+.alert-item.crit { background: var(--red-bg); border-color: var(--red-border); }
+.alert-item.warn { background: var(--yellow-bg); border-color: var(--yellow-border); }
+
+.alert-icon { font-size: 14px; flex-shrink: 0; line-height: 1.4; }
+
+.alert-content {}
+.alert-title { font-size: 12.5px; font-weight: 600; color: var(--text-h2); line-height: 1.3; }
+.alert-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+
+/* =============================================
+   ROW 7: PRIORITY ACTION PANEL
+============================================= */
+.action-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.action-table thead th {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-subtle);
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  background: var(--slate-100);
+}
+
+.action-table thead th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+.action-table thead th:last-child { border-radius: 0 var(--radius-sm) 0 0; }
+
+.action-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+
+.action-table tbody tr:last-child { border-bottom: none; }
+.action-table tbody tr:hover { background: var(--slate-100); }
+
+.action-table tbody td {
+  padding: 10px 12px;
+  color: var(--text-body);
+  vertical-align: middle;
+}
+
+.priority-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.ptag-high { background: var(--red-bg); color: var(--red); }
+.ptag-mid { background: var(--yellow-bg); color: var(--yellow); }
+.ptag-low { background: var(--brand-mid); color: var(--brand); }
+
+/* =============================================
+   LAST UPDATED FOOTER
+============================================= */
+.dash-footer {
+  max-width: 1600px;
+  margin: 24px auto 0;
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  font-size: 11.5px;
+  color: var(--text-subtle);
+}
+
+/* =============================================
+   MINI LEGEND & MISC
+============================================= */
+.legend-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Small metric inside card */
+.mini-metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12.5px;
+}
+
+.mini-metric-row:last-child { border-bottom: none; }
+.mini-metric-name { color: var(--text-body); font-weight: 500; }
+.mini-metric-val { font-weight: 700; color: var(--text-h1); }
+
+/* Funnel pipeline */
+.funnel-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.funnel-stage {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.funnel-stage-label {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  width: 110px;
+  flex-shrink: 0;
+}
+
+.funnel-stage-bar {
+  flex: 1;
+  height: 26px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  transition: width 0.5s ease;
+}
+
+.funnel-stage-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-h2);
+  width: 44px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* link-style buttons */
+.link-btn {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--brand);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+
+.link-btn:hover { text-decoration: underline; }
+
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- =============================================
+     TOP NAV
+============================================= -->
+<nav class="topnav">
+  <div class="brand">
+    <div class="brand-mark">KLX</div>
+    <span class="brand-name">Kalix</span>
+  </div>
+  <div class="nav-divider"></div>
+  <div class="nav-links">
+    <a class="nav-link active">Executive</a>
+    <a class="nav-link" href="kalix_operations.html">Operations</a>
+    <a class="nav-link">Mua hàng</a>
+    <a class="nav-link">CSKH</a>
+    <a class="nav-link">Kho</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-badge">🔴 5 Critical</span>
+    <span style="font-size:12px;color:var(--text-muted)">Cập nhật: 12/04/2026 &nbsp;11:30</span>
+    <div class="nav-avatar">TH</div>
+  </div>
+</nav>
+
+<!-- =============================================
+     ROW 1: PAGE HEADER
+============================================= -->
+<div class="page-header-wrap">
+  <div class="page-header-inner">
+    <div class="page-title-block">
+      <h1>⚡ Executive Dashboard</h1>
+      <p>Điều hành vận hành, mua hàng &amp; chăm sóc khách hàng — Năm 2026 &nbsp;·&nbsp; Dành cho Ban lãnh đạo</p>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <div class="screen-toggle">
+        <button class="screen-btn active">Executive</button>
+        <button class="screen-btn" onclick="location.href='kalix_operations.html'">Operations</button>
+      </div>
+      <span class="status-badge badge-ok">● Live</span>
+    </div>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <span class="filter-label">Lọc:</span>
+
+    <div class="filter-pill active"><span class="dot"></span> 2026</div>
+
+    <div class="period-toggle">
+      <button class="period-btn">Tuần</button>
+      <button class="period-btn active">Tháng</button>
+      <button class="period-btn">Quý</button>
+    </div>
+
+    <select class="filter-select" id="periodSelect">
+      <option>Tháng 3 / 2026</option>
+      <option>Tháng 2 / 2026</option>
+      <option>Tháng 1 / 2026</option>
+    </select>
+
+    <div class="filter-sep"></div>
+
+    <div class="compare-tag">
+      <input type="checkbox" id="cmpPrev" checked> <label for="cmpPrev">So kỳ trước</label>
+    </div>
+    <div class="compare-tag">
+      <input type="checkbox" id="cmpYoY"> <label for="cmpYoY">Cùng kỳ năm trước</label>
+    </div>
+
+    <div class="filter-sep"></div>
+
+    <select class="filter-select">
+      <option>Toàn công ty</option>
+      <option>Xưởng Bắc</option>
+      <option>Xưởng Nam</option>
+    </select>
+  </div>
+</div>
+
+<!-- =============================================
+     MAIN CONTENT AREA
+============================================= -->
+<div class="content">
+
+  <!-- ROW 2: HERO KPI STRIP -->
+  <div class="section-label" style="margin-top:24px;">
+    <div class="section-label-text">Chỉ số điều hành</div>
+    <div class="section-label-line"></div>
+  </div>
+
+  <div class="kpi-strip">
+
+    <div class="kpi-hero kpi-blue">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <span class="kpi-icon">📋</span>
+        <span class="status-badge badge-ok">On Track</span>
+      </div>
+      <div class="kpi-label">Đơn bán đã duyệt</div>
+      <div class="kpi-value-main">1,247</div>
+      <div class="kpi-footer">
+        <span class="trend-up">↑ 8.3%</span>
+        <span class="kpi-compare">vs. tháng trước</span>
+      </div>
+    </div>
+
+    <div class="kpi-hero kpi-blue">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <span class="kpi-icon">💰</span>
+        <span class="status-badge badge-ok">On Track</span>
+      </div>
+      <div class="kpi-label">Tổng tiền mua hàng</div>
+      <div class="kpi-value-main">28.4B ₫</div>
+      <div class="kpi-footer">
+        <span class="trend-up">↑ 5.1%</span>
+        <span class="kpi-compare">vs. T2</span>
+      </div>
+    </div>
+
+    <div class="kpi-hero kpi-green">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <span class="kpi-icon">📈</span>
+        <span class="status-badge badge-ok">On Track</span>
+      </div>
+      <div class="kpi-label">Lợi nhuận gộp</div>
+      <div class="kpi-value-main">6.2B ₫</div>
+      <div class="kpi-footer">
+        <span class="trend-up">↑ 12.4%</span>
+        <span class="kpi-compare">Biên 21.8%</span>
+      </div>
+    </div>
+
+    <div class="kpi-hero kpi-green">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <span class="kpi-icon">🚚</span>
+        <span class="status-badge badge-warn">At Risk</span>
+      </div>
+      <div class="kpi-label">Tỷ lệ giao đúng hạn</div>
+      <div class="kpi-value-main">83.5%</div>
+      <div class="kpi-footer">
+        <span class="trend-down">↓ 3.2%</span>
+        <span class="kpi-compare">Mục tiêu: 92%</span>
+      </div>
+    </div>
+
+    <div class="kpi-hero kpi-yellow">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <span class="kpi-icon">📦</span>
+        <span class="status-badge badge-warn">At Risk</span>
+      </div>
+      <div class="kpi-label">Giá trị tồn kho</div>
+      <div class="kpi-value-main">2.1B ₫</div>
+      <div class="kpi-footer">
+        <span class="trend-up">↑ 18%</span>
+        <span class="kpi-compare">15 lô &gt;30 ngày</span>
+      </div>
+    </div>
+
+    <div class="kpi-hero kpi-red">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <span class="kpi-icon">⚠️</span>
+        <span class="status-badge badge-risk">Critical</span>
+      </div>
+      <div class="kpi-label">Công nợ xưởng</div>
+      <div class="kpi-value-main">450M ₫</div>
+      <div class="kpi-footer">
+        <span class="trend-up">↑ 22%</span>
+        <span class="kpi-compare">3 xưởng rủi ro</span>
+      </div>
+    </div>
+
+    <div class="kpi-hero kpi-yellow">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <span class="kpi-icon">🔧</span>
+        <span class="status-badge badge-warn">At Risk</span>
+      </div>
+      <div class="kpi-label">Chi phí bảo hành</div>
+      <div class="kpi-value-main">55M ₫</div>
+      <div class="kpi-footer">
+        <span class="trend-up">↑ 9.7%</span>
+        <span class="kpi-compare">0.11% / DT</span>
+      </div>
+    </div>
+
+    <div class="kpi-hero kpi-red">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <span class="kpi-icon">🔴</span>
+        <span class="status-badge badge-risk">Action</span>
+      </div>
+      <div class="kpi-label">Đơn trễ cần xử lý</div>
+      <div class="kpi-value-main">38</div>
+      <div class="kpi-footer">
+        <span class="trend-up">↑ 6</span>
+        <span class="kpi-compare">so tuần trước</span>
+      </div>
+    </div>
+
+  </div><!-- /kpi-strip -->
+
+  <!-- ROW 3: EXECUTIVE PERFORMANCE OVERVIEW -->
+  <div class="section-label">
+    <div class="section-label-text">Hiệu suất &amp; dòng chảy đơn hàng</div>
+    <div class="section-label-line"></div>
+  </div>
+
+  <div class="row row-3">
+
+    <!-- 3.1 Order Trend Line Chart -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Xu hướng đơn hàng theo tháng</div>
+          <div class="card-subtitle">Đơn đã duyệt vs. đơn giao thành công</div>
+        </div>
+        <span class="status-badge badge-ok">↑ Tốt</span>
+      </div>
+      <div class="card-body">
+        <div class="chart-wrap">
+          <canvas id="orderTrendChart"></canvas>
+        </div>
+        <div class="legend-row" style="margin-top:10px;">
+          <div class="legend-item"><div class="legend-dot" style="background:#1A56DB"></div> Đã duyệt</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#059669"></div> Giao thành công</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.2 Pipeline Funnel -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Pipeline trạng thái đơn</div>
+          <div class="card-subtitle">Phân bổ đơn theo giai đoạn xử lý</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="funnel-stages" style="margin-top:6px;">
+          <div class="funnel-stage">
+            <div class="funnel-stage-label">Chờ duyệt</div>
+            <div class="funnel-stage-bar" style="width:100%; background:#94A3B8;">
+              <span>124</span>
+            </div>
+            <div class="funnel-stage-count">124</div>
+          </div>
+          <div class="funnel-stage">
+            <div class="funnel-stage-label">Chờ sản xuất</div>
+            <div class="funnel-stage-bar" style="width:88%; background:#1A56DB;">
+              <span>189</span>
+            </div>
+            <div class="funnel-stage-count">189</div>
+          </div>
+          <div class="funnel-stage">
+            <div class="funnel-stage-label">Đang sản xuất</div>
+            <div class="funnel-stage-bar" style="width:74%; background:#7c3aed;">
+              <span>416</span>
+            </div>
+            <div class="funnel-stage-count">416</div>
+          </div>
+          <div class="funnel-stage">
+            <div class="funnel-stage-label">Chờ giao</div>
+            <div class="funnel-stage-bar" style="width:60%; background:#D97706;">
+              <span>280</span>
+            </div>
+            <div class="funnel-stage-count">280</div>
+          </div>
+          <div class="funnel-stage">
+            <div class="funnel-stage-label">Giao thành công</div>
+            <div class="funnel-stage-bar" style="width:42%; background:#059669;">
+              <span>238</span>
+            </div>
+            <div class="funnel-stage-count">238</div>
+          </div>
+        </div>
+        <div style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border); display:flex; justify-content:space-between;">
+          <div style="font-size:11.5px; color:var(--text-muted);">Tổng trong kỳ</div>
+          <div style="font-size:13px; font-weight:700; color:var(--text-h1);">1,247 đơn</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.3 Purchase by Workshop -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Tỷ trọng mua theo xưởng</div>
+          <div class="card-subtitle">Phân bổ giá trị đơn hàng</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="chart-wrap" style="height:190px;">
+          <canvas id="workshopDonutChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /row-3 -->
+
+  <!-- ROW 4: RISK & EXECUTION ANALYSIS -->
+  <div class="section-label">
+    <div class="section-label-text">Rủi ro &amp; áp lực vận hành</div>
+    <div class="section-label-line"></div>
+  </div>
+
+  <div class="row row-4">
+
+    <!-- 4.1 On-time vs Late Delivery Trend -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Đúng hạn vs. Trễ hạn</div>
+          <div class="card-subtitle">Tỷ lệ giao hàng theo tháng</div>
+        </div>
+        <span class="status-badge badge-warn">At Risk</span>
+      </div>
+      <div class="card-body">
+        <div class="chart-wrap-sm">
+          <canvas id="deliveryTrendChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4.2 Debt by Workshop -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Công nợ theo xưởng</div>
+          <div class="card-subtitle">Dư nợ cần thanh toán (triệu ₫)</div>
+        </div>
+        <span class="status-badge badge-risk">⚠ Rủi ro</span>
+      </div>
+      <div class="card-body">
+        <div class="debt-bar-list">
+          <div class="debt-bar-item">
+            <div class="debt-bar-meta">
+              <span class="debt-name">Xưởng Minh Phát</span>
+              <span class="debt-val" style="color:var(--red)">145M</span>
+            </div>
+            <div class="debt-track"><div class="debt-fill" style="width:96%;background:var(--red)"></div></div>
+          </div>
+          <div class="debt-bar-item">
+            <div class="debt-bar-meta">
+              <span class="debt-name">Xưởng Thành Đạt</span>
+              <span class="debt-val" style="color:var(--red)">112M</span>
+            </div>
+            <div class="debt-track"><div class="debt-fill" style="width:74%;background:var(--red)"></div></div>
+          </div>
+          <div class="debt-bar-item">
+            <div class="debt-bar-meta">
+              <span class="debt-name">Xưởng Hòa Bình</span>
+              <span class="debt-val" style="color:var(--yellow)">87M</span>
+            </div>
+            <div class="debt-track"><div class="debt-fill" style="width:58%;background:var(--yellow)"></div></div>
+          </div>
+          <div class="debt-bar-item">
+            <div class="debt-bar-meta">
+              <span class="debt-name">Xưởng Việt Cường</span>
+              <span class="debt-val" style="color:var(--yellow)">63M</span>
+            </div>
+            <div class="debt-track"><div class="debt-fill" style="width:42%;background:var(--yellow)"></div></div>
+          </div>
+          <div class="debt-bar-item">
+            <div class="debt-bar-meta">
+              <span class="debt-name">Xưởng Ánh Dương</span>
+              <span class="debt-val" style="color:var(--green)">43M</span>
+            </div>
+            <div class="debt-track"><div class="debt-fill" style="width:29%;background:var(--green)"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4.3 Aging Inventory -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Tồn kho theo tuổi tồn</div>
+          <div class="card-subtitle">Phân tầng aging inventory</div>
+        </div>
+        <span class="status-badge badge-warn">15 lô rủi ro</span>
+      </div>
+      <div class="card-body">
+        <div class="aging-list">
+          <div class="aging-row">
+            <div class="aging-label">&lt; 30 ngày</div>
+            <div class="aging-bar-wrap">
+              <div class="aging-bar" style="width:70%;background:var(--green);">
+                <span>823M ₫</span>
+              </div>
+            </div>
+            <div class="aging-count" style="color:var(--green)">14 lô</div>
+          </div>
+          <div class="aging-row">
+            <div class="aging-label">30 – 60 ngày</div>
+            <div class="aging-bar-wrap">
+              <div class="aging-bar" style="width:28%;background:var(--yellow);">
+                <span>320M ₫</span>
+              </div>
+            </div>
+            <div class="aging-count" style="color:var(--yellow)">9 lô</div>
+          </div>
+          <div class="aging-row">
+            <div class="aging-label">60 – 90 ngày</div>
+            <div class="aging-bar-wrap">
+              <div class="aging-bar" style="width:12%;background:#EA580C;">
+                <span>180M</span>
+              </div>
+            </div>
+            <div class="aging-count" style="color:#EA580C">4 lô</div>
+          </div>
+          <div class="aging-row">
+            <div class="aging-label">&gt; 90 ngày</div>
+            <div class="aging-bar-wrap">
+              <div class="aging-bar" style="width:6%;background:var(--red);">
+                <span>85M</span>
+              </div>
+            </div>
+            <div class="aging-count" style="color:var(--red)">2 lô</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:12px;">
+          <span style="color:var(--text-muted);">Tổng tồn kho</span>
+          <span style="font-weight:700;color:var(--text-h1);">2.1B ₫ &nbsp;·&nbsp; 29 lô</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4.4 Shipping KPIs -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Chi phí vận chuyển</div>
+          <div class="card-subtitle">Tổng &amp; cơ cấu phí vận chuyển</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div style="text-align:center;padding:8px 0 6px;">
+          <div style="font-size:28px;font-weight:800;color:var(--text-h1);letter-spacing:-1px;">250M ₫</div>
+          <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px;">Tổng phí vận chuyển tháng 3</div>
+        </div>
+        <div style="margin-top:12px;">
+          <div class="mini-metric-row">
+            <span class="mini-metric-name">TB / đơn hàng</span>
+            <span class="mini-metric-val">226,000 ₫</span>
+          </div>
+          <div class="mini-metric-row">
+            <span class="mini-metric-name">Kalix hỗ trợ / đơn</span>
+            <span class="mini-metric-val" style="color:var(--red)">150,000 ₫</span>
+          </div>
+          <div class="mini-metric-row">
+            <span class="mini-metric-name">Đơn vận chuyển xa (&gt;100km)</span>
+            <span class="mini-metric-val" style="color:var(--yellow)">184 đơn</span>
+          </div>
+          <div class="mini-metric-row">
+            <span class="mini-metric-name">Phí bù lỗ giao hàng</span>
+            <span class="mini-metric-val" style="color:var(--red)">27.6M ₫</span>
+          </div>
+        </div>
+        <div style="margin-top:10px;">
+          <div class="chart-wrap-sm" style="height:100px;">
+            <canvas id="shippingBarChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /row-4 -->
+
+  <!-- ROW 5: AFTER-SALES / WARRANTY -->
+  <div class="section-label">
+    <div class="section-label-text">Bảo hành &amp; sau bán hàng</div>
+    <div class="section-label-line"></div>
+  </div>
+
+  <div class="row row-2">
+
+    <!-- 5.1 Warranty Root Cause Donut -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Tỷ trọng nguyên nhân bảo hành</div>
+          <div class="card-subtitle">Phân bổ số case theo nhóm lỗi — Tháng 3/2026</div>
+        </div>
+        <span class="status-badge badge-warn">24 case</span>
+      </div>
+      <div class="card-body" style="display:flex;gap:20px;align-items:center;">
+        <div style="width:180px;height:180px;flex-shrink:0;position:relative;">
+          <canvas id="warrantyReasonChart"></canvas>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;">
+            <div style="font-size:22px;font-weight:800;color:var(--text-h1)">24</div>
+            <div style="font-size:10px;color:var(--text-muted);font-weight:600;">CASE</div>
+          </div>
+        </div>
+        <div style="flex:1;">
+          <div class="mini-metric-row">
+            <span class="mini-metric-name" style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#F59E0B;display:inline-block;"></span>Lỗi ngoại quan</span>
+            <span style="display:flex;align-items:center;gap:8px;"><strong>12</strong> <span class="trend-up" style="font-size:10px;">50%</span></span>
+          </div>
+          <div class="mini-metric-row">
+            <span class="mini-metric-name" style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#DC2626;display:inline-block;"></span>Lỗi kết cấu</span>
+            <span style="display:flex;align-items:center;gap:8px;"><strong>4</strong> <span class="trend-down" style="font-size:10px;">17%</span></span>
+          </div>
+          <div class="mini-metric-row">
+            <span class="mini-metric-name" style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#1A56DB;display:inline-block;"></span>Lỗi màu sắc</span>
+            <span style="display:flex;align-items:center;gap:8px;"><strong>5</strong> <span style="font-size:10px;color:var(--text-muted);">21%</span></span>
+          </div>
+          <div class="mini-metric-row">
+            <span class="mini-metric-name" style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#94A3B8;display:inline-block;"></span>Lỗi khác</span>
+            <span style="display:flex;align-items:center;gap:8px;"><strong>3</strong> <span style="font-size:10px;color:var(--text-muted);">12%</span></span>
+          </div>
+          <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11.5px;color:var(--text-muted);">
+            ⚠ Lỗi ngoại quan chiếm 50% — cần rà quy trình kiểm hàng tại xưởng
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5.2 Warranty Cost by Cause -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Chi phí bảo hành theo nguyên nhân</div>
+          <div class="card-subtitle">Nhóm lỗi nào đang tốn kém nhất — VNĐ</div>
+        </div>
+        <span class="status-badge badge-risk">55M ₫</span>
+      </div>
+      <div class="card-body">
+        <div class="chart-wrap">
+          <canvas id="warrantyCostChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /row-5 -->
+
+  <!-- ROW 6: ALERT CENTER -->
+  <div class="section-label">
+    <div class="section-label-text">Trung tâm cảnh báo — ngoại lệ</div>
+    <div class="section-label-line"></div>
+  </div>
+
+  <div class="alert-panel">
+    <div class="alert-panel-header">
+      <span style="font-size:16px;">🔔</span>
+      <span class="alert-panel-title">Alert Center</span>
+      <span class="alert-count-badge ac-critical">5 Critical</span>
+      <span class="alert-count-badge ac-warning">8 Warning</span>
+      <span class="alert-count-badge ac-notice">4 Notice</span>
+      <span style="margin-left:auto;font-size:11.5px;color:#94A3B8;">Cập nhật: 12/04/2026 · 11:30</span>
+    </div>
+    <div class="alert-grid">
+      <!-- Critical -->
+      <div class="alert-col">
+        <div class="alert-col-header">
+          <span style="font-size:14px;">🔴</span>
+          <span class="alert-col-title col-title-critical">Critical — Xử lý ngay</span>
+        </div>
+        <div class="alert-items">
+          <div class="alert-item crit">
+            <span class="alert-icon">⛔</span>
+            <div class="alert-content">
+              <div class="alert-title">38 đơn trễ vượt ngưỡng cho phép</div>
+              <div class="alert-desc">Tăng 6 đơn so tuần trước · Xưởng Minh Phát &amp; Thành Đạt chiếm 60%</div>
+            </div>
+          </div>
+          <div class="alert-item crit">
+            <span class="alert-icon">⛔</span>
+            <div class="alert-content">
+              <div class="alert-title">Xưởng Minh Phát — Công nợ 145M ₫</div>
+              <div class="alert-desc">Quá hạn 45 ngày · Rủi ro tín dụng cao · Cần escalate</div>
+            </div>
+          </div>
+          <div class="alert-item crit">
+            <span class="alert-icon">⛔</span>
+            <div class="alert-content">
+              <div class="alert-title">3 case bảo hành quá SLA &gt;7 ngày</div>
+              <div class="alert-desc">KH Nguyễn, KH Trần, KH Lê — chưa phản hồi từ xưởng</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Warning -->
+      <div class="alert-col">
+        <div class="alert-col-header">
+          <span style="font-size:14px;">⚠️</span>
+          <span class="alert-col-title col-title-warning">Warning — Theo dõi</span>
+        </div>
+        <div class="alert-items">
+          <div class="alert-item warn">
+            <span class="alert-icon">⚠️</span>
+            <div class="alert-content">
+              <div class="alert-title">2 lô tồn kho &gt;90 ngày chưa xử lý</div>
+              <div class="alert-desc">Trị giá 85M ₫ · Nguy cơ mất giá, cần thanh lý</div>
+            </div>
+          </div>
+          <div class="alert-item warn">
+            <span class="alert-icon">⚠️</span>
+            <div class="alert-content">
+              <div class="alert-title">Tỷ lệ giao đúng hạn giảm 3.2%</div>
+              <div class="alert-desc">Còn 83.5% · Mục tiêu 92% · Khoảng cách 8.5%</div>
+            </div>
+          </div>
+          <div class="alert-item warn">
+            <span class="alert-icon">⚠️</span>
+            <div class="alert-content">
+              <div class="alert-title">Chi phí bảo hành tăng 9.7% so kỳ trước</div>
+              <div class="alert-desc">55M ₫ · Lỗi ngoại quan chiếm 50% chi phí</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notice -->
+      <div class="alert-col">
+        <div class="alert-col-header">
+          <span style="font-size:14px;">ℹ️</span>
+          <span class="alert-col-title col-title-notice">Notice — Cần biết</span>
+        </div>
+        <div class="alert-items">
+          <div class="alert-item">
+            <span class="alert-icon">📊</span>
+            <div class="alert-content">
+              <div class="alert-title">Lợi nhuận gộp tăng 12.4%</div>
+              <div class="alert-desc">Biên 21.8% — cao nhất từ Q4/2025</div>
+            </div>
+          </div>
+          <div class="alert-item">
+            <span class="alert-icon">📦</span>
+            <div class="alert-content">
+              <div class="alert-title">Đơn chờ giao tăng 22%</div>
+              <div class="alert-desc">280 đơn đang chờ · Kiểm tra năng lực giao hàng</div>
+            </div>
+          </div>
+          <div class="alert-item">
+            <span class="alert-icon">💡</span>
+            <div class="alert-content">
+              <div class="alert-title">Phí vận chuyển hỗ trợ KH: 27.6M ₫</div>
+              <div class="alert-desc">Cao hơn ngưỡng cho phép · Cần rà chính sách</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 7: PRIORITY ACTION PANEL -->
+  <div class="section-label">
+    <div class="section-label-text">Ưu tiên hành động</div>
+    <div class="section-label-line"></div>
+  </div>
+
+  <div class="row row-2">
+
+    <!-- 7.1 Top 5 workshops -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Top 5 xưởng cần theo dõi</div>
+          <div class="card-subtitle">Theo mức độ rủi ro vận hành tổng hợp</div>
+        </div>
+        <button class="link-btn">Xem tất cả →</button>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <table class="action-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Xưởng</th>
+              <th>Công nợ</th>
+              <th>Tỷ lệ trễ</th>
+              <th>Rủi ro</th>
+              <th>Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--text-subtle);">1</td>
+              <td style="font-weight:600;">Xưởng Minh Phát</td>
+              <td style="color:var(--red);font-weight:700;">145M ₫</td>
+              <td style="color:var(--red);">28%</td>
+              <td><span class="priority-tag ptag-high">🔴 Cao</span></td>
+              <td><span class="status-badge badge-risk">Critical</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-subtle);">2</td>
+              <td style="font-weight:600;">Xưởng Thành Đạt</td>
+              <td style="color:var(--red);font-weight:700;">112M ₫</td>
+              <td style="color:var(--red);">24%</td>
+              <td><span class="priority-tag ptag-high">🔴 Cao</span></td>
+              <td><span class="status-badge badge-risk">Critical</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-subtle);">3</td>
+              <td style="font-weight:600;">Xưởng Hòa Bình</td>
+              <td style="color:var(--yellow);font-weight:700;">87M ₫</td>
+              <td style="color:var(--yellow);">18%</td>
+              <td><span class="priority-tag ptag-mid">🟡 Vừa</span></td>
+              <td><span class="status-badge badge-warn">At Risk</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-subtle);">4</td>
+              <td style="font-weight:600;">Xưởng Việt Cường</td>
+              <td style="color:var(--yellow);font-weight:700;">63M ₫</td>
+              <td style="color:var(--yellow);">15%</td>
+              <td><span class="priority-tag ptag-mid">🟡 Vừa</span></td>
+              <td><span class="status-badge badge-warn">At Risk</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-subtle);">5</td>
+              <td style="font-weight:600;">Xưởng Ánh Dương</td>
+              <td style="color:var(--green);font-weight:700;">43M ₫</td>
+              <td style="color:var(--green);">8%</td>
+              <td><span class="priority-tag ptag-low">🟢 Thấp</span></td>
+              <td><span class="status-badge badge-ok">On Track</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 7.2 Top action items -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Việc cần xử lý ngay trong kỳ</div>
+          <div class="card-subtitle">Ưu tiên hành động cho Ban lãnh đạo</div>
+        </div>
+        <span class="status-badge badge-risk">5 Action Items</span>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <table class="action-table">
+          <thead>
+            <tr>
+              <th>Hành động</th>
+              <th>Owner</th>
+              <th>Deadline</th>
+              <th>Ưu tiên</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:600;">Giải quyết 38 đơn trễ — liên hệ Minh Phát</td>
+              <td style="color:var(--text-muted);">GĐ Mua hàng</td>
+              <td style="color:var(--red);font-weight:600;">Hôm nay</td>
+              <td><span class="priority-tag ptag-high">Cao</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;">Thu hồi công nợ xưởng Minh Phát 145M ₫</td>
+              <td style="color:var(--text-muted);">Kế toán</td>
+              <td style="color:var(--red);font-weight:600;">15/04</td>
+              <td><span class="priority-tag ptag-high">Cao</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;">Đóng 3 case bảo hành quá SLA</td>
+              <td style="color:var(--text-muted);">CSKH</td>
+              <td style="color:var(--red);font-weight:600;">13/04</td>
+              <td><span class="priority-tag ptag-high">Cao</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;">Thanh lý 2 lô tồn kho &gt;90 ngày</td>
+              <td style="color:var(--text-muted);">Kho</td>
+              <td style="color:var(--yellow);font-weight:600;">20/04</td>
+              <td><span class="priority-tag ptag-mid">Vừa</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;">Rà quy trình kiểm hàng — giảm lỗi ngoại quan</td>
+              <td style="color:var(--text-muted);">QC</td>
+              <td style="color:var(--text-muted);">30/04</td>
+              <td><span class="priority-tag ptag-mid">Vừa</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /row-7 -->
+
+</div><!-- /content -->
+
+<!-- FOOTER -->
+<div class="dash-footer">
+  <span>Kalix — Executive Dashboard 2026 &nbsp;·&nbsp; Dữ liệu cập nhật mỗi 30 phút</span>
+  <span>Cập nhật lần cuối: 12/04/2026 &nbsp;11:30 &nbsp;·&nbsp; Nguồn: 1Office ERP + Google Sheets</span>
+</div>
+
+</div><!-- /page -->
+
+<script>
+/* ========================
+   CHART.JS DEFAULTS
+======================== */
+Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#64748B';
+Chart.defaults.plugins.legend.display = false;
+Chart.defaults.plugins.tooltip.backgroundColor = '#0F172A';
+Chart.defaults.plugins.tooltip.titleColor = '#F8FAFC';
+Chart.defaults.plugins.tooltip.bodyColor = '#CBD5E1';
+Chart.defaults.plugins.tooltip.borderColor = 'rgba(255,255,255,0.06)';
+Chart.defaults.plugins.tooltip.borderWidth = 1;
+Chart.defaults.plugins.tooltip.padding = 10;
+Chart.defaults.plugins.tooltip.cornerRadius = 8;
+
+const gridColor = 'rgba(226,232,240,0.8)';
+
+/* ========================
+   ORDER TREND LINE CHART
+======================== */
+new Chart(document.getElementById('orderTrendChart'), {
+  type: 'line',
+  data: {
+    labels: ['T10', 'T11', 'T12', 'T1', 'T2', 'T3'],
+    datasets: [
+      {
+        label: 'Đã duyệt',
+        data: [980, 1050, 1150, 1100, 1190, 1247],
+        borderColor: '#1A56DB',
+        backgroundColor: 'rgba(26,86,219,0.08)',
+        tension: 0.4,
+        fill: true,
+        pointBackgroundColor: '#1A56DB',
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        borderWidth: 2.5
+      },
+      {
+        label: 'Giao thành công',
+        data: [850, 920, 1020, 960, 1050, 1080],
+        borderColor: '#059669',
+        backgroundColor: 'rgba(5,150,105,0.05)',
+        tension: 0.4,
+        fill: true,
+        pointBackgroundColor: '#059669',
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        borderWidth: 2.5
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: true, position: 'top', align: 'end',
+        labels: { boxWidth: 10, boxHeight: 10, borderRadius: 5, usePointStyle: true, pointStyle: 'circle', font: { size: 11 } } }
+    },
+    scales: {
+      x: { grid: { color: gridColor, drawBorder: false }, ticks: { font: { size: 11 } } },
+      y: { grid: { color: gridColor, drawBorder: false }, ticks: { font: { size: 11 } } }
+    }
+  }
+});
+
+/* ========================
+   WORKSHOP DONUT CHART
+======================== */
+new Chart(document.getElementById('workshopDonutChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Minh Phát', 'Thành Đạt', 'Hòa Bình', 'Việt Cường', 'Ánh Dương', 'Khác'],
+    datasets: [{
+      data: [28, 22, 18, 15, 10, 7],
+      backgroundColor: ['#1A56DB', '#7c3aed', '#059669', '#D97706', '#F59E0B', '#94A3B8'],
+      borderWidth: 2,
+      borderColor: '#FFFFFF',
+      hoverBorderColor: '#FFFFFF'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '62%',
+    plugins: {
+      legend: {
+        display: true,
+        position: 'right',
+        labels: { boxWidth: 10, boxHeight: 10, borderRadius: 5, usePointStyle: true, pointStyle: 'circle', font: { size: 11 }, padding: 10 }
+      },
+      tooltip: {
+        callbacks: { label: (c) => ` ${c.label}: ${c.parsed}%` }
+      }
+    }
+  }
+});
+
+/* ========================
+   DELIVERY TREND CHART
+======================== */
+new Chart(document.getElementById('deliveryTrendChart'), {
+  type: 'bar',
+  data: {
+    labels: ['T10', 'T11', 'T12', 'T1', 'T2', 'T3'],
+    datasets: [
+      {
+        label: 'Đúng hạn',
+        data: [90, 91, 89, 87, 86, 83.5],
+        backgroundColor: '#059669',
+        borderRadius: 4,
+        borderSkipped: false
+      },
+      {
+        label: 'Trễ hạn',
+        data: [10, 9, 11, 13, 14, 16.5],
+        backgroundColor: '#DC2626',
+        borderRadius: 4,
+        borderSkipped: false
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true, position: 'top', align: 'end',
+        labels: { boxWidth: 10, boxHeight: 10, usePointStyle: true, pointStyle: 'circle', font: { size: 11 } }
+      }
+    },
+    scales: {
+      x: { stacked: true, grid: { color: gridColor, drawBorder: false } },
+      y: { stacked: true, grid: { color: gridColor, drawBorder: false }, max: 100, ticks: { callback: v => v + '%' } }
+    }
+  }
+});
+
+/* ========================
+   SHIPPING BAR CHART
+======================== */
+new Chart(document.getElementById('shippingBarChart'), {
+  type: 'bar',
+  data: {
+    labels: ['T10','T11','T12','T1','T2','T3'],
+    datasets: [{
+      label: 'Chi phí VC (M₫)',
+      data: [190, 200, 215, 230, 240, 250],
+      backgroundColor: '#1A56DB',
+      borderRadius: 3
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: { grid: { display: false } },
+      y: { grid: { color: gridColor, drawBorder: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+/* ========================
+   WARRANTY REASON DONUT
+======================== */
+new Chart(document.getElementById('warrantyReasonChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Ngoại quan', 'Kết cấu', 'Màu sắc', 'Khác'],
+    datasets: [{
+      data: [12, 4, 5, 3],
+      backgroundColor: ['#F59E0B', '#DC2626', '#1A56DB', '#94A3B8'],
+      borderWidth: 2,
+      borderColor: '#FFFFFF'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '68%',
+    plugins: { legend: { display: false } }
+  }
+});
+
+/* ========================
+   WARRANTY COST BAR
+======================== */
+new Chart(document.getElementById('warrantyCostChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Lỗi ngoại quan', 'Lỗi kết cấu', 'Lỗi màu sắc', 'Leo lầu / bốc vác', 'Lỗi khác'],
+    datasets: [{
+      label: 'Chi phí (VNĐ)',
+      data: [22000000, 18000000, 7500000, 5000000, 2500000],
+      backgroundColor: ['#DC2626', '#F59E0B', '#1A56DB', '#7c3aed', '#94A3B8'],
+      borderRadius: 5,
+      borderSkipped: false
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    indexAxis: 'y',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (c) => ' ' + Number(c.parsed.x).toLocaleString('vi-VN') + ' ₫'
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { color: gridColor, drawBorder: false },
+        ticks: { callback: v => (v/1000000).toFixed(0) + 'M', font: { size: 11 } }
+      },
+      y: { grid: { display: false } }
+    }
+  }
+});
+</script>
+</body>
+</html>
