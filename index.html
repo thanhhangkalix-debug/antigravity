@@ -936,7 +936,7 @@ html, body {
           <div class="kc-top"><span class="kc-icon">✅</span><span class="status-badge sb-ok">Hoàn thành</span></div>
           <div class="kc-label">Đơn hàng hoàn thành</div>
           <div class="kc-value" id="kpi-completed-count">324</div>
-          <div class="kc-foot"><span class="kc-cmp">Dữ liệu từ Sales 2026</span></div>
+          <div class="kc-foot"><span class="kc-cmp" id="kpi-completed-range">01/01/2026 – 12/04/2026</span></div>
         </div>
       </div><!-- /kpi-row -->
 
@@ -957,44 +957,29 @@ html, body {
             </div>
           </div>
           <div class="card-body">
-            <div style="overflow-x:auto;">
-              <table class="data-table" style="font-size:11.5px;">
-                <thead>
-                  <tr>
-                    <th>Hình thức</th>
-                    <th style="text-align:right;">Số đơn</th>
-                    <th style="text-align:right;">Phí VC</th>
-                    <th style="text-align:right;">TB/Đơn</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Xưởng vận chuyển</td>
-                    <td style="text-align:right;font-weight:600;">245</td>
-                    <td style="text-align:right;font-weight:700;color:var(--text-h1);">42.1M ₫</td>
-                    <td style="text-align:right;font-weight:700;color:var(--green);">172k</td>
-                  </tr>
-                  <tr>
-                    <td>Đơn vị Hưng Thịnh</td>
-                    <td style="text-align:right;font-weight:600;">141</td>
-                    <td style="text-align:right;font-weight:700;color:var(--text-h1);">43.3M ₫</td>
-                    <td style="text-align:right;font-weight:700;color:var(--yellow);">307k</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-              <div style="padding:10px;background:rgba(255,255,255,0.03);border-radius:6px;">
-                <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;">TB thu khách</div>
-                <div style="font-size:16px;font-weight:800;color:var(--text-h1);">210k <span style="font-size:11px;font-weight:400;color:var(--text-muted);">/đơn</span></div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-bottom: 4px;">
+              
+              <!-- Chỉ số 1: Tổng thu khách -->
+              <div style="background: var(--bg-card-2); padding: 16px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; font-weight: 600;">Tổng thu khách</div>
+                <div style="font-size: 22px; font-weight: 800; color: var(--text-h1); line-height: 1;"><span id="shipping-fee">0</span> <span style="font-size: 14px; font-weight: 500; color: var(--text-muted);">₫</span></div>
+                <div style="font-size: 10px; color: var(--text-subtle); margin-top: 8px;" id="shipping-range-1">01/01/2026 – 12/04/2026</div>
               </div>
-              <div style="padding:10px;background:rgba(255,255,255,0.03);border-radius:6px;">
-                <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;">TB Kalix hỗ trợ</div>
-                <div style="font-size:16px;font-weight:800;color:var(--brand);">11k <span style="font-size:11px;font-weight:400;color:var(--text-muted);">/đơn</span></div>
+
+              <!-- Chỉ số 2: Tổng chi thực tế -->
+              <div style="background: var(--bg-card-2); padding: 16px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; font-weight: 600;">Tổng chi thực tế</div>
+                <div style="font-size: 22px; font-weight: 800; color: var(--red); line-height: 1;"><span id="shipping-actual">0</span> <span style="font-size: 14px; font-weight: 500; color: var(--text-muted);">₫</span></div>
+                <div style="font-size: 10px; color: var(--text-subtle); margin-top: 8px;" id="shipping-range-2">01/01/2026 – 12/04/2026</div>
               </div>
-            </div>
-            <div style="margin-top:12px;padding:8px;background:rgba(59,130,246,0.05);border-radius:6px;font-size:11px;color:var(--text-body);">
-              📌 Đơn vị Hưng Thịnh có chi phí TB cao hơn do phụ trách các tuyến đường dài.
+
+              <!-- Chỉ số 3: Trung bình hỗ trợ -->
+              <div style="background: var(--bg-card-2); padding: 16px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; font-weight: 600;">Kalix hỗ trợ / ĐH</div>
+                <div style="font-size: 22px; font-weight: 800; color: var(--brand); line-height: 1;"><span id="shipping-support">0</span> <span style="font-size: 14px; font-weight: 500; color: var(--text-muted);">₫</span></div>
+                <div style="font-size: 10px; color: var(--text-subtle); margin-top: 8px;">TB hỗ trợ trên mỗi đơn</div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -1745,6 +1730,898 @@ html, body {
 
 <script>
 const dashboardData = {
+  "shipping_orders": [
+  {
+    "date_sign": "2026-01-01",
+    "fee": 500000,
+    "total_price_external": 4000000
+  },
+  {
+    "date_sign": "2026-01-01",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-01",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-02",
+    "fee": 0,
+    "total_price_external": 3200000
+  },
+  {
+    "date_sign": "2026-01-02",
+    "fee": 0,
+    "total_price_external": 600000
+  },
+  {
+    "date_sign": "2026-01-02",
+    "fee": 0,
+    "total_price_external": 1100000
+  },
+  {
+    "date_sign": "2026-01-02",
+    "fee": 0,
+    "total_price_external": 600000
+  },
+  {
+    "date_sign": "2026-01-02",
+    "fee": 500000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-02",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-02",
+    "fee": 0,
+    "total_price_external": 1100000
+  },
+  {
+    "date_sign": "2026-01-02",
+    "fee": 1836000,
+    "total_price_external": 6000000
+  },
+  {
+    "date_sign": "2026-01-02",
+    "fee": 0,
+    "total_price_external": 500000
+  },
+  {
+    "date_sign": "2026-01-02",
+    "fee": 2000000,
+    "total_price_external": 5000000
+  },
+  {
+    "date_sign": "2026-01-02",
+    "fee": 0,
+    "total_price_external": 5000000
+  },
+  {
+    "date_sign": "2026-01-03",
+    "fee": 0,
+    "total_price_external": 700000
+  },
+  {
+    "date_sign": "2026-01-03",
+    "fee": 0,
+    "total_price_external": 700000
+  },
+  {
+    "date_sign": "2026-01-03",
+    "fee": 0,
+    "total_price_external": 700000
+  },
+  {
+    "date_sign": "2026-01-03",
+    "fee": 0,
+    "total_price_external": 2590000
+  },
+  {
+    "date_sign": "2026-01-03",
+    "fee": 0,
+    "total_price_external": 2000000
+  },
+  {
+    "date_sign": "2026-01-04",
+    "fee": 200000,
+    "total_price_external": 3500000
+  },
+  {
+    "date_sign": "2026-01-04",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-04",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-04",
+    "fee": 0,
+    "total_price_external": 1900000
+  },
+  {
+    "date_sign": "2026-01-04",
+    "fee": 0,
+    "total_price_external": 4000000
+  },
+  {
+    "date_sign": "2026-01-04",
+    "fee": 0,
+    "total_price_external": 2450000
+  },
+  {
+    "date_sign": "2026-01-05",
+    "fee": 1000000,
+    "total_price_external": 3800000
+  },
+  {
+    "date_sign": "2026-01-05",
+    "fee": 0,
+    "total_price_external": 1100000
+  },
+  {
+    "date_sign": "2026-01-05",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-05",
+    "fee": 2650000,
+    "total_price_external": 3250000
+  },
+  {
+    "date_sign": "2026-01-05",
+    "fee": 1000000,
+    "total_price_external": 3700000
+  },
+  {
+    "date_sign": "2026-01-05",
+    "fee": 0,
+    "total_price_external": 3500000
+  },
+  {
+    "date_sign": "2026-01-05",
+    "fee": 1198000,
+    "total_price_external": 1500000
+  },
+  {
+    "date_sign": "2026-01-05",
+    "fee": 0,
+    "total_price_external": 2400000
+  },
+  {
+    "date_sign": "2026-01-05",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-06",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-06",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-06",
+    "fee": 0,
+    "total_price_external": 300000
+  },
+  {
+    "date_sign": "2026-01-07",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-07",
+    "fee": 0,
+    "total_price_external": 6660000
+  },
+  {
+    "date_sign": "2026-01-07",
+    "fee": 0,
+    "total_price_external": 1650000
+  },
+  {
+    "date_sign": "2026-01-07",
+    "fee": 0,
+    "total_price_external": 300000
+  },
+  {
+    "date_sign": "2026-01-07",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-07",
+    "fee": 0,
+    "total_price_external": 239000
+  },
+  {
+    "date_sign": "2026-01-07",
+    "fee": 0,
+    "total_price_external": 1000000
+  },
+  {
+    "date_sign": "2026-01-07",
+    "fee": 0,
+    "total_price_external": 300000
+  },
+  {
+    "date_sign": "2026-01-07",
+    "fee": 0,
+    "total_price_external": 850000
+  },
+  {
+    "date_sign": "2026-01-07",
+    "fee": 1650000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-08",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-08",
+    "fee": 1500000,
+    "total_price_external": 2750000
+  },
+  {
+    "date_sign": "2026-01-08",
+    "fee": 0,
+    "total_price_external": 4800000
+  },
+  {
+    "date_sign": "2026-01-08",
+    "fee": 0,
+    "total_price_external": 700000
+  },
+  {
+    "date_sign": "2026-01-08",
+    "fee": 0,
+    "total_price_external": 4000000
+  },
+  {
+    "date_sign": "2026-01-08",
+    "fee": 0,
+    "total_price_external": 1000000
+  },
+  {
+    "date_sign": "2026-01-08",
+    "fee": 0,
+    "total_price_external": 3200000
+  },
+  {
+    "date_sign": "2026-01-09",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-09",
+    "fee": 300000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-09",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-09",
+    "fee": 0,
+    "total_price_external": 3500000
+  },
+  {
+    "date_sign": "2026-01-09",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-09",
+    "fee": 0,
+    "total_price_external": 850000
+  },
+  {
+    "date_sign": "2026-01-09",
+    "fee": 500000,
+    "total_price_external": 3500000
+  },
+  {
+    "date_sign": "2026-01-09",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-09",
+    "fee": 0,
+    "total_price_external": 1100000
+  },
+  {
+    "date_sign": "2026-01-10",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-10",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-10",
+    "fee": 0,
+    "total_price_external": 500000
+  },
+  {
+    "date_sign": "2026-01-10",
+    "fee": 0,
+    "total_price_external": 2300000
+  },
+  {
+    "date_sign": "2026-01-10",
+    "fee": 1000000,
+    "total_price_external": 4000000
+  },
+  {
+    "date_sign": "2026-01-10",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-11",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-11",
+    "fee": 0,
+    "total_price_external": 3100000
+  },
+  {
+    "date_sign": "2026-01-11",
+    "fee": 0,
+    "total_price_external": 4000000
+  },
+  {
+    "date_sign": "2026-01-11",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-13",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-13",
+    "fee": 0,
+    "total_price_external": 400000
+  },
+  {
+    "date_sign": "2026-01-14",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-15",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-15",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-15",
+    "fee": 0,
+    "total_price_external": 160000
+  },
+  {
+    "date_sign": "2026-01-15",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-16",
+    "fee": 0,
+    "total_price_external": 450000
+  },
+  {
+    "date_sign": "2026-01-18",
+    "fee": 1000000,
+    "total_price_external": 9000000
+  },
+  {
+    "date_sign": "2026-01-18",
+    "fee": 0,
+    "total_price_external": 900000
+  },
+  {
+    "date_sign": "2026-01-18",
+    "fee": 0,
+    "total_price_external": 750000
+  },
+  {
+    "date_sign": "2026-01-18",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-18",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-18",
+    "fee": 1200000,
+    "total_price_external": 4800000
+  },
+  {
+    "date_sign": "2026-01-21",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-21",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-22",
+    "fee": 0,
+    "total_price_external": 1500000
+  },
+  {
+    "date_sign": "2026-01-22",
+    "fee": 200000,
+    "total_price_external": 352000
+  },
+  {
+    "date_sign": "2026-01-23",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-23",
+    "fee": 0,
+    "total_price_external": 200000
+  },
+  {
+    "date_sign": "2026-01-24",
+    "fee": 0,
+    "total_price_external": 300000
+  },
+  {
+    "date_sign": "2026-01-25",
+    "fee": 0,
+    "total_price_external": 300000
+  },
+  {
+    "date_sign": "2026-01-26",
+    "fee": 0,
+    "total_price_external": 250000
+  },
+  {
+    "date_sign": "2026-01-26",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-26",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-26",
+    "fee": 0,
+    "total_price_external": 164000
+  },
+  {
+    "date_sign": "2026-01-26",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-26",
+    "fee": 1700000,
+    "total_price_external": 4460000
+  },
+  {
+    "date_sign": "2026-01-27",
+    "fee": 0,
+    "total_price_external": 265000
+  },
+  {
+    "date_sign": "2026-01-28",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-28",
+    "fee": 0,
+    "total_price_external": 200000
+  },
+  {
+    "date_sign": "2026-01-28",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-30",
+    "fee": 0,
+    "total_price_external": 3800000
+  },
+  {
+    "date_sign": "2026-01-31",
+    "fee": 1250000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-01-31",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-02-01",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-02-02",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-02-03",
+    "fee": 0,
+    "total_price_external": 800000
+  },
+  {
+    "date_sign": "2026-02-04",
+    "fee": 0,
+    "total_price_external": 800000
+  },
+  {
+    "date_sign": "2026-02-04",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-02-04",
+    "fee": 1000000,
+    "total_price_external": 2676000
+  },
+  {
+    "date_sign": "2026-02-04",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-02-04",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-02-05",
+    "fee": 0,
+    "total_price_external": 500000
+  },
+  {
+    "date_sign": "2026-02-05",
+    "fee": 0,
+    "total_price_external": 200000
+  },
+  {
+    "date_sign": "2026-02-06",
+    "fee": 300000,
+    "total_price_external": 400000
+  },
+  {
+    "date_sign": "2026-02-06",
+    "fee": 2700000,
+    "total_price_external": 5800000
+  },
+  {
+    "date_sign": "2026-02-07",
+    "fee": 0,
+    "total_price_external": 500000
+  },
+  {
+    "date_sign": "2026-02-09",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-02-10",
+    "fee": 1500000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-02-10",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-02-11",
+    "fee": 0,
+    "total_price_external": 1500000
+  },
+  {
+    "date_sign": "2026-02-12",
+    "fee": 0,
+    "total_price_external": 700000
+  },
+  {
+    "date_sign": "2026-02-13",
+    "fee": 2000000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-02-13",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-02-14",
+    "fee": 800000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-02-16",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-02-26",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-02-28",
+    "fee": 0,
+    "total_price_external": 4000000
+  },
+  {
+    "date_sign": "2026-03-03",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-04",
+    "fee": 400000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-04",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-04",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-05",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-05",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-05",
+    "fee": 1320000,
+    "total_price_external": 1800000
+  },
+  {
+    "date_sign": "2026-03-06",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-06",
+    "fee": 2000000,
+    "total_price_external": 4620000
+  },
+  {
+    "date_sign": "2026-03-08",
+    "fee": 374000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-10",
+    "fee": 760000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-14",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-14",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-15",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-15",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-16",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-16",
+    "fee": 1000000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-17",
+    "fee": 0,
+    "total_price_external": 260000
+  },
+  {
+    "date_sign": "2026-03-17",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-17",
+    "fee": 350000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-17",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-17",
+    "fee": 0,
+    "total_price_external": 300000
+  },
+  {
+    "date_sign": "2026-03-18",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-18",
+    "fee": 1343520,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-19",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-19",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-21",
+    "fee": 1500000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-23",
+    "fee": 2500000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-23",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-25",
+    "fee": 1000000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-28",
+    "fee": 1517000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-29",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-03-30",
+    "fee": 1300000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-04-02",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-04-02",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-04-02",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-04-03",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-04-04",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-04-04",
+    "fee": 1500000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-04-06",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-04-07",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-04-08",
+    "fee": 2000000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-04-09",
+    "fee": 2300000,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-04-09",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-04-10",
+    "fee": 0,
+    "total_price_external": 0
+  },
+  {
+    "date_sign": "2026-04-11",
+    "fee": 0,
+    "total_price_external": 0
+  }
+],
   "purchases_source_a": [
       {
         "code": "DHMKL1535",
@@ -7678,8 +8555,9 @@ const fmtFull = (v) => {
 };
 
 const fmtShort = (v) => {
-  if (v >= 1e9) return (v / 1e9).toFixed(2) + 'B';
+  if (v >= 1e9) return (v / 1e9).toFixed(1) + 'B';
   if (v >= 1e6) return (v / 1e6).toFixed(1) + 'M';
+  if (v >= 1000) return (v / 1000).toFixed(0) + 'K';
   return Math.round(v).toLocaleString('vi-VN');
 };
 
@@ -7721,7 +8599,13 @@ function filterData() {
   
   const inRange = (dStr, r) => {
     if (!dStr) return false;
-    const d = new Date(dStr);
+    let d;
+    if (typeof dStr === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dStr)) {
+      const [y, m, day] = dStr.split('-').map(Number);
+      d = new Date(y, m - 1, day);
+    } else {
+      d = new Date(dStr);
+    }
     return d >= r.start && d <= r.end;
   };
 
@@ -7746,7 +8630,8 @@ function filterData() {
     completed_sales: dashboardData.sales.filter(s => inRange(s.date_completion, range) && matchFactory(s.workshop)),
     all_completed_sales: dashboardData.sales.filter(s => inRange(s.date_completion, range)),
     revenue_sales: dashboardData.sales.filter(s => inRange(s.date_ban, range) && matchFactory(s.workshop)),
-    incidents: dashboardData.incidents.filter(i => inRange(i.date, range) && matchFactory(i.workshop))
+    incidents: dashboardData.incidents.filter(i => inRange(i.date, range) && matchFactory(i.workshop)),
+    shipping_orders: dashboardData.shipping_orders.filter(i => inRange(i.date_sign, range))
   };
 }
 
@@ -7760,7 +8645,32 @@ function renderDashboard() {
   
   setVal('kpi-purchase-range', rangeStr);
   setVal('kpi-cogs-range', rangeStr);
+  setVal('kpi-completed-range', rangeStr);
+  setVal('shipping-range-1', rangeStr);
+  setVal('shipping-range-2', rangeStr);
   setVal('ld-WorkshopDonut-Range', rangeStr);
+
+  // Shipping Analysis
+  const sData = data.shipping_orders;
+  const ship_count = sData.length;
+  const ship_fee = sData.reduce((s,i) => {
+    const v = Number(i.fee);
+    return s + (isNaN(v) ? 0 : v);
+  }, 0);
+  const ship_actual = sData.reduce((s,i) => {
+    const v = Number(i.total_price_external);
+    return s + (isNaN(v) ? 0 : v);
+  }, 0);
+  
+  setVal('shipping-fee', fmtShort(ship_fee));
+  setVal('shipping-actual', fmtShort(ship_actual));
+  
+  if (ship_count > 0) {
+    const ship_support = (ship_actual - ship_fee) / ship_count;
+    setVal('shipping-support', fmtShort(ship_support));
+  } else {
+    setVal('shipping-support', '0');
+  }
 
   const cogs_b = data.source_b.reduce((s,i)=>s+i.price, 0);
   const count_b = data.source_b.length;
