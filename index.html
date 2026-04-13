@@ -839,33 +839,35 @@ html, body {
 
   <!-- FILTER BAR -->
   <div class="filterbar">
-    <span class="fb-label">Lọc:</span>
-    <div class="fb-pill">📅 2026</div>
-
-    <div class="period-toggle">
-      <button class="pt-btn">Tuần</button>
-      <button class="pt-btn active">Tháng</button>
-      <button class="pt-btn">Quý</button>
-    </div>
-
-    <select class="fb-select" id="ky-select">
-      <option>Tháng 3 / 2026</option>
-      <option>Tháng 2 / 2026</option>
-      <option>Tháng 1 / 2026</option>
+    <select class="fb-select" id="period-select">
+      <option value="2026-01" selected>Tháng 1 / 2026</option>
+      <option value="2026-02">Tháng 2 / 2026</option>
+      <option value="2026-03">Tháng 3 / 2026</option>
+      <option value="2026-04">Tháng 4 / 2026</option>
     </select>
 
     <div class="fb-sep"></div>
 
-    <div class="fb-cmp"><input type="checkbox" id="cmp1" checked> <label for="cmp1">So kỳ trước</label></div>
-    <div class="fb-cmp"><input type="checkbox" id="cmp2"> <label for="cmp2">Cùng kỳ năm ngoái</label></div>
+    <span class="fb-label">Tuần:</span>
+    <select class="fb-select" id="week-select">
+      <option value="all">Tất cả các tuần</option>
+      <option value="1">Tuần 1</option>
+      <option value="2">Tuần 2</option>
+      <option value="3">Tuần 3</option>
+      <option value="4">Tuần 4</option>
+      <option value="5">Tuần 5</option>
+    </select>
 
     <div class="fb-sep"></div>
 
-    <select class="fb-select">
-      <option>Toàn công ty</option>
-      <option>Xưởng Minh Phát</option>
-      <option>Xưởng Thành Đạt</option>
+    <select class="fb-select" id="factory-select">
+      <option value="all">Tổng các xưởng</option>
+      <option value="ADN">ADN</option>
+      <option value="Sơn Thủy">Sơn Thủy</option>
+      <option value="Inox Pro">Inox Pro</option>
     </select>
+
+    <div class="fb-sep"></div>
 
     <button class="btn-update">↻ Cập nhật</button>
   </div>
@@ -886,27 +888,27 @@ html, body {
 
       <div class="kpi-row kpi-4">
         <div class="kpi-card kc-blue">
-          <div class="kc-top"><span class="kc-icon">📋</span><span class="status-badge sb-ok">Hoàn thành</span></div>
+          <div class="kc-top"><span class="kc-icon">📋</span><span class="status-badge sb-ok" id="status-purchase">Hoàn thành</span></div>
           <div class="kc-label">Đơn mua đã xuống xưởng</div>
-          <div class="kc-value">246</div>
-          <div class="kc-foot"><span class="kc-cmp">01/01 – 12/04/2026</span></div>
+          <div class="kc-value" id="kpi-purchase-count">246</div>
+          <div class="kc-foot"><span class="kc-cmp" id="kpi-purchase-range">01/01 – 12/04/2026</span></div>
         </div>
         <div class="kpi-card kc-purple">
           <div class="kc-top"><span class="kc-icon">💰</span></div>
           <div class="kc-label">Tổng giá vốn</div>
-          <div class="kc-value">3.36B ₫</div>
-          <div class="kc-foot"><span class="kc-cmp">Thực tế 2026</span></div>
+          <div class="kc-value" id="kpi-cogs">3.36B ₫</div>
+          <div class="kc-foot"><span class="kc-cmp" id="kpi-cogs-range">01/01/2026 – 31/01/2026</span></div>
         </div>
         <div class="kpi-card kc-green">
           <div class="kc-top"><span class="kc-icon">📈</span><span class="status-badge sb-ok">Hiệu quả</span></div>
           <div class="kc-label">Lợi nhuận gộp</div>
-          <div class="kc-value">3.71B ₫</div>
-          <div class="kc-foot"><span class="trend-up">Biên 52.4%</span><span class="kc-cmp">DT 7.07B</span></div>
+          <div class="kc-value" id="kpi-profit">3.712.000.000 ₫</div>
+          <div class="kc-foot"><span class="trend-up" id="kpi-margin">Biên 52.4%</span><span class="kc-cmp" id="kpi-revenue-total">DT 7.072.000.000</span></div>
         </div>
         <div class="kpi-card kc-yellow">
           <div class="kc-top"><span class="kc-icon">⚖️</span><span class="status-badge sb-ok">Dưới ngưỡng</span></div>
           <div class="kc-label">% Giá vốn / Doanh thu</div>
-          <div class="kc-value">47.6%</div>
+          <div class="kc-value" id="kpi-cogs-ratio">47.6%</div>
           <div class="kc-foot"><span class="trend-down">Mục tiêu < 80%</span></div>
         </div>
       </div>
@@ -921,20 +923,20 @@ html, body {
         <div class="kpi-card kc-blue">
           <div class="kc-top"><span class="kc-icon">📦</span><span class="status-badge sb-ok">Thực tế</span></div>
           <div class="kc-label">Tổng giá trị tồn kho</div>
-          <div class="kc-value">1.08B ₫</div>
-          <div class="kc-foot"><span class="kc-cmp">01/01 – 12/04/2026</span></div>
+          <div class="kc-value" id="kpi-inventory-value">1.080.616.806 ₫</div>
+          <div class="kc-foot"><span class="kc-cmp">Dữ liệu Warehouse 2026</span></div>
         </div>
         <div class="kpi-card kc-yellow">
           <div class="kc-top"><span class="kc-icon">🚛</span><span class="status-badge sb-warn">Tháng 4</span></div>
           <div class="kc-label">Tổng chi phí vận chuyển</div>
-          <div class="kc-value">14.7M ₫</div>
+          <div class="kc-value" id="kpi-shipping-total">14.700.000 ₫</div>
           <div class="kc-foot"><span class="kc-cmp">Dữ liệu Anh Hưng 2026</span></div>
         </div>
         <div class="kpi-card kc-green">
           <div class="kc-top"><span class="kc-icon">✅</span><span class="status-badge sb-ok">Hoàn thành</span></div>
           <div class="kc-label">Đơn hàng hoàn thành</div>
-          <div class="kc-value">324</div>
-          <div class="kc-foot"><span class="kc-cmp">Doanh số HT: 7.07B ₫</span></div>
+          <div class="kc-value" id="kpi-completed-count">324</div>
+          <div class="kc-foot"><span class="kc-cmp">Dữ liệu từ Sales 2026</span></div>
         </div>
       </div><!-- /kpi-row -->
 
@@ -1002,7 +1004,7 @@ html, body {
           <div class="card-head">
             <div>
               <div class="card-title">Tỷ trọng mua theo xưởng</div>
-              <div class="card-sub">Phân bổ giá vốn — 01/01 – 12/04/2026</div>
+              <div class="card-sub" id="ld-WorkshopDonut-Range">01/01/2026 – 31/01/2026</div>
             </div>
           </div>
           <div class="card-body" style="display:flex;flex-direction:column;align-items:center;">
@@ -1348,7 +1350,7 @@ html, body {
         <div class="kpi-card kc-green">
           <div class="kc-top"><span class="kc-icon">✅</span><span class="status-badge sb-ok">Xong</span></div>
           <div class="kc-label">Hoàn thành</div>
-          <div class="kc-value">324</div>
+          <div class="kc-value" id="kpi-completed-count-staff">324</div>
           <div class="kc-foot"><span class="kc-cmp">Năm 2026</span></div>
         </div>
         <div class="kpi-card kc-red">
@@ -1360,7 +1362,7 @@ html, body {
         <div class="kpi-card kc-green">
           <div class="kc-top"><span class="kc-icon">📈</span><span class="status-badge sb-ok">Mục tiêu</span></div>
           <div class="kc-label">Đơn HT &amp; Doanh số</div>
-          <div class="kc-value">324 <span style="font-size:14px;color:var(--text-muted);font-weight:600;">/ 7.07B</span></div>
+          <div class="kc-value" id="kpi-sales-dual">324 <span style="font-size:14px;color:var(--text-muted);font-weight:600;">/ 7.07B</span></div>
           <div class="kc-foot"><span class="kc-cmp">Dữ liệu thực tế 2026</span></div>
         </div>
         <div class="kpi-card kc-red">
@@ -1571,7 +1573,7 @@ html, body {
                 <th>Trạng thái</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="overdue-table-body">
               <tr class="tr-crit">
                 <td><span class="code-cell">DHMKL1545</span></td>
                 <td class="fw-700">Anh Vinh - HCM</td>
@@ -1743,209 +1745,6377 @@ html, body {
 </div><!-- /app -->
 
 <script>
+const dashboardData = {
+  "purchases_source_a": [
+    {
+      "code": "DHMKL1535",
+      "date_mua": "2026-01-01",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "16/01/2026"
+    },
+    {
+      "code": "DHMKL1538",
+      "date_mua": "2026-01-01",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "26/01/2026"
+    },
+    {
+      "code": "DHMKL1537",
+      "date_mua": "2026-01-01",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "27/01/2026"
+    },
+    {
+      "code": "DHMKL1536",
+      "date_mua": "2026-01-01",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "29/01/2026"
+    },
+    {
+      "code": "DHMKL1540",
+      "date_mua": "2026-01-01",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "29/01/2026"
+    },
+    {
+      "code": "DHMKL1539",
+      "date_mua": "2026-01-01",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1541",
+      "date_mua": "2026-01-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "28/01/2026"
+    },
+    {
+      "code": "DHMKL1543",
+      "date_mua": "2026-01-02",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "24/01/2026"
+    },
+    {
+      "code": "DHMKL1542",
+      "date_mua": "2026-01-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "25/01/2026"
+    },
+    {
+      "code": "DHMKL1547",
+      "date_mua": "2026-01-02",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "20/01/2026"
+    },
+    {
+      "code": "DHMKL1546",
+      "date_mua": "2026-01-02",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "21/01/2026"
+    },
+    {
+      "code": "DHMKL1545",
+      "date_mua": "2026-01-02",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "02/02/2026"
+    },
+    {
+      "code": "DHMKL1544",
+      "date_mua": "2026-01-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "10/02/2026"
+    },
+    {
+      "code": "DHMKL1548",
+      "date_mua": "2026-01-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1551",
+      "date_mua": "2026-01-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "27/01/2026"
+    },
+    {
+      "code": "DHMKL1550",
+      "date_mua": "2026-01-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "25/01/2026"
+    },
+    {
+      "code": "DHMKL1549",
+      "date_mua": "2026-01-02",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "28/01/2026"
+    },
+    {
+      "code": "DHMKL1553",
+      "date_mua": "2026-01-02",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "26/01/2026"
+    },
+    {
+      "code": "DHMKL1552",
+      "date_mua": "2026-01-02",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "27/01/2026"
+    },
+    {
+      "code": "DHMKL1554",
+      "date_mua": "2026-01-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "25/01/2026"
+    },
+    {
+      "code": "DHMKL1557",
+      "date_mua": "2026-01-02",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "19/01/2026"
+    },
+    {
+      "code": "DHMKL1556",
+      "date_mua": "2026-01-02",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "20/01/2026"
+    },
+    {
+      "code": "DHMKL1555",
+      "date_mua": "2026-01-02",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "12/01/2026"
+    },
+    {
+      "code": "DHMKL1560",
+      "date_mua": "2026-01-02",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "26/01/2026"
+    },
+    {
+      "code": "DHMKL1559",
+      "date_mua": "2026-01-02",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "21/01/2026"
+    },
+    {
+      "code": "DHMKL1558",
+      "date_mua": "2026-01-02",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "26/01/2026"
+    },
+    {
+      "code": "DHMKL1561",
+      "date_mua": "2026-01-03",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "15/01/2026"
+    },
+    {
+      "code": "DHMKL1535",
+      "date_mua": "2026-01-01",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "16/01/2026"
+    },
+    {
+      "code": "DHMKL1538",
+      "date_mua": "2026-01-01",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "26/01/2026"
+    },
+    {
+      "code": "DHMKL1537",
+      "date_mua": "2026-01-01",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "27/01/2026"
+    },
+    {
+      "code": "DHMKL1536",
+      "date_mua": "2026-01-01",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "29/01/2026"
+    },
+    {
+      "code": "DHMKL1540",
+      "date_mua": "2026-01-01",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "29/01/2026"
+    },
+    {
+      "code": "DHMKL1539",
+      "date_mua": "2026-01-01",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1541",
+      "date_mua": "2026-01-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "28/01/2026"
+    },
+    {
+      "code": "DHMKL1543",
+      "date_mua": "2026-01-02",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "24/01/2026"
+    },
+    {
+      "code": "DHMKL1542",
+      "date_mua": "2026-01-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "25/01/2026"
+    },
+    {
+      "code": "DHMKL1547",
+      "date_mua": "2026-01-02",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "20/01/2026"
+    },
+    {
+      "code": "DHMKL1546",
+      "date_mua": "2026-01-02",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "21/01/2026"
+    },
+    {
+      "code": "DHMKL1545",
+      "date_mua": "2026-01-02",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "02/02/2026"
+    },
+    {
+      "code": "DHMKL1544",
+      "date_mua": "2026-01-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "10/02/2026"
+    },
+    {
+      "code": "DHMKL1548",
+      "date_mua": "2026-01-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1551",
+      "date_mua": "2026-01-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "27/01/2026"
+    },
+    {
+      "code": "DHMKL1550",
+      "date_mua": "2026-01-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "25/01/2026"
+    },
+    {
+      "code": "DHMKL1549",
+      "date_mua": "2026-01-02",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "28/01/2026"
+    },
+    {
+      "code": "DHMKL1553",
+      "date_mua": "2026-01-02",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "26/01/2026"
+    },
+    {
+      "code": "DHMKL1552",
+      "date_mua": "2026-01-02",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "27/01/2026"
+    },
+    {
+      "code": "DHMKL1554",
+      "date_mua": "2026-01-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "25/01/2026"
+    },
+    {
+      "code": "DHMKL1557",
+      "date_mua": "2026-01-02",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "19/01/2026"
+    },
+    {
+      "code": "DHMKL1556",
+      "date_mua": "2026-01-02",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "20/01/2026"
+    },
+    {
+      "code": "DHMKL1555",
+      "date_mua": "2026-01-02",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "12/01/2026"
+    },
+    {
+      "code": "DHMKL1560",
+      "date_mua": "2026-01-02",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "26/01/2026"
+    },
+    {
+      "code": "DHMKL1559",
+      "date_mua": "2026-01-02",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "21/01/2026"
+    },
+    {
+      "code": "DHMKL1558",
+      "date_mua": "2026-01-02",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "26/01/2026"
+    },
+    {
+      "code": "DHMKL1561",
+      "date_mua": "2026-01-03",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "15/01/2026"
+    },
+    {
+      "code": "DHMKL1562",
+      "date_mua": "2026-01-03",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "05/02/2026"
+    },
+    {
+      "code": "DHMKL1564",
+      "date_mua": "2026-01-03",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "27/01/2026"
+    },
+    {
+      "code": "DHMKL1563",
+      "date_mua": "2026-01-03",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "28/01/2026"
+    },
+    {
+      "code": "DHMKL1565",
+      "date_mua": "2026-01-03",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "28/01/2026"
+    },
+    {
+      "code": "DHMKL1566",
+      "date_mua": "2026-01-03",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "28/01/2026"
+    },
+    {
+      "code": "DHMKL1568",
+      "date_mua": "2026-01-03",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "25/01/2026"
+    },
+    {
+      "code": "DHMKL1567",
+      "date_mua": "2026-01-03",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "26/01/2026"
+    },
+    {
+      "code": "DHMKL1569",
+      "date_mua": "2026-01-03",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "07/01/2026"
+    },
+    {
+      "code": "DHMKL1570",
+      "date_mua": "2026-01-03",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "03/02/2026"
+    },
+    {
+      "code": "DHMKL1571",
+      "date_mua": "2026-01-03",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "25/01/2026"
+    },
+    {
+      "code": "DHMKL1572",
+      "date_mua": "2026-01-03",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "23/01/2026"
+    },
+    {
+      "code": "DHMKL1573",
+      "date_mua": "2026-01-03",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "23/01/2026"
+    },
+    {
+      "code": "DHMKL1575",
+      "date_mua": "2026-01-03",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "01/02/2026"
+    },
+    {
+      "code": "DHMKL1574",
+      "date_mua": "2026-01-03",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1576",
+      "date_mua": "2026-01-03",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "17/01/2026"
+    },
+    {
+      "code": "DHMKL1578",
+      "date_mua": "2026-01-04",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "27/01/2026"
+    },
+    {
+      "code": "DHMKL1577",
+      "date_mua": "2026-01-04",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "27/01/2026"
+    },
+    {
+      "code": "DHMKL1579",
+      "date_mua": "2026-01-04",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "19/01/2026"
+    },
+    {
+      "code": "DHMKL1581",
+      "date_mua": "2026-01-04",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1580",
+      "date_mua": "2026-01-04",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "31/01/2026"
+    },
+    {
+      "code": "DHMKL1582",
+      "date_mua": "2026-01-04",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "26/01/2026"
+    },
+    {
+      "code": "DHMKL1583",
+      "date_mua": "2026-01-04",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "03/02/2026"
+    },
+    {
+      "code": "DHMKL1584",
+      "date_mua": "2026-01-04",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1585",
+      "date_mua": "2026-01-05",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "02/02/2026"
+    },
+    {
+      "code": "DHMKL1587",
+      "date_mua": "2026-01-05",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "01/02/2026"
+    },
+    {
+      "code": "DHMKL1586",
+      "date_mua": "2026-01-05",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "01/02/2026"
+    },
+    {
+      "code": "DHMKL1588",
+      "date_mua": "2026-01-05",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "26/01/2026"
+    },
+    {
+      "code": "DHMKL1589",
+      "date_mua": "2026-01-05",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "31/01/2026"
+    },
+    {
+      "code": "DHMKL1590",
+      "date_mua": "2026-01-05",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1592",
+      "date_mua": "2026-01-05",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1591",
+      "date_mua": "2026-01-05",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "24/01/2026"
+    },
+    {
+      "code": "DHMKL1593",
+      "date_mua": "2026-01-06",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "03/02/2026"
+    },
+    {
+      "code": "DHMKL1594",
+      "date_mua": "2026-01-06",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "23/01/2026"
+    },
+    {
+      "code": "DHMKL1596",
+      "date_mua": "2026-01-06",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "29/01/2026"
+    },
+    {
+      "code": "DHMKL1595",
+      "date_mua": "2026-01-06",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "29/01/2026"
+    },
+    {
+      "code": "DHMKL1597",
+      "date_mua": "2026-01-06",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "25/01/2026"
+    },
+    {
+      "code": "DHMKL1598",
+      "date_mua": "2026-01-06",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "29/01/2026"
+    },
+    {
+      "code": "DHMKL1599",
+      "date_mua": "2026-01-06",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "29/01/2026"
+    },
+    {
+      "code": "DHMKL1600",
+      "date_mua": "2026-01-06",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "26/01/2026"
+    },
+    {
+      "code": "DHMKL1601",
+      "date_mua": "2026-01-06",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "23/01/2026"
+    },
+    {
+      "code": "DHMKL1603",
+      "date_mua": "2026-01-06",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1602",
+      "date_mua": "2026-01-06",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "01/02/2026"
+    },
+    {
+      "code": "DHMKL1606",
+      "date_mua": "2026-01-06",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "09/02/2026"
+    },
+    {
+      "code": "DHMKL1605",
+      "date_mua": "2026-01-06",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "09/02/2026"
+    },
+    {
+      "code": "DHMKL1604",
+      "date_mua": "2026-01-06",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "24/01/2026"
+    },
+    {
+      "code": "DHMKL1607",
+      "date_mua": "2026-01-06",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1608",
+      "date_mua": "2026-01-06",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "04/02/2026"
+    },
+    {
+      "code": "DHMKL1609",
+      "date_mua": "2026-01-07",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "07/02/2026"
+    },
+    {
+      "code": "DHMKL1610",
+      "date_mua": "2026-01-07",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "01/02/2026"
+    },
+    {
+      "code": "DHMKL1612",
+      "date_mua": "2026-01-07",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "28/01/2026"
+    },
+    {
+      "code": "DHMKL1613",
+      "date_mua": "2026-01-07",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "13/01/2026"
+    },
+    {
+      "code": "DHMKL1615",
+      "date_mua": "2026-01-08",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "",
+      "deadline": "03/02/2026"
+    },
+    {
+      "code": "DHMKL1614",
+      "date_mua": "2026-01-08",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "04/02/2026"
+    },
+    {
+      "code": "DHMKL1616",
+      "date_mua": "2026-01-08",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "27/01/2026"
+    },
+    {
+      "code": "DHMKL1618",
+      "date_mua": "2026-01-08",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "26/01/2026"
+    },
+    {
+      "code": "DHMKL1619",
+      "date_mua": "2026-01-08",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "03/02/2026"
+    },
+    {
+      "code": "DHMKL1620",
+      "date_mua": "2026-01-08",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "03/02/2026"
+    },
+    {
+      "code": "DHMKL1621",
+      "date_mua": "2026-01-08",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "07/02/2026"
+    },
+    {
+      "code": "DHMKL1622",
+      "date_mua": "2026-01-08",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "31/01/2026"
+    },
+    {
+      "code": "DHMKL1624",
+      "date_mua": "2026-01-08",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "20/01/2026"
+    },
+    {
+      "code": "DHMKL1623",
+      "date_mua": "2026-01-08",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1625",
+      "date_mua": "2026-01-08",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "08/01/2026"
+    },
+    {
+      "code": "DHMKL1626",
+      "date_mua": "2026-01-08",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "16/01/2026"
+    },
+    {
+      "code": "DHMKL1627",
+      "date_mua": "2026-01-08",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "17/01/2026"
+    },
+    {
+      "code": "DHMKL1629",
+      "date_mua": "2026-01-08",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "25/01/2026"
+    },
+    {
+      "code": "DHMKL1628",
+      "date_mua": "2026-01-08",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "26/01/2026"
+    },
+    {
+      "code": "DHMKL1630",
+      "date_mua": "2026-01-09",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "27/01/2026"
+    },
+    {
+      "code": "DHMKL1631",
+      "date_mua": "2026-01-09",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "04/02/2026"
+    },
+    {
+      "code": "DHMKL1632",
+      "date_mua": "2026-01-09",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "21/01/2026"
+    },
+    {
+      "code": "DHMKL1634",
+      "date_mua": "2026-01-09",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "05/02/2026"
+    },
+    {
+      "code": "DHMKL1633",
+      "date_mua": "2026-01-09",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "23/01/2026"
+    },
+    {
+      "code": "DHMKL1635",
+      "date_mua": "2026-01-09",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "29/01/2026"
+    },
+    {
+      "code": "DHMKL1636",
+      "date_mua": "2026-01-10",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "27/01/2026"
+    },
+    {
+      "code": "DHMKL1637",
+      "date_mua": "2026-01-10",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "16/01/2026"
+    },
+    {
+      "code": "DHMKL1638",
+      "date_mua": "2026-01-10",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "31/01/2026"
+    },
+    {
+      "code": "DHMKL1639",
+      "date_mua": "2026-01-10",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "29/01/2026"
+    },
+    {
+      "code": "DHMKL1640",
+      "date_mua": "2026-01-10",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1642",
+      "date_mua": "2026-01-10",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "01/02/2026"
+    },
+    {
+      "code": "DHMKL1641",
+      "date_mua": "2026-01-10",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "23/01/2026"
+    },
+    {
+      "code": "DHMKL1643",
+      "date_mua": "2026-01-10",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "03/02/2026"
+    },
+    {
+      "code": "DHMKL1644",
+      "date_mua": "2026-01-10",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "02/02/2026"
+    },
+    {
+      "code": "DHMKL1645",
+      "date_mua": "2026-01-10",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1646",
+      "date_mua": "2026-01-11",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "01/02/2026"
+    },
+    {
+      "code": "DHMKL1647",
+      "date_mua": "2026-01-12",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "05/02/2026"
+    },
+    {
+      "code": "DHMKL1648",
+      "date_mua": "2026-01-12",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "02/02/2026"
+    },
+    {
+      "code": "DHMKL1650",
+      "date_mua": "2026-01-12",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "01/02/2026"
+    },
+    {
+      "code": "DHMKL1649",
+      "date_mua": "2026-01-12",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "02/02/2026"
+    },
+    {
+      "code": "DHMKL1652",
+      "date_mua": "2026-01-12",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "16/01/2026"
+    },
+    {
+      "code": "DHMKL1651",
+      "date_mua": "2026-01-12",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "24/01/2026"
+    },
+    {
+      "code": "DHMKL1653",
+      "date_mua": "2026-01-12",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "15/01/2026"
+    },
+    {
+      "code": "DHMKL1654",
+      "date_mua": "2026-01-12",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "01/02/2026"
+    },
+    {
+      "code": "DHMKL1655",
+      "date_mua": "2026-01-13",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "04/02/2026"
+    },
+    {
+      "code": "DHMKL1657",
+      "date_mua": "2026-01-13",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "03/02/2026"
+    },
+    {
+      "code": "DHMKL1658",
+      "date_mua": "2026-01-13",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "23/01/2026"
+    },
+    {
+      "code": "DHMKL1659",
+      "date_mua": "2026-01-13",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "30/01/2026"
+    },
+    {
+      "code": "DHMKL1660",
+      "date_mua": "2026-01-13",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "28/01/2026"
+    },
+    {
+      "code": "DHMKL1661",
+      "date_mua": "2026-01-14",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "07/02/2026"
+    },
+    {
+      "code": "DHMKL1663",
+      "date_mua": "2026-01-15",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "",
+      "deadline": "02/02/2026"
+    },
+    {
+      "code": "DHMKL1664",
+      "date_mua": "2026-01-16",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "10/02/2026"
+    },
+    {
+      "code": "DHMKL1669",
+      "date_mua": "2026-01-17",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "21/01/2026"
+    },
+    {
+      "code": "DHMKL1670",
+      "date_mua": "2026-01-17",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "22/01/2026"
+    },
+    {
+      "code": "DHMKL1671",
+      "date_mua": "2026-01-18",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "22/01/2026"
+    },
+    {
+      "code": "DHMKL1672",
+      "date_mua": "2026-01-18",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "06/02/2026"
+    },
+    {
+      "code": "DHMKL1673",
+      "date_mua": "2026-01-18",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "11/02/2026"
+    },
+    {
+      "code": "DHMKL1674",
+      "date_mua": "2026-01-19",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "31/01/2026"
+    },
+    {
+      "code": "DHMKL1675",
+      "date_mua": "2026-01-19",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "22/01/2026"
+    },
+    {
+      "code": "DHMKL1676",
+      "date_mua": "2026-01-19",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "08/02/2026"
+    },
+    {
+      "code": "DHMKL1677",
+      "date_mua": "2026-01-20",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "09/02/2026"
+    },
+    {
+      "code": "DHMKL1678",
+      "date_mua": "2026-01-20",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "12/02/2026"
+    },
+    {
+      "code": "DHMKL1679",
+      "date_mua": "2026-01-21",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "25/01/2026"
+    },
+    {
+      "code": "DHMKL1680",
+      "date_mua": "2026-01-21",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "11/02/2026"
+    },
+    {
+      "code": "DHMKL1681",
+      "date_mua": "2026-01-23",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương, Cao Văn Phong",
+      "deadline": "08/02/2026"
+    },
+    {
+      "code": "DHMKL1682",
+      "date_mua": "2026-01-23",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Dương, Cao Văn Phong",
+      "deadline": "05/02/2026"
+    },
+    {
+      "code": "DHMKL1684",
+      "date_mua": "2026-01-23",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "03/02/2026"
+    },
+    {
+      "code": "DHMKL1685",
+      "date_mua": "2026-01-24",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "10/02/2026"
+    },
+    {
+      "code": "DHMKL1686",
+      "date_mua": "2026-01-26",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "02/02/2026"
+    },
+    {
+      "code": "DHMKL1687",
+      "date_mua": "2026-01-26",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "02/02/2026"
+    },
+    {
+      "code": "DHMKL1688",
+      "date_mua": "2026-01-27",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "08/02/2026"
+    },
+    {
+      "code": "DHMKL1689",
+      "date_mua": "2026-01-29",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Dương",
+      "deadline": "08/02/2026"
+    },
+    {
+      "code": "DHMKL1690",
+      "date_mua": "2026-02-02",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "03/02/2026"
+    },
+    {
+      "code": "DHMKL1692",
+      "date_mua": "2026-02-08",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "08/02/2026"
+    },
+    {
+      "code": "DHMKL1691",
+      "date_mua": "2026-02-08",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "08/02/2026"
+    },
+    {
+      "code": "DHMKL1693",
+      "date_mua": "2026-02-09",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang, Nguyễn Ngọc Đại",
+      "deadline": "06/03/2026"
+    },
+    {
+      "code": "DHMKL1694",
+      "date_mua": "2026-02-09",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "05/03/2026"
+    },
+    {
+      "code": "DHMKL1695",
+      "date_mua": "2026-02-09",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "09/02/2026"
+    },
+    {
+      "code": "DHMKL1696",
+      "date_mua": "2026-02-26",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "17/03/2026"
+    },
+    {
+      "code": "DHMKL1697",
+      "date_mua": "2026-02-26",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "18/03/2026"
+    },
+    {
+      "code": "DHMKL1698",
+      "date_mua": "2026-02-26",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "13/03/2026"
+    },
+    {
+      "code": "DHMKL1699",
+      "date_mua": "2026-02-26",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "15/02/2026"
+    },
+    {
+      "code": "DHMKL1700",
+      "date_mua": "2026-02-27",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "15/03/2026"
+    },
+    {
+      "code": "DHMKL1701",
+      "date_mua": "2026-02-28",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "10/03/2026"
+    },
+    {
+      "code": "DHMKL1702",
+      "date_mua": "2026-02-28",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "15/03/2026"
+    },
+    {
+      "code": "DHMKL1703",
+      "date_mua": "2026-03-03",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "12/03/2026"
+    },
+    {
+      "code": "DHMKL1704",
+      "date_mua": "2026-03-03",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "16/03/2026"
+    },
+    {
+      "code": "DHMKL1705",
+      "date_mua": "2026-03-04",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "13/03/2026"
+    },
+    {
+      "code": "DHMKL1706",
+      "date_mua": "2026-03-04",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "25/03/2026"
+    },
+    {
+      "code": "DHMKL1707",
+      "date_mua": "2026-03-04",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "14/03/2026"
+    },
+    {
+      "code": "DHMKL1709",
+      "date_mua": "2026-03-05",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "15/03/2026"
+    },
+    {
+      "code": "DHMKL1708",
+      "date_mua": "2026-03-05",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "10/03/2026"
+    },
+    {
+      "code": "DHMKL1710",
+      "date_mua": "2026-03-05",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "26/03/2026"
+    },
+    {
+      "code": "DHMKL1711",
+      "date_mua": "2026-03-05",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "31/03/2026"
+    },
+    {
+      "code": "DHMKL1712",
+      "date_mua": "2026-03-07",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "21/03/2026"
+    },
+    {
+      "code": "DHMKL1713",
+      "date_mua": "2026-03-07",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "26/03/2026"
+    },
+    {
+      "code": "DHMKL1714",
+      "date_mua": "2026-03-08",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "08/03/2026"
+    },
+    {
+      "code": "DHMKL1715",
+      "date_mua": "2026-03-08",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "17/03/2026"
+    },
+    {
+      "code": "DHMKL1716",
+      "date_mua": "2026-03-08",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "20/03/2026"
+    },
+    {
+      "code": "DHMKL1717",
+      "date_mua": "2026-03-08",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "18/03/2026"
+    },
+    {
+      "code": "DHMKL1718",
+      "date_mua": "2026-03-10",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "17/03/2026"
+    },
+    {
+      "code": "DHMKL1720",
+      "date_mua": "2026-03-10",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "23/03/2026"
+    },
+    {
+      "code": "DHMKL1719",
+      "date_mua": "2026-03-10",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "27/03/2026"
+    },
+    {
+      "code": "DHMKL1721",
+      "date_mua": "2026-03-11",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "21/03/2026"
+    },
+    {
+      "code": "DHMKL1722",
+      "date_mua": "2026-03-11",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "25/03/2026"
+    },
+    {
+      "code": "DHMKL1723",
+      "date_mua": "2026-03-11",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "21/03/2026"
+    },
+    {
+      "code": "DHMKL1724",
+      "date_mua": "2026-03-11",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "27/03/2026"
+    },
+    {
+      "code": "DHMKL1726",
+      "date_mua": "2026-03-13",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "13/03/2026"
+    },
+    {
+      "code": "DHMKL1725",
+      "date_mua": "2026-03-13",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "30/03/2026"
+    },
+    {
+      "code": "DHMKL1727",
+      "date_mua": "2026-03-13",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "13/03/2026"
+    },
+    {
+      "code": "DHMKL1728",
+      "date_mua": "2026-03-13",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "31/03/2026"
+    },
+    {
+      "code": "DHMKL1729",
+      "date_mua": "2026-03-17",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "29/03/2026"
+    },
+    {
+      "code": "DHMKL1730",
+      "date_mua": "2026-03-18",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "01/04/2026"
+    },
+    {
+      "code": "DHMKL1732",
+      "date_mua": "2026-03-18",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "28/03/2026"
+    },
+    {
+      "code": "DHMKL1731",
+      "date_mua": "2026-03-18",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "28/03/2026"
+    },
+    {
+      "code": "DHMKL1733",
+      "date_mua": "2026-03-19",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "04/04/2026"
+    },
+    {
+      "code": "DHMKL1734",
+      "date_mua": "2026-03-19",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "04/04/2026"
+    },
+    {
+      "code": "DHMKL1735",
+      "date_mua": "2026-03-19",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "27/03/2026"
+    },
+    {
+      "code": "DHMKL1736",
+      "date_mua": "2026-03-19",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "26/03/2026"
+    },
+    {
+      "code": "DHMKL1737",
+      "date_mua": "2026-03-20",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "",
+      "deadline": "20/03/2026"
+    },
+    {
+      "code": "DHMKL1738",
+      "date_mua": "2026-03-20",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "22/03/2026"
+    },
+    {
+      "code": "DHMKL1739",
+      "date_mua": "2026-03-20",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "25/03/2026"
+    },
+    {
+      "code": "DHMKL1740",
+      "date_mua": "2026-03-20",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "28/03/2026"
+    },
+    {
+      "code": "DHMKL1741",
+      "date_mua": "2026-03-21",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "02/04/2026"
+    },
+    {
+      "code": "DHMKL1742",
+      "date_mua": "2026-03-21",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "30/03/2026"
+    },
+    {
+      "code": "DHMKL1743",
+      "date_mua": "2026-03-21",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "21/03/2026"
+    },
+    {
+      "code": "DHMKL1744",
+      "date_mua": "2026-03-21",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "02/04/2026"
+    },
+    {
+      "code": "DHMKL1746",
+      "date_mua": "2026-03-23",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "07/04/2026"
+    },
+    {
+      "code": "DHMKL1747",
+      "date_mua": "2026-03-23",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "04/04/2026"
+    },
+    {
+      "code": "DHMKL1748",
+      "date_mua": "2026-03-25",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "02/04/2026"
+    },
+    {
+      "code": "DHMKL1749",
+      "date_mua": "2026-03-26",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "18/04/2026"
+    },
+    {
+      "code": "DHMKL1750",
+      "date_mua": "2026-03-31",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "31/03/2026"
+    },
+    {
+      "code": "DHMKL1751",
+      "date_mua": "2026-03-31",
+      "workshop": "Inox Pro",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "01/04/2026"
+    },
+    {
+      "code": "DHMKL1753",
+      "date_mua": "2026-03-31",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "08/04/2026"
+    },
+    {
+      "code": "DHMKL1752",
+      "date_mua": "2026-03-31",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "09/04/2026"
+    },
+    {
+      "code": "DHMKL1754",
+      "date_mua": "2026-03-31",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "22/03/2026"
+    },
+    {
+      "code": "DHMKL1755",
+      "date_mua": "2026-03-31",
+      "workshop": "Sơn Thủy",
+      "timeliness": "",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "14/04/2026"
+    },
+    {
+      "code": "DHMKL1757",
+      "date_mua": "2026-03-31",
+      "workshop": "Inox Pro",
+      "timeliness": "",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "04/05/2026"
+    },
+    {
+      "code": "DHMKL1756",
+      "date_mua": "2026-03-31",
+      "workshop": "Sơn Thủy",
+      "timeliness": "",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "05/05/2026"
+    },
+    {
+      "code": "DHMKL1758",
+      "date_mua": "2026-03-31",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "12/04/2026"
+    },
+    {
+      "code": "DHMKL1759",
+      "date_mua": "2026-04-02",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "15/04/2026"
+    },
+    {
+      "code": "DHMKL1760",
+      "date_mua": "2026-04-02",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "06/04/2026"
+    },
+    {
+      "code": "DHMKL1761",
+      "date_mua": "2026-04-02",
+      "workshop": "Inox Pro",
+      "timeliness": "",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "14/04/2026"
+    },
+    {
+      "code": "DHMKL1763",
+      "date_mua": "2026-04-02",
+      "workshop": "Inox Pro",
+      "timeliness": "",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "16/04/2026"
+    },
+    {
+      "code": "DHMKL1762",
+      "date_mua": "2026-04-02",
+      "workshop": "ADN",
+      "timeliness": "",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "18/04/2026"
+    },
+    {
+      "code": "DHMKL1764",
+      "date_mua": "2026-04-03",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "04/04/2026"
+    },
+    {
+      "code": "DHMKL1765",
+      "date_mua": "2026-04-04",
+      "workshop": "Inox Pro",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "04/04/2026"
+    },
+    {
+      "code": "DHMKL1766",
+      "date_mua": "2026-04-04",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "12/04/2026"
+    },
+    {
+      "code": "DHMKL1767",
+      "date_mua": "2026-04-04",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "10/04/2026"
+    },
+    {
+      "code": "DHMKL1769",
+      "date_mua": "2026-04-05",
+      "workshop": "Inox Pro",
+      "timeliness": "",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "18/04/2026"
+    },
+    {
+      "code": "DHMKL1768",
+      "date_mua": "2026-04-05",
+      "workshop": "ADN",
+      "timeliness": "",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "20/04/2026"
+    },
+    {
+      "code": "DHMKL1771",
+      "date_mua": "2026-04-07",
+      "workshop": "ADN",
+      "timeliness": "Đúng hạn",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "08/04/2026"
+    },
+    {
+      "code": "DHMKL1770",
+      "date_mua": "2026-04-07",
+      "workshop": "ADN",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "07/04/2026"
+    },
+    {
+      "code": "DHMKL1772",
+      "date_mua": "2026-04-07",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "07/04/2026"
+    },
+    {
+      "code": "DHMKL1773",
+      "date_mua": "2026-04-08",
+      "workshop": "Sơn Thủy",
+      "timeliness": "Trễ hạn",
+      "supervisor": "Cao Văn Phong",
+      "deadline": "04/04/2026"
+    },
+    {
+      "code": "DHMKL1774",
+      "date_mua": "2026-04-09",
+      "workshop": "ADN",
+      "timeliness": "",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "17/04/2026"
+    },
+    {
+      "code": "DHMKL1775",
+      "date_mua": "2026-04-10",
+      "workshop": "ADN",
+      "timeliness": "",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "16/04/2026"
+    },
+    {
+      "code": "DHMKL1776",
+      "date_mua": "2026-04-10",
+      "workshop": "ADN",
+      "timeliness": "",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "16/04/2026"
+    },
+    {
+      "code": "DHMKL1777",
+      "date_mua": "2026-04-11",
+      "workshop": "ADN",
+      "timeliness": "",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "27/04/2026"
+    },
+    {
+      "code": "DHMKL1778",
+      "date_mua": "2026-04-11",
+      "workshop": "Inox Pro",
+      "timeliness": "",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "22/04/2026"
+    },
+    {
+      "code": "DHMKL1779",
+      "date_mua": "2026-04-11",
+      "workshop": "ADN",
+      "timeliness": "",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "28/04/2026"
+    },
+    {
+      "code": "DHMKL1780",
+      "date_mua": "2026-04-11",
+      "workshop": "ADN",
+      "timeliness": "",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "14/04/2026"
+    },
+    {
+      "code": "DHMKL1781",
+      "date_mua": "2026-04-11",
+      "workshop": "Inox Pro",
+      "timeliness": "",
+      "supervisor": "Nguyễn Văn Quang",
+      "deadline": "15/04/2026"
+    },
+    {
+      "code": "DHMKL1782",
+      "date_mua": "2026-04-11",
+      "workshop": "Inox Pro",
+      "timeliness": "",
+      "supervisor": "Nguyễn Ngọc Đại",
+      "deadline": "19/04/2026"
+    }
+  ],
+  "purchases_source_b": [
+    {
+      "code": "DHMKL1535",
+      "date_mua": "2026-01-01",
+      "price": 20965000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1538",
+      "date_mua": "2026-01-01",
+      "price": 7500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1537",
+      "date_mua": "2026-01-01",
+      "price": 17800000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1536",
+      "date_mua": "2026-01-01",
+      "price": 17010000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1540",
+      "date_mua": "2026-01-01",
+      "price": 10500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1539",
+      "date_mua": "2026-01-01",
+      "price": 34230000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1541",
+      "date_mua": "2026-01-02",
+      "price": 16190000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1543",
+      "date_mua": "2026-01-02",
+      "price": 13000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1542",
+      "date_mua": "2026-01-02",
+      "price": 24600000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1547",
+      "date_mua": "2026-01-02",
+      "price": 12500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1546",
+      "date_mua": "2026-01-02",
+      "price": 22045000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1545",
+      "date_mua": "2026-01-02",
+      "price": 74000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1544",
+      "date_mua": "2026-01-02",
+      "price": 31647000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1548",
+      "date_mua": "2026-01-02",
+      "price": 19550000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1551",
+      "date_mua": "2026-01-02",
+      "price": 10260000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1550",
+      "date_mua": "2026-01-02",
+      "price": 16190000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1549",
+      "date_mua": "2026-01-02",
+      "price": 7000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1553",
+      "date_mua": "2026-01-02",
+      "price": 8500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1552",
+      "date_mua": "2026-01-02",
+      "price": 13705000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1554",
+      "date_mua": "2026-01-02",
+      "price": 10350000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1557",
+      "date_mua": "2026-01-02",
+      "price": 9500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1556",
+      "date_mua": "2026-01-02",
+      "price": 12955000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1555",
+      "date_mua": "2026-01-02",
+      "price": 4240000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1560",
+      "date_mua": "2026-01-02",
+      "price": 7500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1559",
+      "date_mua": "2026-01-02",
+      "price": 19206000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1558",
+      "date_mua": "2026-01-02",
+      "price": 9300000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1561",
+      "date_mua": "2026-01-03",
+      "price": 9000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1562",
+      "date_mua": "2026-01-03",
+      "price": 31810000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1564",
+      "date_mua": "2026-01-03",
+      "price": 8500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1563",
+      "date_mua": "2026-01-03",
+      "price": 14170000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1565",
+      "date_mua": "2026-01-03",
+      "price": 24235000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1566",
+      "date_mua": "2026-01-03",
+      "price": 17840000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1568",
+      "date_mua": "2026-01-03",
+      "price": 14500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1567",
+      "date_mua": "2026-01-03",
+      "price": 15610000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1569",
+      "date_mua": "2026-01-03",
+      "price": 17000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1570",
+      "date_mua": "2026-01-03",
+      "price": 142750000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1571",
+      "date_mua": "2026-01-03",
+      "price": 10897000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1572",
+      "date_mua": "2026-01-03",
+      "price": 18005000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1573",
+      "date_mua": "2026-01-03",
+      "price": 26400000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1575",
+      "date_mua": "2026-01-03",
+      "price": 17690000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1574",
+      "date_mua": "2026-01-03",
+      "price": 17500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1576",
+      "date_mua": "2026-01-03",
+      "price": 17480000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1578",
+      "date_mua": "2026-01-04",
+      "price": 78000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1577",
+      "date_mua": "2026-01-04",
+      "price": 88370000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1579",
+      "date_mua": "2026-01-04",
+      "price": 22200000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1581",
+      "date_mua": "2026-01-04",
+      "price": 6500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1580",
+      "date_mua": "2026-01-04",
+      "price": 15505000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1582",
+      "date_mua": "2026-01-04",
+      "price": 11980000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1583",
+      "date_mua": "2026-01-04",
+      "price": 17060000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1584",
+      "date_mua": "2026-01-04",
+      "price": 17755000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1585",
+      "date_mua": "2026-01-05",
+      "price": 47410000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1587",
+      "date_mua": "2026-01-05",
+      "price": 7500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1586",
+      "date_mua": "2026-01-05",
+      "price": 26299000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1588",
+      "date_mua": "2026-01-05",
+      "price": 9475000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1589",
+      "date_mua": "2026-01-05",
+      "price": 10740000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1590",
+      "date_mua": "2026-01-05",
+      "price": 19260000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1592",
+      "date_mua": "2026-01-05",
+      "price": 12320000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1591",
+      "date_mua": "2026-01-05",
+      "price": 16225000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1593",
+      "date_mua": "2026-01-06",
+      "price": 16550000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1594",
+      "date_mua": "2026-01-06",
+      "price": 12540000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1596",
+      "date_mua": "2026-01-06",
+      "price": 7500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1595",
+      "date_mua": "2026-01-06",
+      "price": 18145000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1597",
+      "date_mua": "2026-01-06",
+      "price": 9505000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1598",
+      "date_mua": "2026-01-06",
+      "price": 16525000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1599",
+      "date_mua": "2026-01-06",
+      "price": 4635000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1600",
+      "date_mua": "2026-01-06",
+      "price": 4800000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1601",
+      "date_mua": "2026-01-06",
+      "price": 11495000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1603",
+      "date_mua": "2026-01-06",
+      "price": 8800000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1602",
+      "date_mua": "2026-01-06",
+      "price": 17000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1606",
+      "date_mua": "2026-01-06",
+      "price": 55165000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1605",
+      "date_mua": "2026-01-06",
+      "price": 33330000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1604",
+      "date_mua": "2026-01-06",
+      "price": 18755000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1607",
+      "date_mua": "2026-01-06",
+      "price": 18480000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1608",
+      "date_mua": "2026-01-06",
+      "price": 20710000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1609",
+      "date_mua": "2026-01-07",
+      "price": 20680000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1610",
+      "date_mua": "2026-01-07",
+      "price": 18975000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1612",
+      "date_mua": "2026-01-07",
+      "price": 1830000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1613",
+      "date_mua": "2026-01-07",
+      "price": 3035000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1615",
+      "date_mua": "2026-01-08",
+      "price": 6500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1614",
+      "date_mua": "2026-01-08",
+      "price": 18740000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1616",
+      "date_mua": "2026-01-08",
+      "price": 20020000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1618",
+      "date_mua": "2026-01-08",
+      "price": 8000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1619",
+      "date_mua": "2026-01-08",
+      "price": 13205000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1620",
+      "date_mua": "2026-01-08",
+      "price": 12225000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1621",
+      "date_mua": "2026-01-08",
+      "price": 15605000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1622",
+      "date_mua": "2026-01-08",
+      "price": 18715000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1624",
+      "date_mua": "2026-01-08",
+      "price": 2120000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1623",
+      "date_mua": "2026-01-08",
+      "price": 10000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1625",
+      "date_mua": "2026-01-08",
+      "price": 7400000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1626",
+      "date_mua": "2026-01-08",
+      "price": 1820000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1627",
+      "date_mua": "2026-01-08",
+      "price": 5000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1629",
+      "date_mua": "2026-01-08",
+      "price": 7500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1628",
+      "date_mua": "2026-01-08",
+      "price": 16703000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1630",
+      "date_mua": "2026-01-09",
+      "price": 0.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1631",
+      "date_mua": "2026-01-09",
+      "price": 11880000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1632",
+      "date_mua": "2026-01-09",
+      "price": 1955000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1634",
+      "date_mua": "2026-01-09",
+      "price": 13080000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1633",
+      "date_mua": "2026-01-09",
+      "price": 2520000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1635",
+      "date_mua": "2026-01-09",
+      "price": 21691000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1636",
+      "date_mua": "2026-01-10",
+      "price": 14750000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1637",
+      "date_mua": "2026-01-10",
+      "price": 5000000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1638",
+      "date_mua": "2026-01-10",
+      "price": 20125000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1639",
+      "date_mua": "2026-01-10",
+      "price": 13300000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1640",
+      "date_mua": "2026-01-10",
+      "price": 20130000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1642",
+      "date_mua": "2026-01-10",
+      "price": 7690000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1641",
+      "date_mua": "2026-01-10",
+      "price": 5800000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1643",
+      "date_mua": "2026-01-10",
+      "price": 17300000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1644",
+      "date_mua": "2026-01-10",
+      "price": 11730000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1645",
+      "date_mua": "2026-01-10",
+      "price": 8500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1646",
+      "date_mua": "2026-01-11",
+      "price": 25965000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1647",
+      "date_mua": "2026-01-12",
+      "price": 15040000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1648",
+      "date_mua": "2026-01-12",
+      "price": 13840000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1650",
+      "date_mua": "2026-01-12",
+      "price": 13500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1649",
+      "date_mua": "2026-01-12",
+      "price": 21615000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1652",
+      "date_mua": "2026-01-12",
+      "price": 5000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1651",
+      "date_mua": "2026-01-12",
+      "price": 8800000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1653",
+      "date_mua": "2026-01-12",
+      "price": 5600000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1654",
+      "date_mua": "2026-01-12",
+      "price": 7380000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1656",
+      "date_mua": "2026-01-13",
+      "price": 0.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1655",
+      "date_mua": "2026-01-13",
+      "price": 14580000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1657",
+      "date_mua": "2026-01-13",
+      "price": 8800000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1658",
+      "date_mua": "2026-01-13",
+      "price": 2170000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1659",
+      "date_mua": "2026-01-13",
+      "price": 20025000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1660",
+      "date_mua": "2026-01-13",
+      "price": 22600000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1661",
+      "date_mua": "2026-01-14",
+      "price": 31470000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1663",
+      "date_mua": "2026-01-15",
+      "price": 5000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1664",
+      "date_mua": "2026-01-16",
+      "price": 29680000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1667",
+      "date_mua": "2026-01-16",
+      "price": 0.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1666",
+      "date_mua": "2026-01-16",
+      "price": 0.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1665",
+      "date_mua": "2026-01-16",
+      "price": 26680000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1669",
+      "date_mua": "2026-01-17",
+      "price": 250000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1670",
+      "date_mua": "2026-01-17",
+      "price": 1920000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1671",
+      "date_mua": "2026-01-18",
+      "price": 625000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1672",
+      "date_mua": "2026-01-18",
+      "price": 13205000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1673",
+      "date_mua": "2026-01-18",
+      "price": 20640000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1674",
+      "date_mua": "2026-01-19",
+      "price": 150000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1675",
+      "date_mua": "2026-01-19",
+      "price": 1000000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1676",
+      "date_mua": "2026-01-19",
+      "price": 10380000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1677",
+      "date_mua": "2026-01-20",
+      "price": 17155000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1678",
+      "date_mua": "2026-01-20",
+      "price": 19150000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1679",
+      "date_mua": "2026-01-21",
+      "price": 2800000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1680",
+      "date_mua": "2026-01-21",
+      "price": 13945000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1681",
+      "date_mua": "2026-01-23",
+      "price": 13121000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1682",
+      "date_mua": "2026-01-23",
+      "price": 13075000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1684",
+      "date_mua": "2026-01-23",
+      "price": 1920000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1685",
+      "date_mua": "2026-01-24",
+      "price": 14470000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1686",
+      "date_mua": "2026-01-26",
+      "price": 1500000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1687",
+      "date_mua": "2026-01-26",
+      "price": 1550000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1688",
+      "date_mua": "2026-01-27",
+      "price": 1100000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1689",
+      "date_mua": "2026-01-29",
+      "price": 1720000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1690",
+      "date_mua": "2026-02-02",
+      "price": 800000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1692",
+      "date_mua": "2026-02-08",
+      "price": 250000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1691",
+      "date_mua": "2026-02-08",
+      "price": 8800000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1693",
+      "date_mua": "2026-02-09",
+      "price": 13840000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1694",
+      "date_mua": "2026-02-09",
+      "price": 8000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1695",
+      "date_mua": "2026-02-09",
+      "price": 8800000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1696",
+      "date_mua": "2026-02-26",
+      "price": 12820000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1697",
+      "date_mua": "2026-02-26",
+      "price": 21585000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1698",
+      "date_mua": "2026-02-26",
+      "price": 12295000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1699",
+      "date_mua": "2026-02-26",
+      "price": 22496400.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1700",
+      "date_mua": "2026-02-27",
+      "price": 11480000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1701",
+      "date_mua": "2026-02-28",
+      "price": 24405000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1702",
+      "date_mua": "2026-02-28",
+      "price": 14142600.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1703",
+      "date_mua": "2026-03-03",
+      "price": 8830000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1704",
+      "date_mua": "2026-03-03",
+      "price": 11860000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1705",
+      "date_mua": "2026-03-04",
+      "price": 6500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1706",
+      "date_mua": "2026-03-04",
+      "price": 13883400.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1707",
+      "date_mua": "2026-03-04",
+      "price": 17523000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1709",
+      "date_mua": "2026-03-05",
+      "price": 16000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1708",
+      "date_mua": "2026-03-05",
+      "price": 10920000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1710",
+      "date_mua": "2026-03-05",
+      "price": 4320000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1711",
+      "date_mua": "2026-03-05",
+      "price": 2700000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1712",
+      "date_mua": "2026-03-07",
+      "price": 25207200.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1713",
+      "date_mua": "2026-03-07",
+      "price": 12510000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1714",
+      "date_mua": "2026-03-08",
+      "price": 7500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1715",
+      "date_mua": "2026-03-08",
+      "price": 5637600.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1716",
+      "date_mua": "2026-03-08",
+      "price": 20428200.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1717",
+      "date_mua": "2026-03-08",
+      "price": 7000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1718",
+      "date_mua": "2026-03-10",
+      "price": 8429400.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1720",
+      "date_mua": "2026-03-10",
+      "price": 4104000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1719",
+      "date_mua": "2026-03-10",
+      "price": 20480000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1721",
+      "date_mua": "2026-03-11",
+      "price": 21060000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1722",
+      "date_mua": "2026-03-11",
+      "price": 7500000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1723",
+      "date_mua": "2026-03-11",
+      "price": 27421200.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1724",
+      "date_mua": "2026-03-11",
+      "price": 24904800.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1726",
+      "date_mua": "2026-03-13",
+      "price": 7500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1725",
+      "date_mua": "2026-03-13",
+      "price": 35807400.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1727",
+      "date_mua": "2026-03-13",
+      "price": 4100000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1728",
+      "date_mua": "2026-03-13",
+      "price": 3348000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1729",
+      "date_mua": "2026-03-17",
+      "price": 15940800.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1730",
+      "date_mua": "2026-03-18",
+      "price": 25000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1732",
+      "date_mua": "2026-03-18",
+      "price": 8800000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1731",
+      "date_mua": "2026-03-18",
+      "price": 18792000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1733",
+      "date_mua": "2026-03-19",
+      "price": 14887800.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1734",
+      "date_mua": "2026-03-19",
+      "price": 8000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1735",
+      "date_mua": "2026-03-19",
+      "price": 21816000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1736",
+      "date_mua": "2026-03-19",
+      "price": 4320000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1737",
+      "date_mua": "2026-03-20",
+      "price": 4200000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1738",
+      "date_mua": "2026-03-20",
+      "price": 8835000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1739",
+      "date_mua": "2026-03-20",
+      "price": 3780000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1740",
+      "date_mua": "2026-03-20",
+      "price": 18721800.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1741",
+      "date_mua": "2026-03-21",
+      "price": 22800000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1742",
+      "date_mua": "2026-03-21",
+      "price": 14198000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1743",
+      "date_mua": "2026-03-21",
+      "price": 4000000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1744",
+      "date_mua": "2026-03-21",
+      "price": 16983000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1746",
+      "date_mua": "2026-03-23",
+      "price": 15147000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1747",
+      "date_mua": "2026-03-23",
+      "price": 44200000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1748",
+      "date_mua": "2026-03-25",
+      "price": 22717800.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1749",
+      "date_mua": "2026-03-26",
+      "price": 0.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1750",
+      "date_mua": "2026-03-31",
+      "price": 1100000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1751",
+      "date_mua": "2026-03-31",
+      "price": 864000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1753",
+      "date_mua": "2026-03-31",
+      "price": 9500000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1752",
+      "date_mua": "2026-03-31",
+      "price": 29338200.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1754",
+      "date_mua": "2026-03-31",
+      "price": 1400000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1755",
+      "date_mua": "2026-03-31",
+      "price": 11826000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1757",
+      "date_mua": "2026-03-31",
+      "price": 9000000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1756",
+      "date_mua": "2026-03-31",
+      "price": 59572800.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1758",
+      "date_mua": "2026-03-31",
+      "price": 0.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1759",
+      "date_mua": "2026-04-02",
+      "price": 12085200.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1760",
+      "date_mua": "2026-04-02",
+      "price": 11826000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1761",
+      "date_mua": "2026-04-02",
+      "price": 0.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1763",
+      "date_mua": "2026-04-02",
+      "price": 0.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1762",
+      "date_mua": "2026-04-02",
+      "price": 0.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1764",
+      "date_mua": "2026-04-03",
+      "price": 432000.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1765",
+      "date_mua": "2026-04-04",
+      "price": 1728000.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1766",
+      "date_mua": "2026-04-04",
+      "price": 0.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1767",
+      "date_mua": "2026-04-04",
+      "price": 20592360.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1769",
+      "date_mua": "2026-04-05",
+      "price": 0.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1768",
+      "date_mua": "2026-04-05",
+      "price": 0.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1771",
+      "date_mua": "2026-04-07",
+      "price": 0.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1770",
+      "date_mua": "2026-04-07",
+      "price": 0.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1772",
+      "date_mua": "2026-04-07",
+      "price": 11400000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1773",
+      "date_mua": "2026-04-08",
+      "price": 8316000.0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHMKL1774",
+      "date_mua": "2026-04-09",
+      "price": 14126400.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1775",
+      "date_mua": "2026-04-10",
+      "price": 0.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1776",
+      "date_mua": "2026-04-10",
+      "price": 0.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1777",
+      "date_mua": "2026-04-11",
+      "price": 0.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1778",
+      "date_mua": "2026-04-11",
+      "price": 0.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1779",
+      "date_mua": "2026-04-11",
+      "price": 0.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1780",
+      "date_mua": "2026-04-11",
+      "price": 0.0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHMKL1781",
+      "date_mua": "2026-04-11",
+      "price": 0.0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHMKL1782",
+      "date_mua": "2026-04-11",
+      "price": 0.0,
+      "workshop": "Inox Pro"
+    }
+  ],
+  "sales": [
+    {
+      "code": "DHKL805",
+      "date_ban": "2026-02-09",
+      "date_completion": "2026-02-09",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL846",
+      "date_ban": "2026-01-19",
+      "date_completion": "2026-01-19",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL1308",
+      "date_ban": "2026-03-30",
+      "date_completion": "2026-03-30",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL1887",
+      "date_ban": "2026-01-17",
+      "date_completion": "2026-01-17",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL1889",
+      "date_ban": "2026-01-26",
+      "date_completion": "2026-01-26",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL1949",
+      "date_ban": "2026-01-30",
+      "date_completion": "2026-01-30",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2044",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2049",
+      "date_ban": "2026-01-07",
+      "date_completion": "2026-01-07",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2052",
+      "date_ban": "2026-01-31",
+      "date_completion": "2026-01-31",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2055",
+      "date_ban": "2026-01-16",
+      "date_completion": "2026-01-16",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2081",
+      "date_ban": "2026-01-24",
+      "date_completion": "2026-01-24",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2090",
+      "date_ban": "2026-02-03",
+      "date_completion": "2026-02-03",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2105",
+      "date_ban": "2026-02-10",
+      "date_completion": "2026-02-10",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2113",
+      "date_ban": "2026-02-03",
+      "date_completion": "2026-02-03",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2131",
+      "date_ban": "2026-01-12",
+      "date_completion": "2026-01-12",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2133",
+      "date_ban": "2026-01-24",
+      "date_completion": "2026-01-24",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2145",
+      "date_ban": "2026-01-18",
+      "date_completion": "2026-01-18",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2146",
+      "date_ban": "2026-01-18",
+      "date_completion": "2026-01-18",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2177",
+      "date_ban": "2026-01-09",
+      "date_completion": "2026-01-09",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2188",
+      "date_ban": "2026-02-05",
+      "date_completion": "2026-02-05",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2195",
+      "date_ban": "2026-01-06",
+      "date_completion": "2026-01-06",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2252",
+      "date_ban": "2026-02-08",
+      "date_completion": "2026-02-08",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2237",
+      "date_ban": "2026-01-08",
+      "date_completion": "2026-01-08",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2211",
+      "date_ban": "2026-01-08",
+      "date_completion": "2026-01-08",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2287",
+      "date_ban": "2026-01-29",
+      "date_completion": "2026-01-29",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2254",
+      "date_ban": "2026-01-22",
+      "date_completion": "2026-01-22",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2223",
+      "date_ban": "2026-01-30",
+      "date_completion": "2026-01-30",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2236",
+      "date_ban": "2026-03-16",
+      "date_completion": "2026-03-16",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2260",
+      "date_ban": "2026-01-27",
+      "date_completion": "2026-01-27",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2267",
+      "date_ban": "2026-01-10",
+      "date_completion": "2026-01-10",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2269",
+      "date_ban": "2026-01-21",
+      "date_completion": "2026-01-21",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2338",
+      "date_ban": "2026-01-09",
+      "date_completion": "2026-01-09",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2288",
+      "date_ban": "2026-02-08",
+      "date_completion": "2026-02-08",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2268",
+      "date_ban": "2026-01-16",
+      "date_completion": "2026-01-16",
+      "price": 0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHKL2270",
+      "date_ban": "2026-01-07",
+      "date_completion": "2026-01-07",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2271",
+      "date_ban": "2026-01-04",
+      "date_completion": "2026-01-04",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2280",
+      "date_ban": "2026-01-05",
+      "date_completion": "2026-01-05",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2279",
+      "date_ban": "2026-01-15",
+      "date_completion": "2026-01-15",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2322",
+      "date_ban": "2026-01-11",
+      "date_completion": "2026-01-11",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2289",
+      "date_ban": "2026-01-26",
+      "date_completion": "2026-01-26",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2303",
+      "date_ban": "2026-01-31",
+      "date_completion": "2026-01-31",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2341",
+      "date_ban": "2026-01-29",
+      "date_completion": "2026-01-29",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2342",
+      "date_ban": "2026-02-10",
+      "date_completion": "2026-02-10",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2299",
+      "date_ban": "2026-01-02",
+      "date_completion": "2026-01-02",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2302",
+      "date_ban": "2026-01-27",
+      "date_completion": "2026-01-27",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2310",
+      "date_ban": "2026-01-10",
+      "date_completion": "2026-01-10",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2213",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2305",
+      "date_ban": "2026-01-19",
+      "date_completion": "2026-01-19",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2307",
+      "date_ban": "2026-01-22",
+      "date_completion": "2026-01-22",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2308",
+      "date_ban": "2026-01-06",
+      "date_completion": "2026-01-06",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2309",
+      "date_ban": "2026-01-29",
+      "date_completion": "2026-01-29",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2311",
+      "date_ban": "2026-02-10",
+      "date_completion": "2026-02-10",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2321",
+      "date_ban": "2026-01-14",
+      "date_completion": "2026-01-14",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2335",
+      "date_ban": "2026-01-12",
+      "date_completion": "2026-01-12",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2316",
+      "date_ban": "2026-01-11",
+      "date_completion": "2026-01-11",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2320",
+      "date_ban": "2026-01-28",
+      "date_completion": "2026-01-28",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2418",
+      "date_ban": "2026-01-18",
+      "date_completion": "2026-01-18",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2429",
+      "date_ban": "2026-01-05",
+      "date_completion": "2026-01-05",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2430",
+      "date_ban": "2026-01-09",
+      "date_completion": "2026-01-09",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2331",
+      "date_ban": "2026-01-09",
+      "date_completion": "2026-01-09",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2334",
+      "date_ban": "2026-01-26",
+      "date_completion": "2026-01-26",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2387",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2391",
+      "date_ban": "2026-01-20",
+      "date_completion": "2026-01-20",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2390",
+      "date_ban": "2026-01-07",
+      "date_completion": "2026-01-07",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2394",
+      "date_ban": "2026-01-02",
+      "date_completion": "2026-01-02",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2395",
+      "date_ban": "2026-01-22",
+      "date_completion": "2026-01-22",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2396",
+      "date_ban": "2026-01-13",
+      "date_completion": "2026-01-13",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2401",
+      "date_ban": "2026-02-10",
+      "date_completion": "2026-02-10",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2404",
+      "date_ban": "2026-01-11",
+      "date_completion": "2026-01-11",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2455",
+      "date_ban": "2026-01-02",
+      "date_completion": "2026-01-02",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2417",
+      "date_ban": "2026-01-04",
+      "date_completion": "2026-01-04",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2433",
+      "date_ban": "2026-01-24",
+      "date_completion": "2026-01-24",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2407",
+      "date_ban": "2026-01-04",
+      "date_completion": "2026-01-04",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2403",
+      "date_ban": "2026-02-07",
+      "date_completion": "2026-02-07",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2444",
+      "date_ban": "2026-01-12",
+      "date_completion": "2026-01-12",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2424",
+      "date_ban": "2026-02-01",
+      "date_completion": "2026-02-01",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2425",
+      "date_ban": "2026-01-23",
+      "date_completion": "2026-01-23",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2434",
+      "date_ban": "2026-01-04",
+      "date_completion": "2026-01-04",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2448",
+      "date_ban": "2026-01-07",
+      "date_completion": "2026-01-07",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2454",
+      "date_ban": "2026-01-18",
+      "date_completion": "2026-01-18",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2456",
+      "date_ban": "2026-01-30",
+      "date_completion": "2026-01-30",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2428",
+      "date_ban": "2026-02-10",
+      "date_completion": "2026-02-10",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2469",
+      "date_ban": "2026-02-05",
+      "date_completion": "2026-02-05",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2451",
+      "date_ban": "2026-01-09",
+      "date_completion": "2026-01-09",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2453",
+      "date_ban": "2026-01-16",
+      "date_completion": "2026-01-16",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2460",
+      "date_ban": "2026-01-04",
+      "date_completion": "2026-01-04",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2465",
+      "date_ban": "2026-01-12",
+      "date_completion": "2026-01-12",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2466",
+      "date_ban": "2026-01-06",
+      "date_completion": "2026-01-06",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2470",
+      "date_ban": "2026-01-27",
+      "date_completion": "2026-01-27",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2467",
+      "date_ban": "2026-01-08",
+      "date_completion": "2026-01-08",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2468",
+      "date_ban": "2026-01-16",
+      "date_completion": "2026-01-16",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2484",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2482",
+      "date_ban": "2026-02-13",
+      "date_completion": "2026-02-13",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2481",
+      "date_ban": "2026-01-07",
+      "date_completion": "2026-01-07",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2475",
+      "date_ban": "2026-01-17",
+      "date_completion": "2026-01-17",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2485",
+      "date_ban": "2026-01-30",
+      "date_completion": "2026-01-30",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2476",
+      "date_ban": "2026-02-08",
+      "date_completion": "2026-02-08",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2471",
+      "date_ban": "2026-01-15",
+      "date_completion": "2026-01-15",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2474",
+      "date_ban": "2026-01-29",
+      "date_completion": "2026-01-29",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2483",
+      "date_ban": "2026-01-06",
+      "date_completion": "2026-01-06",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2493",
+      "date_ban": "2026-01-11",
+      "date_completion": "2026-01-11",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2494",
+      "date_ban": "2026-01-06",
+      "date_completion": "2026-01-06",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2495",
+      "date_ban": "2026-01-16",
+      "date_completion": "2026-01-16",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2497",
+      "date_ban": "2026-01-30",
+      "date_completion": "2026-01-30",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2496",
+      "date_ban": "2026-01-31",
+      "date_completion": "2026-01-31",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2500",
+      "date_ban": "2026-01-24",
+      "date_completion": "2026-01-24",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2499",
+      "date_ban": "2026-01-28",
+      "date_completion": "2026-01-28",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2502",
+      "date_ban": "2026-01-30",
+      "date_completion": "2026-01-30",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2504",
+      "date_ban": "2026-01-11",
+      "date_completion": "2026-01-11",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2652",
+      "date_ban": "2026-01-11",
+      "date_completion": "2026-01-11",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2653",
+      "date_ban": "2026-01-09",
+      "date_completion": "2026-01-09",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2656",
+      "date_ban": "2026-01-22",
+      "date_completion": "2026-01-22",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2655",
+      "date_ban": "2026-01-27",
+      "date_completion": "2026-01-27",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2671",
+      "date_ban": "2026-01-28",
+      "date_completion": "2026-01-28",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2670",
+      "date_ban": "2026-01-25",
+      "date_completion": "2026-01-25",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2669",
+      "date_ban": "2026-01-12",
+      "date_completion": "2026-01-12",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2665",
+      "date_ban": "2026-02-03",
+      "date_completion": "2026-02-03",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2660",
+      "date_ban": "2026-01-15",
+      "date_completion": "2026-01-15",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2674",
+      "date_ban": "2026-01-22",
+      "date_completion": "2026-01-22",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2673",
+      "date_ban": "2026-01-18",
+      "date_completion": "2026-01-18",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2672",
+      "date_ban": "2026-01-22",
+      "date_completion": "2026-01-22",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2676",
+      "date_ban": "2026-02-10",
+      "date_completion": "2026-02-10",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2663",
+      "date_ban": "2026-01-09",
+      "date_completion": "2026-01-09",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2677",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2658",
+      "date_ban": "2026-02-05",
+      "date_completion": "2026-02-05",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2675",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2505",
+      "date_ban": "2026-02-03",
+      "date_completion": "2026-02-03",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2687",
+      "date_ban": "2026-01-31",
+      "date_completion": "2026-01-31",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2679",
+      "date_ban": "2026-01-30",
+      "date_completion": "2026-01-30",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2680",
+      "date_ban": "2026-01-30",
+      "date_completion": "2026-01-30",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2681",
+      "date_ban": "2026-01-26",
+      "date_completion": "2026-01-26",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2688",
+      "date_ban": "2026-01-20",
+      "date_completion": "2026-01-20",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2682",
+      "date_ban": "2026-01-26",
+      "date_completion": "2026-01-26",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2684",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2685",
+      "date_ban": "2026-02-02",
+      "date_completion": "2026-02-02",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2689",
+      "date_ban": "2026-01-31",
+      "date_completion": "2026-01-31",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2690",
+      "date_ban": "2026-01-24",
+      "date_completion": "2026-01-24",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2691",
+      "date_ban": "2026-01-27",
+      "date_completion": "2026-01-27",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2692",
+      "date_ban": "2026-01-30",
+      "date_completion": "2026-01-30",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2694",
+      "date_ban": "2026-01-28",
+      "date_completion": "2026-01-28",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2695",
+      "date_ban": "2026-01-23",
+      "date_completion": "2026-01-23",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2696",
+      "date_ban": "2026-01-26",
+      "date_completion": "2026-01-26",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2698",
+      "date_ban": "2026-01-18",
+      "date_completion": "2026-01-18",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2699",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2700",
+      "date_ban": "2026-01-18",
+      "date_completion": "2026-01-18",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2701",
+      "date_ban": "2026-01-31",
+      "date_completion": "2026-01-31",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2702",
+      "date_ban": "2026-01-28",
+      "date_completion": "2026-01-28",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2703",
+      "date_ban": "2026-01-22",
+      "date_completion": "2026-01-22",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2704",
+      "date_ban": "2026-02-08",
+      "date_completion": "2026-02-08",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2705",
+      "date_ban": "2026-01-26",
+      "date_completion": "2026-01-26",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2706",
+      "date_ban": "2026-01-24",
+      "date_completion": "2026-01-24",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2707",
+      "date_ban": "2026-01-28",
+      "date_completion": "2026-01-28",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2708",
+      "date_ban": "2026-02-02",
+      "date_completion": "2026-02-02",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2711",
+      "date_ban": "2026-01-18",
+      "date_completion": "2026-01-18",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2712",
+      "date_ban": "2026-02-13",
+      "date_completion": "2026-02-13",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2713",
+      "date_ban": "2026-01-30",
+      "date_completion": "2026-01-30",
+      "price": 0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHKL2714",
+      "date_ban": "2026-01-29",
+      "date_completion": "2026-01-29",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2715",
+      "date_ban": "2026-01-26",
+      "date_completion": "2026-01-26",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2716",
+      "date_ban": "2026-01-24",
+      "date_completion": "2026-01-24",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2719",
+      "date_ban": "2026-01-19",
+      "date_completion": "2026-01-19",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2728",
+      "date_ban": "2026-01-29",
+      "date_completion": "2026-01-29",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2729",
+      "date_ban": "2026-02-10",
+      "date_completion": "2026-02-10",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2730",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2731",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2732",
+      "date_ban": "2026-01-06",
+      "date_completion": "2026-01-06",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2733",
+      "date_ban": "2026-02-05",
+      "date_completion": "2026-02-05",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2734",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2735",
+      "date_ban": "2026-01-28",
+      "date_completion": "2026-01-28",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2736",
+      "date_ban": "2026-02-08",
+      "date_completion": "2026-02-08",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2737",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2738",
+      "date_ban": "2026-01-12",
+      "date_completion": "2026-01-12",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2740",
+      "date_ban": "2026-02-14",
+      "date_completion": "2026-02-14",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2741",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2745",
+      "date_ban": "2026-03-25",
+      "date_completion": "2026-03-25",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2744",
+      "date_ban": "2026-01-29",
+      "date_completion": "2026-01-29",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2743",
+      "date_ban": "2026-01-27",
+      "date_completion": "2026-01-27",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2742",
+      "date_ban": "2026-02-03",
+      "date_completion": "2026-02-03",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2748",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2747",
+      "date_ban": "2026-02-13",
+      "date_completion": "2026-02-13",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2746",
+      "date_ban": "2026-02-05",
+      "date_completion": "2026-02-05",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2753",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2756",
+      "date_ban": "2026-03-26",
+      "date_completion": "2026-03-26",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2751",
+      "date_ban": "2026-02-02",
+      "date_completion": "2026-02-02",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2752",
+      "date_ban": "2026-02-03",
+      "date_completion": "2026-02-03",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2761",
+      "date_ban": "2026-01-11",
+      "date_completion": "2026-01-11",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2760",
+      "date_ban": "2026-02-05",
+      "date_completion": "2026-02-05",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2762",
+      "date_ban": "2026-01-22",
+      "date_completion": "2026-01-22",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2763",
+      "date_ban": "2026-01-26",
+      "date_completion": "2026-01-26",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2764",
+      "date_ban": "2026-01-18",
+      "date_completion": "2026-01-18",
+      "price": 0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHKL2765",
+      "date_ban": "2026-02-08",
+      "date_completion": "2026-02-08",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2766",
+      "date_ban": "2026-02-03",
+      "date_completion": "2026-02-03",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2767",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2770",
+      "date_ban": "2026-01-30",
+      "date_completion": "2026-01-30",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2769",
+      "date_ban": "2026-02-03",
+      "date_completion": "2026-02-03",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2772",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHKL2773",
+      "date_ban": "2026-01-28",
+      "date_completion": "2026-01-28",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2774",
+      "date_ban": "2026-01-30",
+      "date_completion": "2026-01-30",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2775",
+      "date_ban": "2026-02-09",
+      "date_completion": "2026-02-09",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2776",
+      "date_ban": "2026-01-28",
+      "date_completion": "2026-01-28",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2777",
+      "date_ban": "2026-01-20",
+      "date_completion": "2026-01-20",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2778",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2779",
+      "date_ban": "2026-02-13",
+      "date_completion": "2026-02-13",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2780",
+      "date_ban": "2026-03-26",
+      "date_completion": "2026-03-26",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2782",
+      "date_ban": "2026-02-10",
+      "date_completion": "2026-02-10",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2781",
+      "date_ban": "2026-02-02",
+      "date_completion": "2026-02-02",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2783",
+      "date_ban": "2026-01-06",
+      "date_completion": "2026-01-06",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2784",
+      "date_ban": "2026-02-06",
+      "date_completion": "2026-02-06",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2785",
+      "date_ban": "2026-02-03",
+      "date_completion": "2026-02-03",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2786",
+      "date_ban": "2026-02-10",
+      "date_completion": "2026-02-10",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2788",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2787",
+      "date_ban": "2026-02-09",
+      "date_completion": "2026-02-09",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2789",
+      "date_ban": "2026-02-11",
+      "date_completion": "2026-02-11",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2790",
+      "date_ban": "2026-02-01",
+      "date_completion": "2026-02-01",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2794",
+      "date_ban": "2026-02-09",
+      "date_completion": "2026-02-09",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2793",
+      "date_ban": "2026-02-08",
+      "date_completion": "2026-02-08",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2795",
+      "date_ban": "2026-01-29",
+      "date_completion": "2026-01-29",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2797",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2799",
+      "date_ban": "2026-02-11",
+      "date_completion": "2026-02-11",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2798",
+      "date_ban": "2026-02-09",
+      "date_completion": "2026-02-09",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2800",
+      "date_ban": "2026-01-18",
+      "date_completion": "2026-01-18",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2809",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2802",
+      "date_ban": "2026-02-13",
+      "date_completion": "2026-02-13",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2804",
+      "date_ban": "2026-01-29",
+      "date_completion": "2026-01-29",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2805",
+      "date_ban": "2026-01-20",
+      "date_completion": "2026-01-20",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2808",
+      "date_ban": "2026-02-11",
+      "date_completion": "2026-02-11",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2807",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2806",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2816",
+      "date_ban": "2026-01-13",
+      "date_completion": "2026-01-13",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2817",
+      "date_ban": "2026-02-02",
+      "date_completion": "2026-02-02",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2819",
+      "date_ban": "2026-02-11",
+      "date_completion": "2026-02-11",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2818",
+      "date_ban": "2026-02-05",
+      "date_completion": "2026-02-05",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2821",
+      "date_ban": "2026-01-11",
+      "date_completion": "2026-01-11",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2822",
+      "date_ban": "2026-01-24",
+      "date_completion": "2026-01-24",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2824",
+      "date_ban": "2026-01-26",
+      "date_completion": "2026-01-26",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2823",
+      "date_ban": "2026-02-03",
+      "date_completion": "2026-02-03",
+      "price": 0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHKL2825",
+      "date_ban": "2026-01-27",
+      "date_completion": "2026-01-27",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2826",
+      "date_ban": "2026-02-08",
+      "date_completion": "2026-02-08",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2827",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2828",
+      "date_ban": "2026-02-06",
+      "date_completion": "2026-02-06",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2829",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2830",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2865",
+      "date_ban": "2026-02-09",
+      "date_completion": "2026-02-09",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2832",
+      "date_ban": "2026-02-09",
+      "date_completion": "2026-02-09",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2834",
+      "date_ban": "2026-02-05",
+      "date_completion": "2026-02-05",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2835",
+      "date_ban": "2026-02-16",
+      "date_completion": "2026-02-16",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2836",
+      "date_ban": "2026-02-04",
+      "date_completion": "2026-02-04",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2838",
+      "date_ban": "2026-01-28",
+      "date_completion": "2026-01-28",
+      "price": 0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHKL2837",
+      "date_ban": "2026-02-03",
+      "date_completion": "2026-02-03",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2839",
+      "date_ban": "2026-02-16",
+      "date_completion": "2026-02-16",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2840",
+      "date_ban": "2026-01-18",
+      "date_completion": "2026-01-18",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2841",
+      "date_ban": "2026-02-13",
+      "date_completion": "2026-02-13",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2842",
+      "date_ban": "2026-02-07",
+      "date_completion": "2026-02-07",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2843",
+      "date_ban": "2026-01-30",
+      "date_completion": "2026-01-30",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2845",
+      "date_ban": "2026-03-28",
+      "date_completion": "2026-03-28",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2844",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2846",
+      "date_ban": "2026-03-23",
+      "date_completion": "2026-03-23",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2847",
+      "date_ban": "2026-02-10",
+      "date_completion": "2026-02-10",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2848",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHKL2849",
+      "date_ban": "2026-02-10",
+      "date_completion": "2026-02-10",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2850",
+      "date_ban": "2026-01-24",
+      "date_completion": "2026-01-24",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2851",
+      "date_ban": "2026-02-13",
+      "date_completion": "2026-02-13",
+      "price": 0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHKL2852",
+      "date_ban": "2026-01-20",
+      "date_completion": "2026-01-20",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2853",
+      "date_ban": "2026-01-17",
+      "date_completion": "2026-01-17",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2854",
+      "date_ban": "2026-01-17",
+      "date_completion": "2026-01-17",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2855",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2856",
+      "date_ban": "2026-01-30",
+      "date_completion": "2026-01-30",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2857",
+      "date_ban": "2026-02-01",
+      "date_completion": "2026-02-01",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2858",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2859",
+      "date_ban": "2026-02-10",
+      "date_completion": "2026-02-10",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2861",
+      "date_ban": "2026-02-09",
+      "date_completion": "2026-02-09",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2862",
+      "date_ban": "2026-02-16",
+      "date_completion": "2026-02-16",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2863",
+      "date_ban": "2026-02-13",
+      "date_completion": "2026-02-13",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2864",
+      "date_ban": "2026-02-09",
+      "date_completion": "2026-02-09",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2898",
+      "date_ban": "2026-02-15",
+      "date_completion": "2026-02-15",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2900",
+      "date_ban": "2026-02-09",
+      "date_completion": "2026-02-09",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2901",
+      "date_ban": "2026-03-17",
+      "date_completion": "2026-03-17",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2902",
+      "date_ban": "2026-01-31",
+      "date_completion": "2026-01-31",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2903",
+      "date_ban": "2026-01-26",
+      "date_completion": "2026-01-26",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2905",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2906",
+      "date_ban": "2026-01-26",
+      "date_completion": "2026-01-26",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2907",
+      "date_ban": "2026-02-11",
+      "date_completion": "2026-02-11",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2908",
+      "date_ban": "2026-01-28",
+      "date_completion": "2026-01-28",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2909",
+      "date_ban": "2026-01-28",
+      "date_completion": "2026-01-28",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2910",
+      "date_ban": "2026-03-24",
+      "date_completion": "2026-03-24",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2911",
+      "date_ban": "2026-02-10",
+      "date_completion": "2026-02-10",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2912",
+      "date_ban": "2026-02-05",
+      "date_completion": "2026-02-05",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2914",
+      "date_ban": "2026-02-02",
+      "date_completion": "2026-02-02",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2916",
+      "date_ban": "2026-03-15",
+      "date_completion": "2026-03-15",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2917",
+      "date_ban": "2026-02-03",
+      "date_completion": "2026-02-03",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2918",
+      "date_ban": "2026-02-11",
+      "date_completion": "2026-02-11",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2920",
+      "date_ban": "2026-02-08",
+      "date_completion": "2026-02-08",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2921",
+      "date_ban": "2026-02-10",
+      "date_completion": "2026-02-10",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2922",
+      "date_ban": "2026-03-26",
+      "date_completion": "2026-03-26",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2924",
+      "date_ban": "2026-02-05",
+      "date_completion": "2026-02-05",
+      "price": 0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHKL2925",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2926",
+      "date_ban": "2026-02-09",
+      "date_completion": "2026-02-09",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2927",
+      "date_ban": "2026-02-09",
+      "date_completion": "2026-02-09",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2928",
+      "date_ban": "2026-03-31",
+      "date_completion": "2026-03-31",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2929",
+      "date_ban": "2026-04-08",
+      "date_completion": "2026-04-08",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2984",
+      "date_ban": "2026-03-29",
+      "date_completion": "2026-03-29",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2931",
+      "date_ban": "2026-02-12",
+      "date_completion": "2026-02-12",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2933",
+      "date_ban": "2026-03-30",
+      "date_completion": "2026-03-30",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2934",
+      "date_ban": "2026-02-16",
+      "date_completion": "2026-02-16",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL2935",
+      "date_ban": "2026-04-08",
+      "date_completion": "2026-04-08",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2936",
+      "date_ban": "2026-03-13",
+      "date_completion": "2026-03-13",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2973",
+      "date_ban": "2026-03-13",
+      "date_completion": "2026-03-13",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2974",
+      "date_ban": "2026-03-20",
+      "date_completion": "2026-03-20",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2981",
+      "date_ban": "2026-03-22",
+      "date_completion": "2026-03-22",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2980",
+      "date_ban": "2026-03-25",
+      "date_completion": "2026-03-25",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2978",
+      "date_ban": "2026-03-31",
+      "date_completion": "2026-03-31",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL2976",
+      "date_ban": "2026-03-11",
+      "date_completion": "2026-03-11",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL2975",
+      "date_ban": "2026-03-19",
+      "date_completion": "2026-03-19",
+      "price": 0,
+      "workshop": "Inox Pro"
+    },
+    {
+      "code": "DHKL2983",
+      "date_ban": "2026-03-24",
+      "date_completion": "2026-03-24",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL3001",
+      "date_ban": "2026-03-21",
+      "date_completion": "2026-03-21",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL3004",
+      "date_ban": "2026-03-27",
+      "date_completion": "2026-03-27",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL3007",
+      "date_ban": "2026-04-01",
+      "date_completion": "2026-04-01",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL3008",
+      "date_ban": "2026-03-20",
+      "date_completion": "2026-03-20",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL3012",
+      "date_ban": "2026-03-27",
+      "date_completion": "2026-03-27",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL3014",
+      "date_ban": "2026-04-07",
+      "date_completion": "2026-04-07",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL3029",
+      "date_ban": "2026-03-23",
+      "date_completion": "2026-03-23",
+      "price": 0,
+      "workshop": "ADN"
+    },
+    {
+      "code": "DHKL3030",
+      "date_ban": "2026-03-31",
+      "date_completion": "2026-03-31",
+      "price": 0,
+      "workshop": "Sơn Thủy"
+    },
+    {
+      "code": "DHKL3036",
+      "date_ban": "2026-04-05",
+      "date_completion": "2026-04-05",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL3040",
+      "date_ban": "2026-03-24",
+      "date_completion": "2026-03-24",
+      "price": 0,
+      "workshop": null
+    },
+    {
+      "code": "DHKL3044",
+      "date_ban": "2026-04-09",
+      "date_completion": "2026-04-09",
+      "price": 0,
+      "workshop": "ADN"
+    }
+  ],
+  "incidents": [
+    {
+      "code": "DHKL2426",
+      "date": "2026-01-03",
+      "workshop": "ADN",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2276",
+      "date": "2026-01-03",
+      "workshop": "Inox Pro",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2339",
+      "date": "2026-01-06",
+      "workshop": "Inox Pro",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2210",
+      "date": "2026-01-06",
+      "workshop": "Sơn Thủy",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "519 (2024)",
+      "date": "2026-01-09",
+      "workshop": "Sơn Thủy",
+      "cost": 4000000.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL663",
+      "date": "2026-01-10",
+      "workshop": "ADN",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2294",
+      "date": "2026-01-11",
+      "workshop": "Sơn Thủy",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2390",
+      "date": "2026-01-11",
+      "workshop": "ADN",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2255",
+      "date": "2026-01-12",
+      "workshop": "Sơn Thủy",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "",
+      "date": "2026-01-12",
+      "workshop": "Sơn Thủy",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "411 (2023) ",
+      "date": "2026-01-26",
+      "workshop": "Sơn Thủy",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2498",
+      "date": "2026-01-31",
+      "workshop": "ADN",
+      "cost": 0,
+      "status": "Đang xử lí",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2804",
+      "date": "2026-01-31",
+      "workshop": "ADN",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2496",
+      "date": "2026-01-26",
+      "workshop": "Sơn Thủy",
+      "cost": 39000.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2809",
+      "date": "2026-02-12",
+      "workshop": "Inox Pro",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL763",
+      "date": "2026-02-26",
+      "workshop": "ADN",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2139",
+      "date": "2026-02-11",
+      "workshop": "Sơn Thủy",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2745",
+      "date": "2026-02-11",
+      "workshop": "Sơn Thủy",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL260",
+      "date": "2026-03-03",
+      "workshop": "ADN",
+      "cost": 0,
+      "status": "Đang xử lí",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2828",
+      "date": "2026-03-02",
+      "workshop": "ADN",
+      "cost": 0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL52",
+      "date": "2026-03-02",
+      "workshop": "Sơn Thủy",
+      "cost": 0,
+      "status": "Đang xử lí",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2476",
+      "date": "2026-03-02",
+      "workshop": "Sơn Thủy",
+      "cost": 0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2481",
+      "date": "2026-03-04",
+      "workshop": "Sơn Thủy",
+      "cost": 0.0,
+      "status": "Đang xử lí",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL735",
+      "date": "2026-03-04",
+      "workshop": "Sơn Thủy",
+      "cost": 0,
+      "status": "Đang xử lí",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2043",
+      "date": "2026-03-10",
+      "workshop": "Sơn Thủy",
+      "cost": 0,
+      "status": "Đang xử lí",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "",
+      "date": "2026-03-11",
+      "workshop": "Sơn Thủy",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "",
+      "date": "2026-03-10",
+      "workshop": "ADN",
+      "cost": 0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL879",
+      "date": "2026-03-13",
+      "workshop": "Sơn Thủy",
+      "cost": 0,
+      "status": "Đang xử lí",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHMKL1355",
+      "date": "2026-03-20",
+      "workshop": "ADN",
+      "cost": 0.0,
+      "status": "Đang xử lí",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "118(2024)",
+      "date": "2026-03-19",
+      "workshop": "Sơn Thủy",
+      "cost": 0,
+      "status": "Đang xử lí",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "236 (2023)",
+      "date": "2026-03-23",
+      "workshop": "Sơn Thủy",
+      "cost": 0,
+      "status": "Đang xử lí",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "\tDHMKL1243",
+      "date": "2026-04-02",
+      "workshop": "Sơn Thủy",
+      "cost": 0,
+      "status": "Đang xử lí",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2973\r\n",
+      "date": "2026-04-03",
+      "workshop": "Sơn Thủy",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL237",
+      "date": "2026-04-03",
+      "workshop": "Sơn Thủy",
+      "cost": 0.0,
+      "status": "Đã xử lí xong",
+      "type": "Đơn hàng bảo hành"
+    },
+    {
+      "code": "DHKL2922",
+      "date": "2026-04-07",
+      "workshop": "Sơn Thủy",
+      "cost": 0,
+      "status": "Chờ xử lí",
+      "type": "Đơn hàng bảo hành"
+    }
+  ]
+};
+
+const state = {
+  grain: 'month',
+  period: '2026-01',
+  week: 'all',
+  factory: 'all',
+  charts: {}
+};
+
+const CANONICAL_WORKSHOPS = ['ADN', 'Sơn Thủy', 'Inox Pro'];
+
 /* ========================
-   NAVIGATION
+   HELPERS
 ======================== */
+const fmtFull = (v) => {
+  if (v === undefined || v === null || isNaN(v)) return '0';
+  return Math.round(v).toLocaleString('vi-VN') + ' ₫';
+};
+
+const fmtShort = (v) => {
+  if (v >= 1e9) return (v / 1e9).toFixed(2) + 'B';
+  if (v >= 1e6) return (v / 1e6).toFixed(1) + 'M';
+  return Math.round(v).toLocaleString('vi-VN');
+};
+
+const getRange = () => {
+  const [y, m] = state.period.split('-').map(Number);
+  const startMonth = new Date(y, m - 1, 1);
+  const lastDay = new Date(y, m, 0).getDate();
+  const endMonth = new Date(y, m, 0, 23, 59, 59);
+  
+  if (state.week === 'all') return { start: startMonth, end: endMonth };
+  
+  const w = parseInt(state.week);
+  let startD, endD;
+
+  if (w === 1) { startD = 1; endD = 7; }
+  else if (w === 2) { startD = 8; endD = 14; }
+  else if (w === 3) { startD = 15; endD = 21; }
+  else if (w === 4) { startD = 22; endD = 28; }
+  else if (w === 5) { startD = 29; endD = lastDay; }
+  else { return { start: startMonth, end: endMonth }; }
+
+  return { 
+    start: new Date(y, m - 1, startD), 
+    end: new Date(y, m - 1, endD, 23, 59, 59) 
+  };
+};
+
+const fmtDate = (d) => {
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;
+};
+
+/* ========================
+   CORE FILTER ENGINE
+======================== */
+function filterData() {
+  const range = getRange();
+  const f = state.factory;
+  
+  const inRange = (dStr, r) => {
+    if (!dStr) return false;
+    const d = new Date(dStr);
+    return d >= r.start && d <= r.end;
+  };
+
+  const isCanonical = (ws) => CANONICAL_WORKSHOPS.includes(ws);
+  const matchFactory = (ws) => (f === 'all' ? isCanonical(ws) : ws === f);
+
+  return {
+    source_a: dashboardData.purchases_source_a.filter(p => inRange(p.date_mua, range) && matchFactory(p.workshop)),
+    source_b: dashboardData.purchases_source_b.filter(p => inRange(p.date_mua, range) && matchFactory(p.workshop)),
+    completed_sales: dashboardData.sales.filter(s => inRange(s.date_completion, range) && matchFactory(s.workshop)),
+    all_completed_sales: dashboardData.sales.filter(s => inRange(s.date_completion, range)),
+    revenue_sales: dashboardData.sales.filter(s => inRange(s.date_ban, range) && matchFactory(s.workshop)),
+    incidents: dashboardData.incidents.filter(i => inRange(i.date, range) && matchFactory(i.workshop))
+  };
+}
+
+/* ========================
+   RENDER ENGINE
+======================== */
+function renderDashboard() {
+  const data = filterData();
+  const range = getRange();
+  const rangeStr = `${fmtDate(range.start)} – ${fmtDate(range.end)}`;
+  
+  setVal('kpi-purchase-range', rangeStr);
+  setVal('kpi-cogs-range', rangeStr);
+  setVal('ld-WorkshopDonut-Range', rangeStr);
+
+  const cogs_b = data.source_b.reduce((s,i)=>s+i.price, 0);
+  const count_b = data.source_b.length;
+  const revenue = data.revenue_sales.reduce((s,i)=>s+i.price, 0);
+  const profit = revenue - cogs_b;
+
+  setVal('kpi-purchase-count', count_b);
+  setVal('kpi-cogs', fmtFull(cogs_b));
+  setVal('kpi-profit', fmtFull(profit));
+  setVal('kpi-revenue-total', 'DT ' + fmtFull(revenue));
+  setVal('kpi-margin', `Biên ${revenue>0?(profit/revenue*100).toFixed(1):0}%`);
+  setVal('kpi-cogs-ratio', (revenue>0?(cogs_b/revenue*100).toFixed(1):0) + '%');
+
+  const totalCompleted = data.all_completed_sales.length;
+  setVal('kpi-completed-count', totalCompleted); // Executive Screen
+  setVal('kpi-completed-count-staff', totalCompleted); // Staff Screen
+  
+  const dualVal = document.getElementById('kpi-sales-dual');
+  if (dualVal) {
+    dualVal.innerHTML = `${totalCompleted} <span style="font-size:14px;color:var(--text-muted);font-weight:600;">/ ${fmtShort(revenue)}</span>`;
+  }
+
+  updateCharts(data);
+  updateOverdueTable(data);
+}
+
+function setVal(id, v) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = v;
+}
+
+function updateCharts(data) {
+  const GRID = 'rgba(255,255,255,0.06)';
+  Chart.defaults.color = '#64748B';
+
+  const wsMap = {};
+  CANONICAL_WORKSHOPS.forEach(w => wsMap[w] = 0);
+  data.source_a.forEach(p => { if(wsMap[p.workshop] !== undefined) wsMap[p.workshop]++; });
+  
+  const wsTotal = Object.values(wsMap).reduce((a,b)=>a+b, 0) || 1;
+  const donutLabels = CANONICAL_WORKSHOPS.map(k => `${k} (${(wsMap[k]/wsTotal*100).toFixed(1)}%)`);
+  
+  renderChart('ld-WorkshopDonut', 'doughnut', {
+    labels: donutLabels,
+    datasets: [{ data: CANONICAL_WORKSHOPS.map(w => wsMap[w]), backgroundColor: ['#3B82F6','#8B5CF6','#10B981'], borderWidth: 2, borderColor: '#1A2035' }]
+  }, { cutout: '60%', plugins: { 
+    legend: { display: true, position: 'right', labels: { color: '#94A3B8' } },
+    tooltip: { callbacks: { label: c => `${c.label}: ${c.raw} đơn` } }
+  }});
+
+  const timeMap = {};
+  CANONICAL_WORKSHOPS.forEach(w => timeMap[w] = {on:0, late:0});
+  data.source_a.forEach(p => {
+    if(timeMap[p.workshop]) {
+      if(p.timeliness === 'Đúng hạn') timeMap[p.workshop].on++;
+      else if(p.timeliness === 'Trễ hạn') timeMap[p.workshop].late++;
+    }
+  });
+  
+  const barWorkshops = state.factory === 'all' ? CANONICAL_WORKSHOPS : [state.factory];
+  renderChart('ld-WorkshopTimeliness', 'bar', {
+    labels: barWorkshops,
+    datasets: [
+      { label: 'Đúng hạn', data: barWorkshops.map(w => timeMap[w].on), backgroundColor: '#10B981', borderRadius: 4 },
+      { label: 'Trễ hạn', data: barWorkshops.map(w => timeMap[w].late), backgroundColor: '#EF4444', borderRadius: 4 }
+    ]
+  }, { indexAxis: 'y', plugins: { legend: { display: true, position: 'top', align: 'end', labels: { color: '#94A3B8' } } }, scales: { x: { stacked: true, grid: { color: GRID }, ticks: { color: '#64748B' } }, y: { stacked: true, grid: { display: false }, ticks: { color: '#64748B' } } } });
+
+  const statusMap = { 'Chờ xử lý': 0, 'Đang xử lý': 0, 'Hoàn thành': 0 };
+  data.incidents.forEach(i => {
+    if (i.status.includes('Đã xử lí')) statusMap['Hoàn thành']++;
+    else if (i.status.includes('Đang')) statusMap['Đang xử lý']++;
+    else statusMap['Chờ xử lý']++;
+  });
+  renderChart('nv-WarrantyStatus', 'doughnut', {
+    labels: Object.keys(statusMap),
+    datasets: [{ data: Object.values(statusMap), backgroundColor: ['#EF4444','#F59E0B','#10B981'], borderWidth: 2, borderColor: '#1A2035' }]
+  }, { cutout: '65%', plugins: { legend: { display: false } } });
+}
+
+function renderChart(id, type, data, options) {
+  const ctx = document.getElementById(id); if (!ctx) return;
+  if (state.charts[id]) state.charts[id].destroy();
+  state.charts[id] = new Chart(ctx, { type, data, options: { ...options, responsive: true, maintainAspectRatio: false } });
+}
+
+function updateOverdueTable(data) {
+  const tbody = document.getElementById('overdue-table-body'); if(!tbody) return;
+  const overdue = data.source_a.filter(p => {
+    if(!p.deadline) return false;
+    const dParts = p.deadline.split('/');
+    if(dParts.length < 3) return false;
+    const d = new Date(dParts[2], dParts[1]-1, dParts[0]);
+    return d < new Date(2026, 3, 12) && p.timeliness !== 'Đúng hạn';
+  });
+  tbody.innerHTML = overdue.slice(0, 8).map(p => {
+    const dParts = p.deadline.split('/');
+    const d = new Date(dParts[2], dParts[1]-1, dParts[0]);
+    const lateDays = Math.floor((new Date(2026, 3, 12).getTime() - d.getTime()) / (1000*60*60*24));
+    return `<tr><td><span class="code-cell">${p.code}</span></td><td class="fw-700">Khách ${p.code}</td><td>${p.workshop}</td><td>${p.supervisor}</td><td class="text-red fw-700">${p.deadline}</td><td><span class="delay-val">+${lateDays} ngày</span></td><td><span class="pt-tag pt-high">Cao</span></td><td><span class="status-badge sb-risk">${p.timeliness}</span></td></tr>`;
+  }).join('') || '<tr><td colspan="8" style="text-align:center;padding:40px;">Không có đơn trễ hạn trong kỳ này</td></tr>';
+}
+
 function switchScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
-  document.getElementById('screen-' + id).classList.add('active');
-  document.getElementById('nav-' + id).classList.add('active');
-
-  const titles = {
-    ld: { title: 'Ban Lãnh Đạo', sub: 'Tổng quan điều hành vận hành, mua hàng & CSKH năm 2026' },
-    nv: { title: 'Nhân Viên Mua Hàng & CSKH', sub: 'Theo dõi đơn hàng, tiến độ, phát sinh & bảo hành — Tuần hiện tại' }
-  };
-
-  document.getElementById('topbar-title').textContent = titles[id].title;
-  document.getElementById('topbar-sub').textContent   = titles[id].sub;
-
-  // render charts for active screen
-  if (id === 'ld' && !window.ldChartsRendered)  { renderLdCharts();  window.ldChartsRendered  = true; }
-  if (id === 'nv' && !window.nvChartsRendered)  { renderNvCharts();  window.nvChartsRendered  = true; }
+  const scr = document.getElementById('screen-' + id); if(scr) scr.classList.add('active');
+  const navBtn = document.getElementById('nav-' + id); if (navBtn) navBtn.classList.add('active');
+  renderDashboard();
 }
 
-/* period toggle */
-document.querySelectorAll('.pt-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    this.closest('.period-toggle').querySelectorAll('.pt-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
+function updateWeekOptions() {
+  const wSelect = document.getElementById('week-select'); if (!wSelect) return;
+  const prevWeek = state.week;
+
+  const [y, m] = state.period.split('-').map(Number);
+  const lastDay = new Date(y, m, 0).getDate();
+  
+  const maxW = lastDay >= 29 ? 5 : 4;
+  wSelect.innerHTML = '<option value="all">Tất cả các tuần</option>';
+  for (let i = 1; i <= maxW; i++) {
+    const opt = document.createElement('option'); opt.value = i; opt.textContent = "Tuần " + i; wSelect.appendChild(opt);
+  }
+
+  // Persistence & Fallback logic
+  if (prevWeek !== 'all') {
+    const wNum = parseInt(prevWeek);
+    if (wNum > maxW) state.week = String(maxW);
+    else state.week = String(wNum);
+  } else {
+    state.week = 'all';
+  }
+  wSelect.value = state.week;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('period-select').addEventListener('change', (e) => {
+    state.period = e.target.value; updateWeekOptions(); renderDashboard();
   });
+  document.getElementById('week-select').addEventListener('change', (e) => {
+    state.week = e.target.value; renderDashboard();
+  });
+  document.getElementById('factory-select').addEventListener('change', (e) => {
+    state.factory = e.target.value; renderDashboard();
+  });
+  document.querySelector('.btn-update').addEventListener('click', renderDashboard);
+  updateWeekOptions();
+  renderDashboard();
 });
 
-/* ========================
-   CHART.JS DEFAULTS
-======================== */
-Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
-Chart.defaults.font.size   = 11;
-Chart.defaults.color       = '#64748B';
-Chart.defaults.plugins.legend.display = false;
-Chart.defaults.plugins.tooltip.backgroundColor  = '#0d1525';
-Chart.defaults.plugins.tooltip.titleColor       = '#F1F5F9';
-Chart.defaults.plugins.tooltip.bodyColor        = '#94A3B8';
-Chart.defaults.plugins.tooltip.borderColor      = 'rgba(255,255,255,0.08)';
-Chart.defaults.plugins.tooltip.borderWidth      = 1;
-Chart.defaults.plugins.tooltip.padding          = 10;
-Chart.defaults.plugins.tooltip.cornerRadius     = 8;
-
-const GRID = 'rgba(255,255,255,0.06)';
-
-/* ========================
-   LD CHARTS
-======================== */
-function renderLdCharts() {
-
-  /* Tỷ trọng mua theo xưởng — Dữ liệu thực tế 01/01–12/04/2026 */
-  new Chart(document.getElementById('ld-WorkshopDonut'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Sơn Thủy (41.6%)','ADN (36.5%)','Inox Pro (21.1%)','Nhi Long (0.8%)'],
-      datasets: [{
-        data: [41.6, 36.5, 21.1, 0.8],
-        backgroundColor: ['#3B82F6','#8B5CF6','#10B981','#F59E0B'],
-        borderWidth: 2, borderColor: '#1A2035'
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      cutout: '60%',
-      plugins: {
-        legend: {
-          display: true, position: 'right',
-          labels: { boxWidth: 9, boxHeight: 9, usePointStyle: true, pointStyle: 'circle', padding: 10, font: { size: 11 }, color: '#94A3B8' }
-        },
-        tooltip: { callbacks: { label: c => ` ${c.label}: ${c.parsed}%` } }
-      }
-    }
-  });
-
-  /* Tỷ lệ trả hàng đúng hạn / trễ hạn — Dữ liệu thực tế 01/01–12/04/2026 */
-  new Chart(document.getElementById('ld-WorkshopTimeliness'), {
-    type: 'bar',
-    data: {
-      labels: ['ADN (43 đơn)','Inox Pro (36 đơn)','Sơn Thủy (53 đơn)','Nhi Long (1 đơn)'],
-      datasets: [
-        { label: 'Đúng hạn %', data: [65, 54, 51, 100], backgroundColor: '#10B981', borderRadius: 4 },
-        { label: 'Trễ hạn %',  data: [35, 46, 49, 0],   backgroundColor: '#EF4444', borderRadius: 4 }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      indexAxis: 'y',
-      plugins: {
-        legend: {
-          display: true, position: 'top', align: 'end',
-          labels: { boxWidth: 9, boxHeight: 9, usePointStyle: true, pointStyle: 'circle', font: { size: 11 }, color: '#94A3B8' }
-        },
-        tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.x}%` } },
-        annotation: {}
-      },
-      scales: {
-        x: { stacked: true, grid: { color: GRID }, max: 100, ticks: { callback: v => v + '%', color: '#64748B' } },
-        y: { stacked: true, grid: { display: false }, ticks: { color: '#64748B' } }
-      }
-    }
-  });
-
-  /* Tỷ trọng nguyên nhân phát sinh & bảo hành */
-  new Chart(document.getElementById('ld-WarrantyReason'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Ngoại quan','Kết cấu','Màu sắc','Lý do khác'],
-      datasets: [{
-        data: [21, 8, 8, 5],
-        backgroundColor: ['#F59E0B','#EF4444','#3B82F6','#64748B'],
-        borderWidth: 2, borderColor: '#1A2035'
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      cutout: '65%',
-      plugins: { legend: { display: false } }
-    }
-  });
-
-  /* Chi phí phát sinh & bảo hành theo nguyên nhân */
-  new Chart(document.getElementById('ld-WarrantyCost'), {
-    type: 'bar',
-    data: {
-      labels: ['Lỗi ngoại quan','Lỗi kết cấu','Lỗi màu sắc','Leo lầu/BC','Khác'],
-      datasets: [{
-        label: 'Chi phí (VNĐ)',
-        data: [22000000, 18000000, 7500000, 5000000, 2500000],
-        backgroundColor: ['#F59E0B','#EF4444','#3B82F6','#8B5CF6','#64748B'],
-        borderRadius: 5
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      indexAxis: 'y',
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: c => ' ' + Number(c.parsed.x).toLocaleString('vi-VN') + ' ₫' } }
-      },
-      scales: {
-        x: { grid: { color: GRID }, ticks: { callback: v => (v/1000000).toFixed(0) + 'M', color: '#64748B' } },
-        y: { grid: { display: false }, ticks: { color: '#64748B' } }
-      }
-    }
-  });
-
-  /* Tình trạng đơn phát sinh / bảo hành */
-  new Chart(document.getElementById('ld-WarrantyStatus'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Chờ xử lý','Đang xử lý','Hoàn thành'],
-      datasets: [{
-        data: [8, 14, 20],
-        backgroundColor: ['#EF4444','#F59E0B','#10B981'],
-        borderWidth: 2, borderColor: '#1A2035'
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      cutout: '65%',
-      plugins: { legend: { display: false } }
-    }
-  });
-}
-
-/* ========================
-   NV CHARTS
-======================== */
-function renderNvCharts() {
-
-  /* Tình trạng đơn phát sinh / bảo hành — NV */
-  new Chart(document.getElementById('nv-WarrantyStatus'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Chờ xử lý','Đang xử lý','Hoàn thành'],
-      datasets: [{
-        data: [8, 14, 20],
-        backgroundColor: ['#EF4444','#F59E0B','#10B981'],
-        borderWidth: 2, borderColor: '#1A2035'
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      cutout: '65%',
-      plugins: { legend: { display: false } }
-    }
-  });
-}
-
-/* ========================
-   KHỞI CHẠY
-======================== */
-window.ldChartsRendered = false;
-window.nvChartsRendered = false;
-
-document.addEventListener('DOMContentLoaded', function() {
-  renderLdCharts();
-  window.ldChartsRendered = true;
-});
 </script>
-
 </body>
 </html>
