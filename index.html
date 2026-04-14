@@ -472,6 +472,151 @@
       opacity: 0.85;
     }
 
+    /* --- NEW MULTI-SELECT DESIGN --- */
+    .filter-mode-group {
+      display: flex;
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: 20px;
+      padding: 2px;
+      margin-right: 8px;
+    }
+
+    .fm-btn {
+      padding: 4px 14px;
+      font-size: 11.5px;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .fm-btn.active {
+      background: var(--brand);
+      color: white;
+    }
+
+    .ms-wrapper {
+      position: relative;
+      min-width: 180px;
+    }
+
+    .ms-header {
+      padding: 5px 30px 5px 12px;
+      border: 1px solid var(--border-strong);
+      border-radius: 20px;
+      background: var(--bg-card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 3l3 4 3-4' stroke='%2364748B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-h2);
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      user-select: none;
+    }
+
+    .ms-header:hover {
+      border-color: var(--brand);
+    }
+
+    .ms-dropdown {
+      position: absolute;
+      top: calc(100% + 5px);
+      left: 0;
+      width: 240px;
+      background: var(--bg-card-2);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      z-index: 100;
+      display: none;
+      padding: 8px 0;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .ms-dropdown.open {
+      display: block;
+    }
+
+    .ms-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-size: 12.5px;
+    }
+
+    .ms-option:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .ms-option input {
+      accent-color: var(--brand);
+      cursor: pointer;
+    }
+
+    .ms-option-label {
+      flex: 1;
+      color: var(--text-h2);
+    }
+
+    .ms-footer {
+      padding: 8px 14px 4px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+    }
+
+    .ms-action {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--brand);
+      text-transform: uppercase;
+      cursor: pointer;
+      opacity: 0.8;
+    }
+
+    .ms-action:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .selected-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-left: 10px;
+    }
+
+    .pill {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      background: var(--brand-dim);
+      border: 1px solid var(--brand-glow);
+      border-radius: 12px;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--brand);
+    }
+
+    .pill-close {
+      cursor: pointer;
+      opacity: 0.7;
+    }
+
+    .pill-close:hover {
+      opacity: 1;
+    }
+
     /* =============================================
    SCROLL AREA
 ============================================= */
@@ -1708,37 +1853,43 @@
 
       <!-- FILTER BAR -->
       <div class="filterbar">
-        <select class="fb-select" id="period-select">
-          <option value="2026-01" selected>Tháng 1 / 2026</option>
-          <option value="2026-02">Tháng 2 / 2026</option>
-          <option value="2026-03">Tháng 3 / 2026</option>
-          <option value="2026-04">Tháng 4 / 2026</option>
-        </select>
+        <div class="fb-label" style="margin-right:8px;">Chế độ:</div>
+        <div class="filter-mode-group">
+          <button class="fm-btn" onclick="setFilterMode('quarter')">Quý</button>
+          <button class="fm-btn active" onclick="setFilterMode('month')">Tháng</button>
+          <button class="fm-btn" onclick="setFilterMode('week')">Tuần</button>
+        </div>
 
         <div class="fb-sep"></div>
 
-        <span class="fb-label">Tuần:</span>
-        <select class="fb-select" id="week-select">
-          <option value="all">Tất cả các tuần</option>
-          <option value="1">Tuần 1</option>
-          <option value="2">Tuần 2</option>
-          <option value="3">Tuần 3</option>
-          <option value="4">Tuần 4</option>
-          <option value="5">Tuần 5</option>
-        </select>
+        <div class="ms-wrapper" id="time-ms-wrapper">
+          <div class="ms-header" id="ms-header-text" onclick="toggleMs()">Tháng 1 / 2026</div>
+          <div class="ms-dropdown" id="ms-dropdown">
+            <div id="ms-options-list">
+              <!-- JS rendered options -->
+            </div>
+            <div class="ms-footer">
+              <span class="ms-action" onclick="msSelectAll()">Tất cả</span>
+              <span class="ms-action" onclick="msDeselectAll()">Bỏ chọn</span>
+            </div>
+          </div>
+        </div>
 
+        <div class="selected-pills" id="selected-pills"></div>
+        <div class="fb-sep"></div>
+        <div class="fb-label" style="margin-right:8px;">Xưởng:</div>
+        <select class="fb-select" id="factory-select" style="width:140px;">
+          <option value="all">Tất cả xưởng</option>
+          <option value="ADN">Xưởng ADN</option>
+          <option value="Sơn Thủy">Xưởng Sơn Thủy</option>
+          <option value="Inox Pro">Xưởng Inox Pro</option>
+        </select>
         <div class="fb-sep"></div>
 
-        <select class="fb-select" id="factory-select">
-          <option value="all">Tổng các xưởng</option>
-          <option value="ADN">ADN</option>
-          <option value="Sơn Thuỷ">Sơn Thuỷ</option>
-          <option value="Inox Pro">Inox Pro</option>
-        </select>
-
-        <div class="fb-sep"></div>
-
-        <button class="btn-update">↻ Cập nhật</button>
+        <button class="btn-update"
+          style="background:var(--bg-card);border:1px solid var(--border-strong);color:var(--text-muted);margin-left:auto;margin-right:8px;"
+          onclick="resetToDefault()">Reset</button>
+        <button class="btn-update" onclick="renderDashboard()">↻ Cập nhật</button>
       </div>
 
       <!-- SCROLL AREA -->
@@ -1755,7 +1906,7 @@
             <div class="sec-line"></div>
           </div>
 
-          <div class="kpi-row kpi-4">
+          <div class="kpi-row kpi-3">
             <div class="kpi-card kc-blue">
               <div class="kc-top"><span class="kc-icon">📋</span><span class="status-badge sb-ok"
                   id="status-purchase">Hoàn thành</span></div>
@@ -1768,13 +1919,6 @@
               <div class="kc-label">Tổng giá vốn</div>
               <div class="kc-value" id="kpi-cogs">3.36B ₫</div>
               <div class="kc-foot"><span class="kc-cmp" id="kpi-cogs-range">01/01/2026 – 31/01/2026</span></div>
-            </div>
-            <div class="kpi-card kc-green">
-              <div class="kc-top"><span class="kc-icon">📈</span><span class="status-badge sb-ok">Hiệu quả</span></div>
-              <div class="kc-label">Lợi nhuận gộp</div>
-              <div class="kc-value" id="kpi-profit">3.712.000.000 ₫</div>
-              <div class="kc-foot"><span class="trend-up" id="kpi-margin">Biên 52.4%</span><span class="kc-cmp"
-                  id="kpi-revenue-total">DT 7.072.000.000</span></div>
             </div>
             <div class="kpi-card kc-yellow">
               <div class="kc-top"><span class="kc-icon">⚖️</span><span class="status-badge sb-ok">Dưới ngưỡng</span>
@@ -2067,7 +2211,7 @@
               <div class="card-head">
                 <div>
                   <div class="card-title">Chi phí phát sinh và bảo hành theo nguyên nhân</div>
-                  <div class="card-sub" id="kpi-incident-cause-cost-range">01/01/2026 – 14/04/2026</div>
+                  <div class="card-sub" id="ld-WarrantyCost-Range">01/01/2026 – 14/04/2026</div>
                 </div>
                 <span class="status-badge sb-risk" id="kpi-incident-cause-cost-total">0 ₫</span>
               </div>
@@ -2196,13 +2340,7 @@
               <div class="alert-col">
                 <div class="alert-col-head ach-blue">ℹ Thông tin</div>
                 <div class="al-items">
-                  <div class="al-item">
-                    <span class="al-icon">📊</span>
-                    <div>
-                      <div class="al-title">Lợi nhuận gộp tăng 12.4%</div>
-                      <div class="al-desc">Biên 21.8% — cao nhất từ Q4/2025</div>
-                    </div>
-                  </div>
+
                   <div class="al-item">
                     <span class="al-icon">📦</span>
                     <div>
@@ -2261,7 +2399,7 @@
               </div>
               <div class="kc-label">T.Gian TB (Cọc ➔ HT)</div>
               <div class="kc-value">39.7 ngày</div>
-              <div class="kc-foot"><span class="kc-cmp">01/01 – 14/04/2026</span></div>
+              <div class="kc-foot"><span class="kc-cmp" id="staff-leadtime-overall-range">01/01 – 14/04/2026</span></div>
             </div>
             <div class="kpi-card kc-green">
               <div class="kc-top"><span class="kc-icon">✅</span><span class="status-badge sb-ok">Xong</span></div>
@@ -2399,7 +2537,7 @@
             <div class="card-head">
               <div>
                 <div class="card-title">Thời gian xử lý trung bình</div>
-                <div class="card-sub">Dữ liệu thực tế 01/01 – 14/04/2026</div>
+                <div class="card-sub" id="staff-avg-leadtime-range">Dữ liệu thực tế 01/01 – 14/04/2026</div>
               </div>
               <span class="status-badge sb-warn">Cần rút ngắn</span>
             </div>
@@ -2537,8 +2675,7 @@
           </div>
           <div
             style="padding:9px 16px;border-top:1px solid var(--border);font-size:11.5px;color:var(--text-muted);display:flex;justify-content:space-between;">
-            <span>Hiển thị 3 / 22 đơn trễ — <span style="color:var(--red);font-weight:600;">Dữ liệu thực tế
-                01/01–14/04/2026</span></span>
+            <span>Hiển thị 3 / 22 đơn trễ — <span style="color:var(--red);font-weight:600;" id="staff-overdue-table-range">Dữ liệu thực tế 01/01–14/04/2026</span></span>
             <button class="btn-link">Xuất Excel →</button>
           </div>
         </div>
@@ -11648,14 +11785,67 @@
     };
 
     const state = {
-      grain: 'month',
-      period: '2026-01',
-      week: 'all',
+      filterMode: 'month',
+      selectedValues: ['2026-01'],
       factory: 'all',
       charts: {}
     };
 
     const CANONICAL_WORKSHOPS = ['ADN', 'Sơn Thuỷ', 'Inox Pro'];
+
+    /* ========================
+       TIME CONFIGURATION (2026)
+    ======================== */
+    const CONFIG = {
+      MAX_DATE: new Date(2026, 3, 14, 23, 59, 59),
+      START_DATE: new Date(2026, 0, 1)
+    };
+
+    function getTimeChoices(mode) {
+      const choices = [];
+      if (mode === 'quarter') {
+        choices.push({ id: 'Q1', label: 'Quý 1 / 2026', start: new Date(2026, 0, 1), end: new Date(2026, 2, 31, 23, 59, 59) });
+        choices.push({ id: 'Q2', label: 'Quý 2 / 2026', start: new Date(2026, 3, 1), end: CONFIG.MAX_DATE });
+      }
+      else if (mode === 'month') {
+        const monNames = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4'];
+        monNames.forEach((n, i) => {
+          const s = new Date(2026, i, 1);
+          let e = new Date(2026, i + 1, 0, 23, 59, 59);
+          if (e > CONFIG.MAX_DATE) e = CONFIG.MAX_DATE;
+          if (s <= CONFIG.MAX_DATE) choices.push({ id: `2026-0${i + 1}`, label: `${n} / 2026`, start: s, end: e });
+        });
+      }
+      else if (mode === 'week') {
+        const monNames = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4'];
+        monNames.forEach((n, i) => {
+          const monthStart = new Date(2026, i, 1);
+          if (monthStart > CONFIG.MAX_DATE) return;
+          const lastDay = new Date(2026, i + 1, 0).getDate();
+
+          for (let w = 1; w <= 5; w++) {
+            let startD = (w - 1) * 7 + 1;
+            let endD = w * 7;
+            if (w === 5) endD = lastDay;
+            if (startD > lastDay) continue;
+
+            const s = new Date(2026, i, startD);
+            let e = new Date(2026, i, endD, 23, 59, 59);
+            if (e > CONFIG.MAX_DATE) e = CONFIG.MAX_DATE;
+
+            if (s <= CONFIG.MAX_DATE) {
+              choices.push({
+                id: `2026-0${i + 1}-W${w}`,
+                label: `${n} - Tuần ${w}`,
+                start: s,
+                end: e
+              });
+            }
+          }
+        });
+      }
+      return choices;
+    }
 
     /* ========================
        HELPERS
@@ -11672,39 +11862,9 @@
       return Math.round(v).toLocaleString('vi-VN');
     };
 
-    const getRange = () => {
-      const [y, m] = state.period.split('-').map(Number);
-      const startMonth = new Date(y, m - 1, 1);
-      const lastDay = new Date(y, m, 0).getDate();
-      const endMonth = new Date(y, m, 0, 23, 59, 59);
-
-      let res;
-      if (state.week === 'all') {
-        res = { start: startMonth, end: endMonth };
-      } else {
-        const w = parseInt(state.week);
-        let startD, endD;
-        if (w === 1) { startD = 1; endD = 7; }
-        else if (w === 2) { startD = 8; endD = 14; }
-        else if (w === 3) { startD = 15; endD = 21; }
-        else if (w === 4) { startD = 22; endD = 28; }
-        else if (w === 5) { startD = 29; endD = lastDay; }
-        else { res = { start: startMonth, end: endMonth }; }
-
-        if (!res) {
-          res = {
-            start: new Date(y, m - 1, startD),
-            end: new Date(y, m - 1, endD, 23, 59, 59)
-          };
-        }
-      }
-
-      // Clamp to global max: 14/04/2026
-      const globalMax = new Date(2026, 3, 14, 23, 59, 59);
-      if (res.end > globalMax) res.end = globalMax;
-      if (res.start > globalMax) res.start = globalMax; // Should not happen but for safety
-
-      return res;
+    const getSelectedRanges = () => {
+      const allChoices = getTimeChoices(state.filterMode);
+      return allChoices.filter(c => state.selectedValues.includes(c.id));
     };
 
     const fmtDate = (d) => {
@@ -11713,14 +11873,14 @@
     };
 
     /* ========================
-       CORE FILTER ENGINE
+       CORE FILTER ENGINE (MULTI-RANGE)
     ======================== */
     function filterData() {
-      const range = getRange();
+      const ranges = getSelectedRanges();
       const f = state.factory;
 
-      const inRange = (dStr, r) => {
-        if (!dStr) return false;
+      const inMultiRange = (dStr) => {
+        if (!dStr || ranges.length === 0) return false;
         let d;
         if (typeof dStr === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dStr)) {
           const [y, m, day] = dStr.split('-').map(Number);
@@ -11728,7 +11888,7 @@
         } else {
           d = new Date(dStr);
         }
-        return d >= r.start && d <= r.end;
+        return ranges.some(r => d >= r.start && d <= r.end);
       };
 
       const isCanonical = (ws) => {
@@ -11747,43 +11907,146 @@
       };
 
       return {
-        source_a: dashboardData.purchases_source_a.filter(p => inRange(p.date_mua, range) && matchFactory(p.workshop)),
-        source_b: dashboardData.purchases_source_b.filter(p => inRange(p.date_mua, range) && matchFactory(p.workshop)),
-        completed_sales: dashboardData.sales.filter(s => inRange(s.date_completion, range) && matchFactory(s.workshop)),
-        all_completed_sales: dashboardData.sales.filter(s => inRange(s.date_completion, range)),
-        revenue_sales: dashboardData.sales.filter(s => inRange(s.date_ban, range) && matchFactory(s.workshop)),
-        incidents: dashboardData.incidents.filter(i => inRange(i.date, range) && matchFactory(i.workshop)),
-        shipping_orders: dashboardData.shipping_orders.filter(i => inRange(i.date_sign, range)),
-        workshop_debt: dashboardData.workshop_debt.filter(d => inRange(d.date_sign, range) && (f === 'all' ? isCanonical(d.workshop) : matchFactory(d.workshop))),
-        incident_orders: dashboardData.incident_orders.filter(d => inRange(d.date, range)),
-        warranty_orders: dashboardData.warranty_orders.filter(d => inRange(d.date, range)),
-        incident_costs: dashboardData.incident_costs.filter(d => inRange(d.date, range)),
-        pending_orders: (dashboardData.pending_orders || []).filter(d => inRange(d.date, range)),
-        incident_report_full: (dashboardData.incident_report_full || []).filter(d => inRange(d.date, range))
+        source_a: dashboardData.purchases_source_a.filter(p => inMultiRange(p.date_mua) && matchFactory(p.workshop)),
+        source_b: dashboardData.purchases_source_b.filter(p => inMultiRange(p.date_mua) && matchFactory(p.workshop)),
+        completed_sales: dashboardData.sales.filter(s => inMultiRange(s.date_completion) && matchFactory(s.workshop)),
+        all_completed_sales: dashboardData.sales.filter(s => inMultiRange(s.date_completion)),
+        revenue_sales: dashboardData.sales.filter(s => inMultiRange(s.date_ban) && matchFactory(s.workshop)),
+        incidents: dashboardData.incidents.filter(i => inMultiRange(i.date) && matchFactory(i.workshop)),
+        shipping_orders: dashboardData.shipping_orders.filter(i => inMultiRange(i.date_sign)),
+        workshop_debt: dashboardData.workshop_debt.filter(d => inMultiRange(d.date_sign) && (f === 'all' ? isCanonical(d.workshop) : matchFactory(d.workshop))),
+        incident_orders: dashboardData.incident_orders.filter(d => inMultiRange(d.date)),
+        warranty_orders: dashboardData.warranty_orders.filter(d => inMultiRange(d.date)),
+        incident_costs: dashboardData.incident_costs.filter(d => inMultiRange(d.date)),
+        pending_orders: (dashboardData.pending_orders || []).filter(d => inMultiRange(d.date)),
+        incident_report_full: (dashboardData.incident_report_full || []).filter(d => inMultiRange(d.date))
       };
     }
+
+    /* ========================
+       UI HANDLERS for MULTI-SELECT
+    ======================== */
+    function toggleMs() {
+      document.getElementById('ms-dropdown').classList.toggle('open');
+    }
+
+    function setFilterMode(mode) {
+      state.filterMode = mode;
+      state.selectedValues = []; // Clear selection when changing mode
+
+      // Defaults toggle
+      const btns = document.querySelectorAll('.fm-btn');
+      btns.forEach(b => {
+        b.classList.toggle('active', b.getAttribute('onclick').includes(mode));
+      });
+
+      // Default selection for "month" mode
+      if (mode === 'month') state.selectedValues = ['2026-01'];
+      if (mode === 'quarter') state.selectedValues = ['Q1'];
+
+      updateMsUI();
+      renderDashboard();
+    }
+
+    function updateMsUI() {
+      const choices = getTimeChoices(state.filterMode);
+      const list = document.getElementById('ms-options-list');
+      if (!list) return;
+      list.innerHTML = '';
+
+      choices.forEach(c => {
+        const div = document.createElement('div');
+        div.className = 'ms-option';
+        const checked = state.selectedValues.includes(c.id) ? 'checked' : '';
+        div.innerHTML = `
+          <input type="checkbox" id="ms-${c.id}" ${checked} onchange="toggleValue('${c.id}')">
+          <label class="ms-option-label" for="ms-${c.id}">${c.label}</label>
+        `;
+        list.appendChild(div);
+      });
+
+      // Update pills
+      const pillContainer = document.getElementById('selected-pills');
+      pillContainer.innerHTML = '';
+      const selectedChoices = choices.filter(c => state.selectedValues.includes(c.id));
+
+      selectedChoices.forEach(c => {
+        const pill = document.createElement('div');
+        pill.className = 'pill';
+        pill.innerHTML = `
+          <span>${c.label}</span>
+          <span class="pill-close" onclick="toggleValue('${c.id}')">×</span>
+        `;
+        pillContainer.appendChild(pill);
+      });
+
+      // Update header text
+      const header = document.getElementById('ms-header-text');
+      if (state.selectedValues.length === 0) header.textContent = 'Chọn thời gian...';
+      else if (state.selectedValues.length === 1) header.textContent = selectedChoices[0].label;
+      else header.textContent = `Đã chọn ${state.selectedValues.length} mục`;
+    }
+
+    function toggleValue(id) {
+      const idx = state.selectedValues.indexOf(id);
+      if (idx > -1) state.selectedValues.splice(idx, 1);
+      else state.selectedValues.push(id);
+
+      updateMsUI();
+      renderDashboard();
+    }
+
+    function msSelectAll() {
+      const choices = getTimeChoices(state.filterMode);
+      state.selectedValues = choices.map(c => c.id);
+      updateMsUI();
+      renderDashboard();
+    }
+
+    function msDeselectAll() {
+      state.selectedValues = [];
+      updateMsUI();
+      renderDashboard();
+    }
+
+    // Close dropdown on click outside
+    window.addEventListener('click', (e) => {
+      const wrapper = document.getElementById('time-ms-wrapper');
+      if (!wrapper.contains(e.target)) {
+        document.getElementById('ms-dropdown').classList.remove('open');
+      }
+    });
+
 
     /* ========================
        RENDER ENGINE
     ======================== */
     function renderDashboard() {
       const data = filterData();
-      const range = getRange();
-      const rangeStr = `${fmtDate(range.start)} – ${fmtDate(range.end)}`;
+      const ranges = getSelectedRanges();
+
+      let rangeStr = 'Chưa chọn thời gian';
+      if (ranges.length === 1) {
+        rangeStr = `${fmtDate(ranges[0].start)} – ${fmtDate(ranges[0].end)}`;
+      } else if (ranges.length > 1) {
+        rangeStr = ranges.map(r => r.label.split(' / ')[0]).join(', ') + ' / 2026';
+      }
 
       setVal('kpi-purchase-range', rangeStr);
-      setVal('kpi-cogs-range', rangeStr);
-      setVal('kpi-completed-range', rangeStr);
       setVal('kpi-workshop-debt-range', rangeStr);
+      setVal('kpi-completed-range', rangeStr);
       setVal('kpi-incident-range', rangeStr);
       setVal('kpi-warranty-range', rangeStr);
       setVal('kpi-incident-cost-range', rangeStr);
-      setVal('kpi-incident-cause-cost-range', rangeStr);
+      setVal('ld-WarrantyCost-Range', rangeStr);
       setVal('kpi-incident-status-range', rangeStr);
       setVal('kpi-pending-overdue-range', rangeStr);
-      setVal('incident-cause-dist-range', 'Phân bổ số case theo nhóm lỗi — ' + rangeStr);
+      setVal('staff-avg-leadtime-range', 'Khoảng thời gian: ' + rangeStr);
+      setVal('staff-overall-leadtime-range', rangeStr);
+      setVal('staff-overdue-table-range', 'Khoảng thời gian: ' + rangeStr);
       setVal('shipping-range-1', rangeStr);
       setVal('shipping-range-2', rangeStr);
+      setVal('ld-WorkshopDonut-Range', rangeStr);
       setVal('ld-WorkshopDonut-Range', rangeStr);
 
       // Shipping Analysis
@@ -11815,9 +12078,6 @@
 
       setVal('kpi-purchase-count', count_b);
       setVal('kpi-cogs', fmtFull(cogs_b));
-      setVal('kpi-profit', fmtFull(profit));
-      setVal('kpi-revenue-total', 'DT ' + fmtFull(revenue));
-      setVal('kpi-margin', `Biên ${revenue > 0 ? (profit / revenue * 100).toFixed(1) : 0}%`);
       setVal('kpi-cogs-ratio', (revenue > 0 ? (cogs_b / revenue * 100).toFixed(1) : 0) + '%');
 
       const totalCompleted = data.all_completed_sales.length;
@@ -12146,19 +12406,47 @@
       wSelect.value = state.week;
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('period-select').addEventListener('change', (e) => {
-        state.period = e.target.value; updateWeekOptions(); renderDashboard();
-      });
-      document.getElementById('week-select').addEventListener('change', (e) => {
-        state.week = e.target.value; renderDashboard();
-      });
-      document.getElementById('factory-select').addEventListener('change', (e) => {
-        state.factory = e.target.value; renderDashboard();
-      });
-      document.querySelector('.btn-update').addEventListener('click', renderDashboard);
-      updateWeekOptions();
+    function resetToDefault() {
+      state.filterMode = 'month';
+      state.selectedValues = ['2026-01'];
+      state.factory = 'all';
+      const fSelect = document.getElementById('factory-select');
+      if (fSelect) fSelect.value = 'all';
+
+      const btns = document.querySelectorAll('.fm-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      btns[1].classList.add('active'); // Month btn
+
+      updateMsUI();
       renderDashboard();
+    }
+
+    /* ========================
+       INITIALIZATION
+    ======================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      // populate dropdown even if listeners fail
+      updateMsUI();
+      renderDashboard();
+
+      const btns = document.querySelectorAll('.fm-btn');
+      btns.forEach(b => {
+        const onClick = b.getAttribute('onclick') || '';
+        b.classList.toggle('active', onClick.includes(state.filterMode));
+      });
+
+      const fSelect = document.getElementById('factory-select');
+      if (fSelect) {
+        fSelect.addEventListener('change', (e) => {
+          state.factory = e.target.value;
+          renderDashboard();
+        });
+      }
+
+      const updateBtn = document.querySelector('.btn-update');
+      if (updateBtn) {
+        updateBtn.addEventListener('click', renderDashboard);
+      }
     });
 
   </script>
