@@ -2067,7 +2067,7 @@
               <div class="card-head">
                 <div>
                   <div class="card-title">Chi phí phát sinh và bảo hành theo nguyên nhân</div>
-                  <div class="card-sub">Nhóm lỗi tốn kém nhất — VNĐ</div>
+                  <div class="card-sub" id="kpi-incident-cause-cost-range">01/01/2026 – 14/04/2026</div>
                 </div>
                 <span class="status-badge sb-risk" id="kpi-incident-cause-cost-total">0 ₫</span>
               </div>
@@ -2091,7 +2091,7 @@
                   <div class="donut-canvas-wrap" style="width:140px;height:140px;">
                     <canvas id="ld-WarrantyStatus"></canvas>
                     <div class="donut-center">
-                      <div class="donut-center-val" id="incident-cause-total-center">0</div>
+                      <div class="donut-center-val" id="incident-status-total-center">0</div>
                       <div class="donut-center-lbl">TỔNG</div>
                     </div>
                   </div>
@@ -2100,25 +2100,24 @@
                       <div class="ws-label">
                         <div class="ws-dot" style="background:var(--red)"></div> Chờ xử lý
                       </div>
-                      <div class="ws-val text-red">8</div>
+                      <div class="ws-val text-red" id="status-pending-count">0</div>
                     </div>
                     <div class="ws-row">
                       <div class="ws-label">
                         <div class="ws-dot" style="background:var(--yellow)"></div> Đang xử lý
                       </div>
-                      <div class="ws-val text-yellow">14</div>
+                      <div class="ws-val text-yellow" id="status-processing-count">0</div>
                     </div>
                     <div class="ws-row">
                       <div class="ws-label">
                         <div class="ws-dot" style="background:var(--green)"></div> Hoàn thành
                       </div>
-                      <div class="ws-val text-green">20</div>
+                      <div class="ws-val text-green" id="status-completed-count">0</div>
                     </div>
                   </div>
                 </div>
                 <div class="mt-14" style="padding-top:12px;border-top:1px solid var(--border);">
-                  <div style="font-size:11.5px;color:var(--yellow);">⚠ 5 đơn chưa đổi trạng thái sau 7 ngày — cần kiểm
-                    tra ngay</div>
+                  <div id="kpi-incident-status-range" style="font-size:11.5px;color:var(--text-subtle);">01/01/2026 – 14/04/2026</div>
                 </div>
               </div>
             </div>
@@ -2943,473 +2942,455 @@
         }
       ],
       "incident_report_full": [
-        {
-          "date": "2026-01-01",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi do Vận chuyển & Lắp đặt",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-01",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-01",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-01",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Mút, Bông",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-01",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-01",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-01",
-          "type": "Đơn hàng phát sinh",
-          "cause": "Lỗi do Vận chuyển & Lắp đặt",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-02",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi do Vận chuyển & Lắp đặt",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-03",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Mút, Bông",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-03",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-06",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-06",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Mút, Bông",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-06",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Thiết kế, 3D, Thẩm Mỹ",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-08",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi do Vận chuyển & Lắp đặt",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-09",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-10",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-11",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Mút, Bông",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-11",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-11",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-12",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-12",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-16",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-16",
-          "type": "Đơn hàng phát sinh",
-          "cause": "Lỗi khác",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-20",
-          "type": "Đơn hàng phát sinh",
-          "cause": "Lỗi Thiết kế, 3D, Thẩm Mỹ",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-22",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Thiết kế, 3D, Thẩm Mỹ",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-25",
-          "type": "Đơn hàng phát sinh",
-          "cause": "Lỗi Thiết kế, 3D, Thẩm Mỹ",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-26",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-26",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi do Vận chuyển & Lắp đặt",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-26",
-          "type": "Đơn hàng phát sinh",
-          "cause": "Lỗi do Vận chuyển & Lắp đặt",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-29",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Mút, Bông",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-29",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-31",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi do Vận chuyển & Lắp đặt",
-          "cost": 0
-        },
-        {
-          "date": "2026-01-31",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-02-11",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-02-11",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-02-12",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi do Vận chuyển & Lắp đặt",
-          "cost": 0
-        },
-        {
-          "date": "2026-02-26",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-02",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi do Vận chuyển & Lắp đặt",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-02",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-02",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-03",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-04",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-04",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-05",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-09",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Mút, Bông",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-10",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-10",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Mút, Bông",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-11",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-12",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-13",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-19",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-20",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Mút, Bông",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-23",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-24",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Thiết kế, 3D, Thẩm Mỹ",
-          "cost": 0
-        },
-        {
-          "date": "2026-03-25",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-04-02",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-04-02",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-04-03",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-04-03",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Mút, Bông",
-          "cost": 0
-        },
-        {
-          "date": "2026-04-06",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-04-06",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-04-07",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Khung, Động cơ",
-          "cost": 0
-        },
-        {
-          "date": "2026-04-08",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        },
-        {
-          "date": "2026-04-13",
-          "type": "Đơn hàng bảo hành",
-          "cause": "Lỗi Da, Vải",
-          "cost": 0
-        }
-      ],
-      "pending_orders": [
-        {
-          "date": "2026-01-01",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-01-25",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-01-31",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-03-02",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-03-03",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-03-04",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-03-04",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-03-09",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-03-10",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-03-13",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-03-19",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-03-20",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-03-23",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-03-24",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-04-02",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-04-02",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-04-06",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-04-06",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-04-08",
-          "status": "Đang xử lí"
-        },
-        {
-          "date": "2026-04-13",
-          "status": "Đang xử lí"
-        }
-      ],
+  {
+    "date": "2026-01-01",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi do Vận chuyển & Lắp đặt",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-01",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-01",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đã xử lí xong",
+    "cost": 10800000
+  },
+  {
+    "date": "2026-01-01",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Mút, Bông ",
+    "status": "Đã xử lí xong",
+    "cost": 3780000
+  },
+  {
+    "date": "2026-01-01",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đã xử lí xong",
+    "cost": 16956000
+  },
+  {
+    "date": "2026-01-01",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đã xử lí xong",
+    "cost": 10260000
+  },
+  {
+    "date": "2026-01-01",
+    "type": "Đơn hàng phát sinh ",
+    "cause": "Lỗi do Vận chuyển & Lắp đặt",
+    "status": "Đã xử lí xong",
+    "cost": 4250000
+  },
+  {
+    "date": "2026-01-02",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi do Vận chuyển & Lắp đặt",
+    "status": "Đã xử lí xong",
+    "cost": 41000
+  },
+  {
+    "date": "2026-01-03",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Mút, Bông ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-03",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-06",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-06",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Mút, Bông ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-06",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Thiết kế, 3D, Thẩm Mỹ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-08",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi do Vận chuyển & Lắp đặt",
+    "status": "Đã xử lí xong",
+    "cost": 4250000
+  },
+  {
+    "date": "2026-01-09",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đã xử lí xong",
+    "cost": 4000000
+  },
+  {
+    "date": "2026-01-10",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-11",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Mút, Bông ",
+    "status": "Đã xử lí xong",
+    "cost": 1470000
+  },
+  {
+    "date": "2026-01-11",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-11",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-12",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-12",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-16",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-16",
+    "type": "Đơn hàng phát sinh ",
+    "cause": "Lỗi khác",
+    "status": "Đã xử lí xong",
+    "cost": 250000
+  },
+  {
+    "date": "2026-01-20",
+    "type": "Đơn hàng phát sinh ",
+    "cause": "Lỗi Thiết kế, 3D, Thẩm Mỹ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-22",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Thiết kế, 3D, Thẩm Mỹ",
+    "status": "Đã xử lí xong",
+    "cost": 6500000
+  },
+  {
+    "date": "2026-01-25",
+    "type": "Đơn hàng phát sinh ",
+    "cause": "Lỗi Thiết kế, 3D, Thẩm Mỹ",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-26",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-26",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi do Vận chuyển & Lắp đặt",
+    "status": "Đã xử lí xong",
+    "cost": 39000
+  },
+  {
+    "date": "2026-01-26",
+    "type": "Đơn hàng phát sinh ",
+    "cause": "Lỗi do Vận chuyển & Lắp đặt",
+    "status": "Đã xử lí xong",
+    "cost": 39000
+  },
+  {
+    "date": "2026-01-29",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Mút, Bông ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-29",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-31",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi do Vận chuyển & Lắp đặt",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-01-31",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-02-11",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-02-11",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-02-12",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi do Vận chuyển & Lắp đặt",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-02-26",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-02",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi do Vận chuyển & Lắp đặt",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-02",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-02",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-03",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-04",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-04",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-05",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đã xử lí xong",
+    "cost": 4320000
+  },
+  {
+    "date": "2026-03-09",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Mút, Bông ",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-10",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-10",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Mút, Bông ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-11",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-12",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đã xử lí xong",
+    "cost": 3348000
+  },
+  {
+    "date": "2026-03-13",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-19",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-20",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Mút, Bông ",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-23",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-24",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Thiết kế, 3D, Thẩm Mỹ",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-03-25",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đã xử lí xong",
+    "cost": 12420000
+  },
+  {
+    "date": "2026-04-02",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-04-02",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-04-03",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-04-03",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Mút, Bông ",
+    "status": "Đã xử lí xong",
+    "cost": 0
+  },
+  {
+    "date": "2026-04-06",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đang xử lí",
+    "cost": 7000000
+  },
+  {
+    "date": "2026-04-06",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-04-07",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Khung, Động cơ",
+    "status": "Chờ xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-04-08",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đang xử lí",
+    "cost": 0
+  },
+  {
+    "date": "2026-04-13",
+    "type": "Đơn hàng bảo hành",
+    "cause": "Lỗi Da, Vải",
+    "status": "Đang xử lí",
+    "cost": 0
+  }
+],
       "warranty_orders": [
         {
           "date": "2026-01-01",
@@ -11839,6 +11820,8 @@
       setVal('kpi-incident-range', rangeStr);
       setVal('kpi-warranty-range', rangeStr);
       setVal('kpi-incident-cost-range', rangeStr);
+      setVal('kpi-incident-cause-cost-range', rangeStr);
+      setVal('kpi-incident-status-range', rangeStr);
       setVal('kpi-pending-overdue-range', rangeStr);
       setVal('incident-cause-dist-range', 'Phân bổ số case theo nhóm lỗi — ' + rangeStr);
       setVal('shipping-range-1', rangeStr);
@@ -12026,16 +12009,34 @@
         }
       });
 
+      // Warranty Status (3-state Processing Status)
       const statusMap = { 'Chờ xử lý': 0, 'Đang xử lý': 0, 'Hoàn thành': 0 };
-      data.incidents.forEach(i => {
-        if (i.status.includes('Đã xử lí')) statusMap['Hoàn thành']++;
-        else if (i.status.includes('Đang')) statusMap['Đang xử lý']++;
+      data.incident_report_full.forEach(i => {
+        const s = i.status || '';
+        if (s.includes('Đã xử lí')) statusMap['Hoàn thành']++;
+        else if (s.includes('Đang')) statusMap['Đang xử lý']++;
         else statusMap['Chờ xử lý']++;
       });
-      renderChart('nv-WarrantyStatus', 'doughnut', {
+      
+      const statusChartData = {
         labels: Object.keys(statusMap),
-        datasets: [{ data: Object.values(statusMap), backgroundColor: ['#EF4444', '#F59E0B', '#10B981'], borderWidth: 2, borderColor: '#1A2035' }]
-      }, { cutout: '65%', plugins: { legend: { display: false } } });
+        datasets: [{ 
+          data: Object.values(statusMap), 
+          backgroundColor: ['#EF4444', '#F59E0B', '#10B981'], 
+          borderWidth: 2, 
+          borderColor: '#1A2035' 
+        }]
+      };
+      const statusOptions = { cutout: '65%', plugins: { legend: { display: false } } };
+
+      renderChart('nv-WarrantyStatus', 'doughnut', statusChartData, statusOptions);
+      renderChart('ld-WarrantyStatus', 'doughnut', statusChartData, statusOptions);
+
+      const totalStatus = statusMap['Chờ xử lý'] + statusMap['Đang xử lý'] + statusMap['Hoàn thành'];
+      setVal('incident-status-total-center', totalStatus);
+      setVal('status-pending-count', statusMap['Chờ xử lý']);
+      setVal('status-processing-count', statusMap['Đang xử lý']);
+      setVal('status-completed-count', statusMap['Hoàn thành']);
 
       // Cause Distribution (Donut Chart)
       const causeMap = {};
@@ -12088,22 +12089,35 @@
         }
       });
 
-      // Cost by Cause (Horizontal Bar Chart)
+      // Cost by Cause (Horizontal Bar Chart) - RE-RENDERED FRESH
       const costMap = {};
       data.incident_report_full.forEach(i => {
-        const c = i.cause || 'Khác';
-        costMap[c] = (costMap[c] || 0) + (Number(i.cost) || 0);
+        const cause = (i.cause || '').trim();
+        if (!cause) return; // Skip empty causes
+        
+        // Finalized numeric parser: handles "1.000.000", "500,000 đ", etc.
+        let rawVal = i.cost;
+        if (typeof rawVal === 'string') {
+          // Remove dots (thousand separators), 'đ', and spaces
+          rawVal = rawVal.replace(/[^0-9-]+/g, ''); 
+        }
+        const numericVal = parseInt(rawVal, 10) || 0;
+        
+        costMap[cause] = (costMap[cause] || 0) + numericVal;
       });
-      const topCausesByCost = Object.keys(costMap).sort((a, b) => costMap[b] - costMap[a]);
-      const totalCostByCause = Object.values(costMap).reduce((a, b) => a + b, 0);
 
-      setVal('kpi-incident-cause-cost-total', fmtFull(totalCostByCause));
+      const topCauses = Object.keys(costMap).sort((a,b) => costMap[b] - costMap[a]);
+      const finalTotal = Object.values(costMap).reduce((a,b) => a + b, 0);
 
+      // 1. Sync the Badge
+      setVal('kpi-incident-cause-cost-total', fmtFull(finalTotal));
+
+      // 2. Render the Chart
       renderChart('ld-WarrantyCost', 'bar', {
-        labels: topCausesByCost,
+        labels: topCauses,
         datasets: [{
           label: 'Chi phí (VNĐ)',
-          data: topCausesByCost.map(c => costMap[c]),
+          data: topCauses.map(c => costMap[c]),
           backgroundColor: '#3B82F6',
           borderRadius: 4
         }]
