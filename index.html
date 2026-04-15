@@ -1949,7 +1949,7 @@
               <div class="kc-top"><span class="kc-icon">🚛</span><span class="status-badge sb-warn">Tháng 4</span></div>
               <div class="kc-label">Tổng chi phí vận chuyển</div>
               <div class="kc-value" id="kpi-shipping-total">14.700.000 ₫</div>
-              <div class="kc-foot"><span class="kc-cmp">Dữ liệu Anh Hưng 2026</span></div>
+              <div class="kc-foot"><span class="kc-cmp" id="kpi-shipping-total-range">Dữ liệu Anh Hưng 2026</span></div>
             </div>
             <div class="kpi-card kc-green">
               <div class="kc-top"><span class="kc-icon">✅</span><span class="status-badge sb-ok">Hoàn thành</span></div>
@@ -2145,37 +2145,36 @@
           </div>
 
           <!-- KPI phát sinh + bảo hành -->
-          <div class="kpi-row kpi-4" style="margin-bottom:14px;">
+           <div class="kpi-row kpi-4" style="margin-bottom:14px;">
 
-            <div class="kpi-card kc-yellow">
-              <div class="kc-top"><span class="kc-icon">📋</span></div>
-              <div class="kc-label">Số đơn phát sinh</div>
-              <div class="kc-value" id="kpi-incident-count">0</div>
-              <div class="kc-foot"><span class="kc-cmp" id="kpi-incident-range">01/01/2026 – 14/04/2026</span></div>
-            </div>
+             <div class="kpi-card kc-yellow">
+               <div class="kc-top"><span class="kc-icon">📋</span></div>
+               <div class="kc-label">Số đơn phát sinh</div>
+               <div class="kc-value" id="kpi-incident-count">0</div>
+               <div class="kc-foot"><span class="kc-cmp" id="kpi-incident-range">01/01/2026 – 14/04/2026</span></div>
+             </div>
 
-            <div class="kpi-card kc-red">
-              <div class="kc-top"><span class="kc-icon">🔧</span></div>
-              <div class="kc-label">Số đơn bảo hành</div>
-              <div class="kc-value" id="kpi-warranty-count">0</div>
-              <div class="kc-foot"><span class="kc-cmp" id="kpi-warranty-range">01/01/2026 – 14/04/2026</span></div>
-            </div>
+             <div class="kpi-card kc-red">
+               <div class="kc-top"><span class="kc-icon">🔧</span></div>
+               <div class="kc-label">Số đơn bảo hành</div>
+               <div class="kc-value" id="kpi-warranty-count">0</div>
+               <div class="kc-foot"><span class="kc-cmp" id="kpi-warranty-range">01/01/2026 – 14/04/2026</span></div>
+             </div>
 
-            <div class="kpi-card kc-yellow">
-              <div class="kc-top"><span class="kc-icon">💰</span></div>
-              <div class="kc-label">Tổng chi phí phát sinh &amp; BH</div>
-              <div class="kc-value" id="kpi-incident-cost-total">0 ₫</div>
-              <div class="kc-foot"><span class="kc-cmp" id="kpi-incident-cost-range">01/01/2026 – 14/04/2026</span>
-              </div>
-            </div>
+             <div class="kpi-card kc-yellow">
+               <div class="kc-top"><span class="kc-icon">💰</span></div>
+               <div class="kc-label">Tổng chi phí phát sinh &amp; BH</div>
+               <div class="kc-value" id="kpi-incident-cost-total">0 ₫</div>
+               <div class="kc-foot"><span class="kc-cmp" id="kpi-incident-cost-range">01/01/2026 – 14/04/2026</span>
+               </div>
+             </div>
 
-            <div class="kpi-card kc-red">
-              <div class="kc-top"><span class="kc-icon">⏱️</span><span class="status-badge sb-risk">Quá hạn</span></div>
-              <div class="kc-label">Phát sinh / BH quá 7 ngày chưa đóng</div>
-              <div class="kc-value" id="kpi-pending-overdue">0</div>
-              <div class="kc-foot"><span class="kc-cmp" id="kpi-pending-overdue-range">01/01/2026 – 14/04/2026</span>
-              </div>
-            </div>
+             <div class="kpi-card kc-red">
+               <div class="kc-top"><span class="kc-icon">⚠️</span><span class="status-badge sb-risk">Quá hạn</span></div>
+               <div class="kc-label">Case đang xử lí quá 7 ngày</div>
+               <div class="kc-value" id="kpi-overdue-incident-count">0</div>
+               <div class="kc-foot"><span class="kc-cmp" id="kpi-overdue-incident-range">01/01/2026 – 14/04/2026</span></div>
+             </div>
 
           </div>
 
@@ -12035,12 +12034,12 @@
       setVal('kpi-purchase-range', rangeStr);
       setVal('kpi-workshop-debt-range', rangeStr);
       setVal('kpi-completed-range', rangeStr);
+      setVal('kpi-shipping-total-range', rangeStr);
       setVal('kpi-incident-range', rangeStr);
       setVal('kpi-warranty-range', rangeStr);
       setVal('kpi-incident-cost-range', rangeStr);
       setVal('ld-WarrantyCost-Range', rangeStr);
       setVal('kpi-incident-status-range', rangeStr);
-      setVal('kpi-pending-overdue-range', rangeStr);
       setVal('staff-avg-leadtime-range', 'Khoảng thời gian: ' + rangeStr);
       setVal('staff-overall-leadtime-range', rangeStr);
       setVal('staff-overdue-table-range', 'Khoảng thời gian: ' + rangeStr);
@@ -12063,6 +12062,7 @@
 
       setVal('shipping-fee', fmtShort(ship_fee));
       setVal('shipping-actual', fmtShort(ship_actual));
+      setVal('kpi-shipping-total', fmtFull(ship_actual));
 
       if (ship_count > 0) {
         const ship_support = (ship_actual - ship_fee) / ship_count;
@@ -12091,20 +12091,35 @@
       const totalIncidentCost = data.incident_costs.reduce((s, i) => s + (i.cost || 0), 0);
       setVal('kpi-incident-cost-total', fmtFull(totalIncidentCost));
 
-      // Precision Overdue Pending logic: Status "Đang xử lí" && (14/04/2026 - Request Date) > 7 days
-      const ANCHOR = new Date(2026, 3, 14);
-      const overduePending = data.pending_orders.filter(o => {
-        const [y, m, d] = o.date.split('-').map(Number);
-        const reqDate = new Date(y, m - 1, d);
-        const diffDays = Math.round((ANCHOR - reqDate) / (1000 * 60 * 60 * 24));
-        return diffDays > 7;
+      // Overdue incidents (> 7 days from 14/04/2026)
+      const currentDate = new Date(2026, 3, 14); // 14/04/2026 is month 3
+      const startDate = new Date(2026, 0, 1);
+      let overdueIncidentCount = 0;
+      data.incident_report_full.forEach(i => {
+        const status = (i.status || '').trim().toLowerCase();
+        if (status === 'đang xử lí' || status === 'đang xử lý') {
+          let dDate;
+          if (typeof i.date === 'string') {
+            const [y, m, d] = i.date.split('-').map(Number);
+            dDate = new Date(y, m - 1, d);
+          } else {
+             dDate = new Date(i.date);
+          }
+          if (dDate >= startDate && dDate <= currentDate) {
+            const daysWait = (currentDate - dDate) / (1000 * 60 * 60 * 24);
+            if (daysWait > 7) {
+              overdueIncidentCount++;
+            }
+          }
+        }
       });
-      setVal('kpi-pending-overdue', overduePending.length);
+      setVal('kpi-overdue-incident-count', overdueIncidentCount);
 
       // Dynamic Range Footers
       setVal('kpi-incident-range', rangeStr);
       setVal('kpi-warranty-range', rangeStr);
       setVal('kpi-incident-cost-range', rangeStr);
+      setVal('kpi-overdue-incident-range', rangeStr);
 
       // Workshop Debt
       const debtData = data.workshop_debt;
