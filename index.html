@@ -2331,7 +2331,7 @@
                     <span class="mm-val text-red" id="avg-xuong-tra-val">20 ngày</span>
                   </div>
                   <div class="mm-row" style="border-bottom: none;">
-                    <span class="mm-name">Nhập kho &#10145; Hoàn tất giao</span>
+                    <span class="mm-name">Cọc &#10145; Hoàn tất giao</span>
                     <span class="mm-val">~3-5 ngày (TB)</span>
                   </div>
                   <div
@@ -11859,6 +11859,8 @@
       // Lead Time / Thời gian xử lý trung bình Mapping
       let diffCocXuong = [], diffXuongTra = [], diffLeadTime = [];
       const parseDateStr = (str) => {
+        if (!str || typeof str !== 'string') return null;
+        str = str.trim();
         if (!str) return null;
         let d, m, y;
         if (str.includes('/')) {
@@ -11870,10 +11872,13 @@
            }
         }
         if (!y) return null;
-        return new Date(y, m - 1, d);
+        const dt = new Date(y, m - 1, d);
+        if (isNaN(dt.getTime())) return null;
+        return dt;
       };
 
       const isDateInFilter = (d) => {
+        if (!d || isNaN(d.getTime())) return false;
         if (ranges.length === 0) return false;
         return ranges.some(r => d >= r.start && d <= r.end);
       };
@@ -11884,18 +11889,21 @@
         let dTra = parseDateStr(row.ngay_tra);
         
         if (dBan && isDateInFilter(dBan)) {
-           if (dMua) {
+           if (dBan && dMua) {
              let delta = (dMua - dBan) / (1000 * 60 * 60 * 24);
-             if (delta >= 0) diffCocXuong.push(delta);
-             
-             if (dTra) {
-                let deltaTr = (dTra - dMua) / (1000 * 60 * 60 * 24);
-                if (deltaTr >= 0) diffXuongTra.push(deltaTr);
+             if (!isNaN(delta)) {
+               diffCocXuong.push(delta);
              }
            }
-           if (dTra) {
+           
+           if (dMua && dTra) {
+             let deltaTr = (dTra - dMua) / (1000 * 60 * 60 * 24);
+             if (!isNaN(deltaTr) && deltaTr >= 0) diffXuongTra.push(deltaTr);
+           }
+           
+           if (dTra && dBan) {
              let deltaLT = (dTra - dBan) / (1000 * 60 * 60 * 24);
-             if (deltaLT >= 0) diffLeadTime.push(deltaLT);
+             if (!isNaN(deltaLT) && deltaLT >= 0) diffLeadTime.push(deltaLT);
            }
         }
       });
@@ -11903,7 +11911,11 @@
       const calcAvg = (arr) => arr.length ? (arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1).replace('.0', '') : 0;
       let avgCocXuong = calcAvg(diffCocXuong);
       let avgXuongTra = calcAvg(diffXuongTra);
-      let avgLeadTime = diffLeadTime.length ? ((diffLeadTime.reduce((a,b)=>a+b,0)/diffLeadTime.length) + 4).toFixed(1).replace('.0','') : 0; 
+      
+      // Calculate Total KPI related to these metrics explicitly. Since total = sum of parts
+      const avgFixedShip = 4; // Nhập kho -> Hoàn tất giao
+      let computedTotal = (parseFloat(avgCocXuong) || 0) + (parseFloat(avgXuongTra) || 0) + avgFixedShip;
+      let avgLeadTime = computedTotal > avgFixedShip ? computedTotal.toFixed(1).replace('.0', '') : 0;
       
       setVal('avg-lead-time-val', avgLeadTime);
       setVal('avg-coc-xuong-val', `~${avgCocXuong} ngày (TB)`);
