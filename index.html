@@ -2245,24 +2245,17 @@
               <div class="kc-foot"><span class="kc-cmp" id="kpi-cho-san-xuat-range">Đợi xưởng xác nhận</span></div>
             </div>
             <div class="kpi-card kc-purple">
-              <div class="kc-top"><span class="kc-icon">🏭</span><span class="status-badge sb-ok">Tại xưởng</span></div>
+              <div class="kc-top"><span class="kc-icon">🏭</span></div>
               <div class="kc-label">Đang sản xuất</div>
-              <div class="kc-value">46</div>
-              <div class="kc-foot"><span class="kc-cmp">Dữ liệu thực tế 2026</span></div>
+              <div class="kc-value" id="kpi-dang-san-xuat">—</div>
+              <div class="kc-foot"><span class="kc-cmp" id="kpi-dang-san-xuat-range">Dữ liệu thực tế 2026</span></div>
             </div>
-            <div class="kpi-card kc-yellow">
-              <div class="kc-top"><span class="kc-icon">🚚</span><span class="status-badge sb-warn">Cọc ➔ HT</span>
-              </div>
-              <div class="kc-label">T.Gian TB (Cọc ➔ HT)</div>
-              <div class="kc-value">39.7 ngày</div>
-              <div class="kc-foot"><span class="kc-cmp" id="staff-leadtime-overall-range">01/01 – 14/04/2026</span>
-              </div>
-            </div>
+
             <div class="kpi-card kc-green">
               <div class="kc-top"><span class="kc-icon">✅</span><span class="status-badge sb-ok">Xong</span></div>
               <div class="kc-label">Hoàn thành</div>
               <div class="kc-value" id="kpi-completed-count-staff">324</div>
-              <div class="kc-foot"><span class="kc-cmp">Năm 2026</span></div>
+              <div class="kc-foot"><span class="kc-cmp" id="kpi-hoan-thanh-range">Năm 2026</span></div>
             </div>
             <div class="kpi-card kc-red">
               <div class="kc-top"><span class="kc-icon">🔴</span><span class="status-badge sb-risk">Cần xử lý</span>
@@ -11719,6 +11712,8 @@
       setVal('shipping-range-2', rangeStr);
       setVal('kpi-cho-tiep-nhan-range', rangeStr);
       setVal('kpi-cho-san-xuat-range', rangeStr);
+      setVal('kpi-dang-san-xuat-range', rangeStr);
+      setVal('kpi-hoan-thanh-range', rangeStr);
       setVal('ld-WorkshopDonut-Range', rangeStr);
       setVal('ld-WorkshopDonut-Range', rangeStr);
 
@@ -11949,9 +11944,10 @@
         }
       });
 
-      // KPI: Đơn chờ tiếp nhận & Chờ sản xuất
+      // KPI: Đơn chờ tiếp nhận & Chờ sản xuất & Đang sản xuất
       let choTiepNhanCount = 0;
       let choSanXuatCount = 0;
+      let dangSanXuatCount = 0;
       (dashboardData.dhbFullTracking || []).forEach(item => {
         if (!item.trang_thai_don || !item.ngay_ban) return;
         const status = item.trang_thai_don.trim().toLowerCase();
@@ -11959,10 +11955,12 @@
         if (isDateInFilter(d)) {
           if (status === "chờ tiếp nhận") choTiepNhanCount++;
           if (status === "chờ sản xuất") choSanXuatCount++;
+          if (status === "đang sản xuất") dangSanXuatCount++;
         }
       });
       setVal('kpi-cho-tiep-nhan', choTiepNhanCount);
       setVal('kpi-cho-san-xuat', choSanXuatCount);
+      setVal('kpi-dang-san-xuat', dangSanXuatCount);
 
       Object.keys(svMap).forEach(name => {
         const prefix = svMap[name];
