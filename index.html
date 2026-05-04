@@ -1881,7 +1881,7 @@
         <select class="fb-select" id="factory-select" style="width:140px;">
           <option value="all">Tất cả xưởng</option>
           <option value="ADN">Xưởng ADN</option>
-          <option value="Sơn Thủy">Xưởng Sơn Thủy</option>
+          <option value="Sơn Thuỷ">Xưởng Sơn Thuỷ</option>
           <option value="Inox Pro">Xưởng Inox Pro</option>
         </select>
         <div class="fb-sep"></div>
@@ -18929,6 +18929,31 @@
 
     const CANONICAL_WORKSHOPS = ['ADN', 'Sơn Thuỷ', 'Inox Pro'];
 
+    function normalizeText(value) {
+      return String(value || '')
+        .trim()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd')
+        .replace(/\s+/g, ' ');
+    }
+
+    function mapXuong(value) {
+      const v = normalizeText(value);
+      if (v.includes('son thuy')) return 'Sơn Thuỷ';
+      if (v.includes('adn')) return 'ADN';
+      if (v.includes('inox')) return 'Inox Pro';
+      return null;
+    }
+
+    function mapTrangThai(value) {
+      const v = normalizeText(value);
+      if (v.includes('dung han')) return 'Đúng hạn';
+      if (v.includes('tre han')) return 'Trễ hạn';
+      return null;
+    }
+
     /* ========================
        TIME CONFIGURATION (2026)
     ======================== */
@@ -18959,7 +18984,7 @@
           const s = new Date(y, i, 1);
           let e = new Date(y, i + 1, 0, 23, 59, 59);
           if (e > CONFIG.MAX_DATE) e = CONFIG.MAX_DATE;
-          if (s <= CONFIG.MAX_DATE) choices.push({ id: `${y}-${String(i+1).padStart(2,'0')}`, label: `Tháng ${i+1} / ${y}`, start: s, end: e });
+          if (s <= CONFIG.MAX_DATE) choices.push({ id: `${y}-${String(i + 1).padStart(2, '0')}`, label: `Tháng ${i + 1} / ${y}`, start: s, end: e });
         }
       }
       else if (mode === 'week') {
@@ -18980,8 +19005,8 @@
 
             if (s <= CONFIG.MAX_DATE) {
               choices.push({
-                id: `${y}-${String(i+1).padStart(2,'0')}-W${w}`,
-                label: `Tháng ${i+1} - Tuần ${w}`,
+                id: `${y}-${String(i + 1).padStart(2, '0')}-W${w}`,
+                label: `Tháng ${i + 1} - Tuần ${w}`,
                 start: s,
                 end: e
               });
@@ -19042,18 +19067,14 @@
       };
 
       const isCanonical = (ws) => {
-        const n = (ws || '').trim().toLowerCase();
-        return n.includes('adn') || n.includes('sơn thủy') || n.includes('sơn thuỷ') || n.includes('son thuy') || n.includes('inox');
+        return !!mapXuong(ws);
       };
 
       const matchFactory = (ws) => {
         if (f === 'all') return isCanonical(ws);
-        const fn = (f || '').toLowerCase();
-        const wn = (ws || '').toLowerCase();
-        if (fn === 'adn') return wn.includes('adn');
-        if (fn.includes('sơn thủy') || fn.includes('sơn thuỷ') || fn.includes('son thuy')) return wn.includes('sơn thủy') || wn.includes('sơn thuỷ') || wn.includes('son thuy');
-        if (fn.includes('inox')) return wn.includes('inox');
-        return wn === fn;
+        const target = mapXuong(f);
+        const current = mapXuong(ws);
+        return target && current && target === current;
       };
 
       return {
@@ -19377,7 +19398,7 @@
         const bd = {};
         const workshops = ['ADN', 'Sơn Thuỷ', 'Inox Pro'];
         workshops.forEach(w => bd[w] = 0);
-        
+
         // Robust normalization for workshop names
         const norm = (s) => (s || "").toLowerCase().normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "")
@@ -19533,7 +19554,10 @@
 
       const wsMap = {};
       CANONICAL_WORKSHOPS.forEach(w => wsMap[w] = 0);
-      data.source_a.forEach(p => { if (wsMap[p.workshop] !== undefined) wsMap[p.workshop]++; });
+      data.source_a.forEach(p => {
+        const ws = mapXuong(p.workshop);
+        if (ws && wsMap[ws] !== undefined) wsMap[ws]++;
+      });
 
       const wsTotal = Object.values(wsMap).reduce((a, b) => a + b, 0) || 1;
       const donutLabels = CANONICAL_WORKSHOPS.map(k => `${k} (${(wsMap[k] / wsTotal * 100).toFixed(1)}%)`);
@@ -19548,14 +19572,24 @@
         }
       });
 
-      const timeMap = {};
-      CANONICAL_WORKSHOPS.forEach(w => timeMap[w] = { on: 0, late: 0 });
+      const results = {
+        'ADN': { dungHan: 0, treHan: 0 },
+        'Sơn Thuỷ': { dungHan: 0, treHan: 0 },
+        'Inox Pro': { dungHan: 0, treHan: 0 }
+      };
+
       data.source_a.forEach(p => {
-        if (timeMap[p.workshop]) {
-          const s = String(p.timeliness || '').toLowerCase();
-          if (s.includes('đúng') || s.includes('dung')) timeMap[p.workshop].on++;
-          else if (s.includes('trễ') || s.includes('tre')) timeMap[p.workshop].late++;
+        const ws = mapXuong(p.workshop);
+        const st = mapTrangThai(p.timeliness);
+        if (ws && st && results[ws]) {
+          if (st === 'Đúng hạn') results[ws].dungHan++;
+          else if (st === 'Trễ hạn') results[ws].treHan++;
         }
+      });
+
+      const timeMap = {};
+      CANONICAL_WORKSHOPS.forEach(w => {
+        timeMap[w] = { on: results[w].dungHan, late: results[w].treHan };
       });
 
       const barWorkshops = state.factory === 'all' ? CANONICAL_WORKSHOPS : [state.factory];
@@ -19832,12 +19866,12 @@
         ngay_ban: r.ngay_ban || ""
       }));
 
-      // Map purchases_source_a
+      // Map purchases_source_a strictly as requested
       const purchases_source_a = dhm.map(r => ({
-        date_mua: r.ngay_mua || "",
+        date_mua: r.ngay_mua || r.date || "",
         workshop: r.xuong_san_xuat || "",
         timeliness: r.danh_gia_dung_han || "",
-        supervisor: r.nv_giam_sat || "",
+        supervisor: r.nv_giam_sat || r.supervisor || "",
         deadline: r.ngay_xuong_can_tra_hang || r.deadline || ""
       }));
 
@@ -19894,6 +19928,7 @@
 
       // Overwrite dashboardData with structured data
       dashboardData = {
+        debug_ws_col: "xuong_san_xuat",
         dhbTracking,
         dhmTracking,
         dhmFullTracking,
@@ -19972,7 +20007,7 @@
         console.error("Lỗi khi tải dữ liệu từ Google Sheets API:", err);
         banner.style.backgroundColor = '#ef4444';
         banner.innerHTML = '⚠️ Lỗi đồng bộ dữ liệu từ API: ' + err.message;
-        
+
         // Ensure app continues to work with empty data if needed
         calculateMetrics({});
         renderDashboard();
