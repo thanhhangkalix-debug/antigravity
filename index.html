@@ -714,6 +714,11 @@
       grid-template-columns: repeat(3, 1fr);
     }
 
+    .kpi-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+
     .kpi-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -1901,7 +1906,7 @@
             <div class="sec-line"></div>
           </div>
 
-          <div class="kpi-row kpi-3">
+          <div class="kpi-row kpi-2">
             <div class="kpi-card kc-blue">
               <div class="kc-top"><span class="kc-icon">📋</span><span class="status-badge sb-ok"
                   id="status-purchase">Hoàn thành</span></div>
@@ -1914,14 +1919,6 @@
               <div class="kc-label">Tổng giá vốn</div>
               <div class="kc-value" id="kpi-cogs">3.36B ₫</div>
               <div class="kc-foot"><span class="kc-cmp" id="kpi-cogs-range">01/01/2026 – 31/01/2026</span></div>
-            </div>
-            <div class="kpi-card kc-yellow">
-              <div class="kc-top"><span class="kc-icon">⚖️</span><span class="status-badge sb-ok">Dưới ngưỡng</span>
-              </div>
-              <div class="kc-label">% Giá vốn / Doanh thu</div>
-              <div class="kc-value" id="kpi-cogs-ratio">47.6%</div>
-              <div class="kc-foot"><span class="trend-down">Mục tiêu < 80%</span>
-              </div>
             </div>
           </div>
 
@@ -2072,9 +2069,8 @@
               <div class="card-head">
                 <div>
                   <div class="card-title">Công nợ theo xưởng</div>
-                  <div class="card-sub">Dư nợ cần thanh toán &mdash; 2026</div>
+                  <div id="workshop-debt-sub" class="card-sub">Dư nợ cần thanh toán — 2026</div>
                 </div>
-                <span class="status-badge sb-ok">Dữ liệu thực tế</span>
               </div>
               <div class="card-body">
                 <div id="workshop-debt-list" style="display: flex; flex-direction: column; gap: 10px; padding: 5px 0;">
@@ -19175,6 +19171,7 @@
 
       setVal('kpi-purchase-range', rangeStr);
       setVal('kpi-workshop-debt-range', rangeStr);
+      setVal('workshop-debt-sub', 'Dư nợ cần thanh toán - ' + rangeStr);
       setVal('kpi-completed-range', rangeStr);
       setVal('kpi-shipping-total-range', rangeStr);
       setVal('kpi-incident-range', rangeStr);
@@ -19226,7 +19223,7 @@
 
       setVal('kpi-purchase-count', count_b);
       setVal('kpi-cogs', fmtFull(cogs_b));
-      setVal('kpi-cogs-ratio', (revenue > 0 ? (cogs_b / revenue * 100).toFixed(1) : 0) + '%');
+
 
       const totalCompleted = data.all_completed_sales.length;
       setVal('kpi-completed-count', totalCompleted); // Executive Screen
@@ -19359,17 +19356,26 @@
       const debtList = document.getElementById('workshop-debt-list');
       if (debtList) {
         const bd = {};
-        CANONICAL_WORKSHOPS.forEach(w => bd[w] = 0);
+        const workshops = ['ADN', 'Sơn Thuỷ', 'Inox Pro'];
+        workshops.forEach(w => bd[w] = 0);
+        
+        // Robust normalization for workshop names
+        const norm = (s) => (s || "").toLowerCase().normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/đ/g, "d")
+          .replace(/[y|i]/g, "i")
+          .trim();
+
         debtData.forEach(d => {
-          CANONICAL_WORKSHOPS.forEach(w => {
-            if (d.workshop && d.workshop.toLowerCase().includes(w.toLowerCase())) {
-              bd[w] += (Number(d.money_end) || 0);
-            }
-          });
+          if (!d.workshop) return;
+          const target = norm(d.workshop);
+          if (target.includes('adn')) bd['ADN'] += (Number(d.money_end) || 0);
+          else if (target.includes('son thui')) bd['Sơn Thuỷ'] += (Number(d.money_end) || 0);
+          else if (target.includes('inox')) bd['Inox Pro'] += (Number(d.money_end) || 0);
         });
 
         const maxVal = Math.max(...Object.values(bd), 1);
-        debtList.innerHTML = CANONICAL_WORKSHOPS.map(w => {
+        debtList.innerHTML = workshops.map(w => {
           const v = bd[w];
           const colors = { 'ADN': 'var(--brand)', 'Sơn Thuỷ': 'var(--purple)', 'Inox Pro': 'var(--green)' };
           const c = colors[w] || 'var(--brand)';
