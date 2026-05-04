@@ -19176,7 +19176,7 @@
       const data = filterData();
       const ranges = getSelectedRanges();
 
-      let rangeStr = '--/--/---- ' + fmtDate(new Date());
+      let rangeStr = '01/01/2026 – ' + fmtDate(new Date());
       if (ranges.length === 1) {
         rangeStr = `${fmtDate(ranges[0].start)} – ${fmtDate(ranges[0].end)}`;
       } else if (ranges.length > 1) {
@@ -19188,6 +19188,7 @@
       setVal('topbar-time', `${fmtDate(now)} · ${pad(now.getHours())}:${pad(now.getMinutes())}`);
 
       setVal('kpi-purchase-range', rangeStr);
+      setVal('kpi-cogs-range', rangeStr);
       setVal('kpi-workshop-debt-range', rangeStr);
       setVal('workshop-debt-sub', 'Dư nợ cần thanh toán - ' + rangeStr);
       setVal('kpi-completed-range', rangeStr);
