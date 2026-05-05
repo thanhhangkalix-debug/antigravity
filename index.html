@@ -1879,8 +1879,7 @@
         <button id="btn-main-update" class="btn-primary-update"
           style="background:var(--brand); border:none; color:#fff; padding:7px 18px; border-radius:20px; font-weight:600; cursor:pointer; margin-left:auto; display:flex; align-items:center; gap:6px; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);"
           onmouseover="this.style.filter='brightness(1.1)'; this.style.transform='translateY(-1px)';"
-          onmouseout="this.style.filter='none'; this.style.transform='none';"
-          onclick="loadDashboardData(true)">
+          onmouseout="this.style.filter='none'; this.style.transform='none';" onclick="loadDashboardData(true)">
           <span style="font-size:16px;">↻</span> Cập nhật
         </button>
       </div>
@@ -19072,6 +19071,7 @@
 
       return {
         source_a: dashboardData.purchases_source_a.filter(p => inMultiRange(p.date_mua) && matchFactory(p.workshop)),
+        purchase_orders_for_block: dashboardData.purchases_source_a.filter(p => inMultiRange(p.date_mua) && p.ma_don_hang_mua),
         source_b: dashboardData.purchases_source_b.filter(p => inMultiRange(p.date_mua) && matchFactory(p.workshop)),
         completed_sales: dashboardData.sales.filter(s => inMultiRange(s.date_completion) && matchFactory(s.workshop)),
         all_completed_sales: dashboardData.sales.filter(s => inMultiRange(s.date_completion)),
@@ -19250,11 +19250,11 @@
       }
 
       const cogs_b = data.source_b.reduce((s, i) => s + i.price, 0);
-      const count_b = data.source_b.length;
+      const count_purchase = data.purchase_orders_for_block.length;
       const revenue = data.revenue_sales.reduce((s, i) => s + i.price, 0);
       const profit = revenue - cogs_b;
 
-      setVal('kpi-purchase-count', count_b);
+      setVal('kpi-purchase-count', count_purchase);
       setVal('kpi-cogs', fmtFull(cogs_b));
 
 
@@ -19268,6 +19268,16 @@
 
       const totalIncidentCost = data.incident_costs.reduce((s, i) => s + (i.cost || 0), 0);
       setVal('kpi-incident-cost-total', fmtFull(totalIncidentCost));
+
+      // Update Total Inventory (Directly from tonKhoTongGiaTri source)
+      let invRaw = dashboardData.tonKhoTongGiaTri;
+      let invNum = 0;
+      if (typeof invRaw === 'string') {
+        invNum = Number(invRaw.replace(/\./g, '').replace(/[^0-9-]/g, ''));
+      } else {
+        invNum = Number(invRaw || 0);
+      }
+      setVal('kpi-inventory-value', fmtFull(invNum));
 
       // Overdue incidents (> 7 days from --/--/----)
       const currentDate = new Date(2026, 3, 14); // --/--/---- is month 3
@@ -19863,6 +19873,7 @@
 
       // Map purchases_source_a strictly as requested
       const purchases_source_a = dhm.map(r => ({
+        ma_don_hang_mua: r.ma_don_hang_mua || "",
         date_mua: r.ngay_mua || r.date || "",
         workshop: r.xuong_san_xuat || "",
         timeliness: r.danh_gia_dung_han || "",
@@ -19942,7 +19953,8 @@
         salesTracking: donHangBanAllTime.map(r => ({ cf151: r.date_sign, total_price: Number(r.total_price || 0) })),
         pending_orders: (data.pending_orders || []).map(r => ({ code: r.code, date: r.date })),
         heThongBaoHanh,
-        tonKho
+        tonKho,
+        tonKhoTongGiaTri: data.tonKhoTongGiaTri
       };
     }
 
@@ -19979,7 +19991,7 @@
 
       try {
         const baseUrl = "https://script.google.com/macros/s/AKfycbyZJ37pO7kueeDwqG3c7TgwkEs1elbqCQgzNavtsSTcAH2R_ZFOsYpavcUKYithwxQgxQ/exec";
-        const sources = ["dhb", "dhm", "donHangBanAllTime", "donHangMuaAllTime", "baoHanh", "heThongBaoHanh", "tonKho"];
+        const sources = ["dhb", "dhm", "donHangBanAllTime", "donHangMuaAllTime", "baoHanh", "heThongBaoHanh", "tonKho", "tonKhoTongGiaTri"];
 
         const fetchPromises = sources.map(src =>
           fetch(`${baseUrl}?source=${src}`).then(r => {
@@ -19994,8 +20006,8 @@
         sources.forEach((src, idx) => {
           const res = results[idx];
           if (res && res.success && res.data) {
-            // Correct nested assignment: data[source] = json.data[source]
-            rawData[src] = res.data[src] || [];
+            // Correct nested assignment: data[source] = json.data[source] or json.data if it's the raw array
+            rawData[src] = res.data[src] || (Array.isArray(res.data) ? res.data : []);
           } else {
             console.warn(`Không tải được nguồn ${src}, sử dụng mảng rỗng.`);
             rawData[src] = [];
