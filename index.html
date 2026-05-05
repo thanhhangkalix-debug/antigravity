@@ -1810,16 +1810,6 @@
           NV Mua Hàng &amp; CSKH
         </div>
 
-        <div class="nav-group-label" style="margin-top:16px;">Hệ thống</div>
-
-        <div class="nav-item">
-          <span class="nav-icon">🔔</span>
-          Cảnh báo
-        </div>
-        <div class="nav-item">
-          <span class="nav-icon">⚙️</span>
-          Cài đặt
-        </div>
       </nav>
 
       <div class="sidebar-footer">
@@ -1886,10 +1876,13 @@
         </select>
         <div class="fb-sep"></div>
 
-        <button class="btn-update"
-          style="background:var(--bg-card);border:1px solid var(--border-strong);color:var(--text-muted);margin-left:auto;margin-right:8px;"
-          onclick="resetToDefault()">Reset</button>
-        <button class="btn-update" onclick="renderDashboard()">↻ Cập nhật</button>
+        <button id="btn-main-update" class="btn-primary-update"
+          style="background:var(--brand); border:none; color:#fff; padding:7px 18px; border-radius:20px; font-weight:600; cursor:pointer; margin-left:auto; display:flex; align-items:center; gap:6px; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);"
+          onmouseover="this.style.filter='brightness(1.1)'; this.style.transform='translateY(-1px)';"
+          onmouseout="this.style.filter='none'; this.style.transform='none';"
+          onclick="loadDashboardData(true)">
+          <span style="font-size:16px;">↻</span> Cập nhật
+        </button>
       </div>
 
       <!-- SCROLL AREA -->
@@ -19837,6 +19830,8 @@
       const donHangBanAllTime = data.donHangBanAllTime || [];
       const donHangMuaAllTime = data.donHangMuaAllTime || [];
       const baoHanh = data.baoHanh || [];
+      const heThongBaoHanh = data.heThongBaoHanh || [];
+      const tonKho = data.tonKho || [];
 
       // Map dhbTracking
       const dhbTracking = dhb.map(r => ({
@@ -19945,11 +19940,20 @@
         incident_report_full: incidents,
         warrantyTracking: incidents.map(i => ({ ngay_yeu_cau: i.date, chi_phi: i.cost })),
         salesTracking: donHangBanAllTime.map(r => ({ cf151: r.date_sign, total_price: Number(r.total_price || 0) })),
-        pending_orders: (data.pending_orders || []).map(r => ({ code: r.code, date: r.date }))
+        pending_orders: (data.pending_orders || []).map(r => ({ code: r.code, date: r.date })),
+        heThongBaoHanh,
+        tonKho
       };
     }
 
     async function loadDashboardData(force = false) {
+      const updateBtn = document.getElementById('btn-main-update');
+      if (updateBtn) {
+        updateBtn.disabled = true;
+        updateBtn.style.opacity = '0.7';
+        updateBtn.innerHTML = '<span style="font-size:16px;">↻</span> Đang cập nhật...';
+      }
+
       let banner = document.getElementById('api-status-banner');
       if (!banner) {
         banner = document.createElement('div');
@@ -19960,6 +19964,11 @@
 
       const now = Date.now();
       if (!force && state.lastFetchTime && (now - state.lastFetchTime < 300000)) {
+        if (updateBtn) {
+          updateBtn.disabled = false;
+          updateBtn.style.opacity = '1';
+          updateBtn.innerHTML = '<span style="font-size:16px;">↻</span> Cập nhật';
+        }
         renderDashboard();
         return;
       }
@@ -19970,7 +19979,7 @@
 
       try {
         const baseUrl = "https://script.google.com/macros/s/AKfycbyZJ37pO7kueeDwqG3c7TgwkEs1elbqCQgzNavtsSTcAH2R_ZFOsYpavcUKYithwxQgxQ/exec";
-        const sources = ["dhb", "dhm", "donHangBanAllTime", "donHangMuaAllTime", "baoHanh"];
+        const sources = ["dhb", "dhm", "donHangBanAllTime", "donHangMuaAllTime", "baoHanh", "heThongBaoHanh", "tonKho"];
 
         const fetchPromises = sources.map(src =>
           fetch(`${baseUrl}?source=${src}`).then(r => {
@@ -20003,6 +20012,12 @@
 
         renderDashboard();
 
+        if (updateBtn) {
+          updateBtn.disabled = false;
+          updateBtn.style.opacity = '1';
+          updateBtn.innerHTML = '<span style="font-size:16px;">↻</span> Cập nhật';
+        }
+
       } catch (err) {
         console.error("Lỗi khi tải dữ liệu từ Google Sheets API:", err);
         banner.style.backgroundColor = '#ef4444';
@@ -20011,6 +20026,12 @@
         // Ensure app continues to work with empty data if needed
         calculateMetrics({});
         renderDashboard();
+
+        if (updateBtn) {
+          updateBtn.disabled = false;
+          updateBtn.style.opacity = '1';
+          updateBtn.innerHTML = '<span style="font-size:16px;">↻</span> Cập nhật';
+        }
       }
     }
 
